@@ -1,4 +1,4 @@
-﻿<img align="left" src="https://imgur.com/TBfPmju" alt="logo" width="400"/>
+﻿<img align="left" src="https://i.imgur.com/TBfPmju.png" alt="logo" width="400"/>
 
 ## Introduction
 Elva is a manga and comic downloader written in C# with WPF that is currently under development. 🖥️
