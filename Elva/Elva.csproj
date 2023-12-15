@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Recource\Image\Window\logo.ico</ApplicationIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TypNull/Elva</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>manga; downloader; comic; wpf; c#</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Maik\.nuget\packages\lottiesharp\2.3.0\contentFiles\any\net6.0-windows7.0\lottie_sharp.ico" />
+    <Content Remove="C:\Users\Sandmann\.nuget\packages\lottiesharp\2.3.0\contentFiles\any\net6.0-windows7.0\lottie_sharp.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Recource\Animation\loading-1.json" />
+    <None Remove="Recource\Animation\loading.json" />
+    <None Remove="Recource\Animation\menu.json" />
+    <None Remove="Recource\Image\Comic\check_mark.png" />
+    <None Remove="Recource\Image\Comic\clock.png" />
+    <None Remove="Recource\Image\Comic\download.png" />
+    <None Remove="Recource\Image\Comic\no_image.jpg" />
+    <None Remove="Recource\Image\Connection\available.png" />
+    <None Remove="Recource\Image\Connection\disabled.png" />
+    <None Remove="Recource\Image\Connection\save.png" />
+    <None Remove="Recource\Image\Connection\unavailable.png" />
+    <None Remove="Recource\Image\Search\arrow.png" />
+    <None Remove="Recource\Image\Search\clean.png" />
+    <None Remove="Recource\Image\Search\nothing_found.png" />
+    <None Remove="Recource\Image\Search\reload.png" />
+    <None Remove="Recource\Image\Window\book.png" />
+    <None Remove="Recource\Image\Window\home.png" />
+    <None Remove="Recource\Image\Window\logo.ico" />
+    <None Remove="Recource\Image\Window\search.png" />
+    <None Remove="Recource\Image\Window\setting.png" />
+    <None Remove="Recource\Image\Window\settings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Recource\Image\Window\logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.0.7" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="LottieSharp" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Shard.WebsiteScraper" Version="1.2.0" />
+    <PackageReference Include="XamlRadialProgressBar" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Recource\Animation\loading.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Recource\Animation\menu.json" />
+    <Resource Include="Recource\Image\Comic\check_mark.png" />
+    <Resource Include="Recource\Image\Comic\clock.png" />
+    <Resource Include="Recource\Image\Comic\download.png" />
+    <Resource Include="Recource\Image\Comic\no_image.jpg" />
+    <Resource Include="Recource\Image\Connection\available.png" />
+    <Resource Include="Recource\Image\Connection\disabled.png" />
+    <Resource Include="Recource\Image\Connection\save.png" />
+    <Resource Include="Recource\Image\Connection\unavailable.png" />
+    <Resource Include="Recource\Image\Search\arrow.png" />
+    <Resource Include="Recource\Image\Search\clean.png" />
+    <Resource Include="Recource\Image\Search\nothing_found.png" />
+    <Resource Include="Recource\Image\Search\reload.png" />
+    <Resource Include="Recource\Image\Window\book.png" />
+    <Resource Include="Recource\Image\Window\home.png" />
+    <Resource Include="Recource\Image\Window\logo.ico" />
+    <Resource Include="Recource\Image\Window\search.png" />
+    <Resource Include="Recource\Image\Window\settings.png" />
+  </ItemGroup>
+
+</Project>

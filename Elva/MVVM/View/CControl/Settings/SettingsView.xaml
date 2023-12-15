@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Elva.MVVM.View.CControl.Settings.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Elva.MVVM.View.CControl.Settings"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <TextBlock Text="Download:" Foreground="White" FontSize="20" />
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="10,0,10,0"
+                        Height="20"
+                        Style="{StaticResource ModernButton}"
+                        Content="Change"
+                        Command="{Binding ChangeDownloadFolderCommand}"
+                        Background="#FF5B8EA7" />
+                <TextBlock Margin="5"
+                           Foreground="White"
+                           FontSize="17">
+      <Run Text="Folder:" />
+      <Run Text="{Binding DownloadFolder, Mode=OneWay}"
+                    FontSize="14" 
+                    Foreground="#FFDADADA" />
+                </TextBlock>
+              
+            </StackPanel>
+            <TextBlock Margin="0,5,0,0" Text="Websites:"
+                       Foreground="White"
+                       FontSize="20" />
+            <Button Margin="10,5,10,0"
+                    Height="20"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource ModernButton}"
+                    Content="Add Website" MaxWidth="100"
+                    Command="{Binding ChangeDownloadFolderCommand}"
+                    Background="#FFFF7B95" />
+
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

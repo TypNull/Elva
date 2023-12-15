@@ -1,0 +1,65 @@
+﻿<Application x:Class="Elva.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Elva"
+             xmlns:conv="clr-namespace:Elva.Core.Converter"
+               xmlns:view="clr-namespace:Elva.MVVM.View.CControl"
+             xmlns:vm="clr-namespace:Elva.MVVM.ViewModel.CControl"
+             xmlns:vm1="clr-namespace:Elva.MVVM.ViewModel.CControl.Home"
+             xmlns:view1="clr-namespace:Elva.MVVM.View.CControl.Home"
+             xmlns:vm2="clr-namespace:Elva.MVVM.ViewModel.CControl.Search"
+             xmlns:view2="clr-namespace:Elva.MVVM.View.CControl.Search"
+             xmlns:vm3="clr-namespace:Elva.MVVM.ViewModel.CControl.Info"
+             xmlns:view3="clr-namespace:Elva.MVVM.View.CControl.Info"
+              xmlns:vm4="clr-namespace:Elva.MVVM.ViewModel.CControl.Settings"
+             xmlns:view4="clr-namespace:Elva.MVVM.View.CControl.Settings"
+             xmlns:sys="clr-namespace:System;assembly=netstandard">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Style/ModernWindow.xaml" />
+                <ResourceDictionary Source="/Style/WindowMenuButton.xaml" />
+                <ResourceDictionary Source="/Style/ModernScrollBar.xaml" />
+                <ResourceDictionary Source="/Style/ModernButton.xaml" />
+                <ResourceDictionary Source="/Style/ModernSearchBar.xaml" />
+                <ResourceDictionary Source="/Style/ModernTextBox.xaml" />
+                <ResourceDictionary Source="/Style/FilterButton.xaml" />
+                <ResourceDictionary Source="/Style/TextBlockTextBox.xaml" />
+                <ResourceDictionary Source="/Style/ModernRadioButton.xaml" />
+               
+            </ResourceDictionary.MergedDictionaries>
+            <sys:String x:Key="NullImagePath">pack://application:,,,/Recource/Image/Comic/no_image.jpg</sys:String>
+            <conv:DictionaryBoolConverter x:Key="DictionaryConverter" />
+            <conv:MultiValueEqualityConverter x:Key="MultiEqualtityConverter" />
+            <conv:MultiBindingConverter x:Key="MultiBindingConverter" />
+            <conv:ImageConverter x:Key="ImageConverter" />
+            <DataTemplate DataType="{x:Type  vm1:HomeVM}">
+                <view1:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm2:SearchVM}">
+                <view2:SearchView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm3:InfoVM}">
+                <view3:InfoView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm4:SettingsVM}">
+                <view4:SettingsView />
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type  vm2:SourceVM}">
+                <view2:SourceView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm2:GenreVM}">
+                <view2:GenreView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm2:InputVM}">
+                <view2:InputView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm2:OtherVM}">
+                <view2:OtherView />
+            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
