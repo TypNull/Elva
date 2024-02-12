@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Elva.Core;
 using Elva.MVVM.Model.Database;
-using Elva.MVVM.Model.Database.Saveable;
 using Elva.MVVM.Model.Manager;
 using Elva.MVVM.ViewModel.Model;
 using System.Linq;
@@ -16,15 +15,15 @@ namespace Elva.MVVM.ViewModel.CControl.Info
         private ComicVM _comic;
         [ObservableProperty]
         private ChapterInfoVM _chapterVM;
-        private SettingsDatabaseManager _settingsManager;
+        private SettingsManager _settingsManager;
         public InfoVM(INavigationService navigation) : base(navigation)
         {
-            _settingsManager = GetService<SettingsDatabaseManager>();
-            ComicReference? lastReference = _settingsManager.Context.ComicReferences.FirstOrDefault(x => x.ReferenceType == "Info");
-            Website? website = GetService<WebsiteManager>().GetWebsite(lastReference?.WebsiteID ?? "");
-            if (website != null && !string.IsNullOrEmpty(lastReference?.Url))
-                _comic = new(new(lastReference.Url, lastReference.Url, website));
-            else if (string.IsNullOrEmpty(lastReference?.Url))
+            _settingsManager = GetService<SettingsManager>();
+            (string url, string websiteID)? lastReference = _settingsManager.GetActualComic();
+            Website? website = GetService<WebsiteManager>().GetWebsite(lastReference?.websiteID ?? "");
+            if (website != null && !string.IsNullOrEmpty(lastReference?.url))
+                _comic = new(new(lastReference.Value.url, lastReference.Value.url, website));
+            else if (string.IsNullOrEmpty(lastReference?.url))
             {
                 Home.HomeWebsiteVM? websiteVM = GetService<Home.HomeVM>().Websites.FirstOrDefault();
                 _comic = new(new(websiteVM?.NewItems.FirstOrDefault()?.Url ?? websiteVM?.RecommendedItems.FirstOrDefault()?.Url ?? "", websiteVM?.NewItems.FirstOrDefault()?.Url ?? websiteVM?.RecommendedItems.FirstOrDefault()?.Url ?? "", websiteVM?.WebsiteObject ?? new()));
@@ -40,13 +39,8 @@ namespace Elva.MVVM.ViewModel.CControl.Info
             if (e.PropertyName == nameof(Comic))
             {
                 ChapterVM.UpdateChapter(Comic.ChapterVMs);
-                _settingsManager.Add(new ComicReference()
-                {
-                    Url = Comic.Url,
-                    ReferenceType = "Info",
-                    WebsiteID = Comic.Website
-                });
-                _settingsManager.SaveData();
+                _settingsManager.SetActualComic(Comic.Website, Comic.Url);
+                _settingsManager.SaveSettings();
             }
         }
         [RelayCommand]

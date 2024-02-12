@@ -55,7 +55,7 @@ namespace Elva.MVVM.Model.Manager
             return new(websites.DistinctBy(x => x.Name + x.Suffix).ToArray());
         }
 
-        private static void DeserializeWebsiteImage(string path)
+        public static void DeserializeWebsiteImage(string path)
         {
             JsonElement element;
             FileStream? openStream = null;
@@ -110,13 +110,21 @@ namespace Elva.MVVM.Model.Manager
             return fileBuilder.ToString();
         }
 
-        internal static void ChangeDownloadPath(string value)
+        internal static void ChangeDownloadPath(string path)
         {
-            if (Path.Exists(value))
-                if (value.EndsWith('\\'))
-                    DownloadPath = value;
-                else DownloadPath = value + "\\";
+            if (Path.Exists(path))
+                if (path.EndsWith('\\'))
+                    DownloadPath = path;
+                else DownloadPath = path + "\\";
             DownloadPathChanged?.Invoke(null, DownloadPath);
+        }
+
+        internal static string CopyFileTo(string path, string dataPath)
+        {
+            string filename = Path.GetFileName(path);
+            string newFilePath = Path.Combine(dataPath, filename);
+            File.Copy(path, newFilePath, true);
+            return newFilePath;
         }
     }
 }

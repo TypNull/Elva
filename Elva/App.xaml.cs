@@ -28,7 +28,7 @@ namespace Elva
             services.AddSingleton(provider => new MainWindow { DataContext = provider.GetRequiredService<MainWindowVM>() });
             services.AddSingleton(provider => IOManager.LoadWebsites());
             services.AddSingleton<ComicDatabaseManager>();
-            services.AddSingleton<SettingsDatabaseManager>();
+            services.AddSingleton<SettingsManager>();
             services.AddSingleton<SearchManager>();
 
             AddViewModels(services);
@@ -54,11 +54,11 @@ namespace Elva
         {
             base.OnStartup(e);
             _serviceProvider.GetRequiredService<ComicDatabaseManager>().LoadData();
+            _serviceProvider.GetRequiredService<SettingsManager>().LoadSettings();
             ConnectionManager.Initialize();
             ConnectionManager.ConnectionChanged += (o, s) => { if (ConnectionManager.ConnectionIsSave) RequestHandler.CreateMainCTS(); else RequestHandler.CancelMainCTS(); };
 
             _serviceProvider.GetRequiredService<INavigationService>().NavigateTo<HomeVM>();
-            _serviceProvider.GetRequiredService<SettingsDatabaseManager>().LoadData();
             _serviceProvider.GetRequiredService<MainWindow>().Show();
         }
 

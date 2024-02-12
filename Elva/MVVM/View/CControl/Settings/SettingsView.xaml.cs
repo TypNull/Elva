@@ -16,10 +16,23 @@ namespace Elva.MVVM.View.CControl.Settings
         {
             InitializeComponent();
             _vm = App.Current.ServiceProvider.GetRequiredService<SettingsVM>();
-            _vm.ChangeDownaloadFolder += ChangeDownaloadFolder;
+            _vm.OnChangeDownloadFolder += ChangeDownloadFolder;
+            _vm.OnAddWebsite += OnAddWebsite;
         }
 
-        private void ChangeDownaloadFolder(object? sender, System.EventArgs e)
+        private void OnAddWebsite(object? sender, System.EventArgs e)
+        {
+            OpenFileDialog dialog = new()
+            {
+                Title = "Add Website",
+                Multiselect = false,
+                Filter = "Websites | *.wsf"
+            };
+            if (dialog.ShowDialog() == true)
+                _vm.AddWebsite(dialog.FileName);
+        }
+
+        private void ChangeDownloadFolder(object? sender, System.EventArgs e)
         {
             OpenFolderDialog dialog = new()
             {

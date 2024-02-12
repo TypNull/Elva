@@ -8,36 +8,49 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
-            <TextBlock Text="Download:" Foreground="White" FontSize="20" />
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="10,0,10,0"
-                        Height="20"
-                        Style="{StaticResource ModernButton}"
-                        Content="Change"
-                        Command="{Binding ChangeDownloadFolderCommand}"
-                        Background="#FF5B8EA7" />
-                <TextBlock Margin="5"
-                           Foreground="White"
-                           FontSize="17">
-      <Run Text="Folder:" />
-      <Run Text="{Binding DownloadFolder, Mode=OneWay}"
-                    FontSize="14" 
-                    Foreground="#FFDADADA" />
-                </TextBlock>
-              
-            </StackPanel>
-            <TextBlock Margin="0,5,0,0" Text="Websites:"
-                       Foreground="White"
-                       FontSize="20" />
-            <Button Margin="10,5,10,0"
-                    Height="20"
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource ModernButton}"
-                    Content="Add Website" MaxWidth="100"
-                    Command="{Binding ChangeDownloadFolderCommand}"
-                    Background="#FFFF7B95" />
+            <Border Background="#7F808080"
+                    CornerRadius="5"
+                    Margin="10,5,10,5"
+                    Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Download:"
+                               Foreground="White"
+                               FontSize="20" />
+                    <StackPanel Margin="0,5,0,5" Orientation="Horizontal">
+                        <Button Margin="10,0,10,0"
+                                Height="25" Width="70"
+                                Style="{StaticResource ModernButton}"
+                                Content="Change"
+                                Command="{Binding ChangeDownloadFolderCommand}"
+                                Background="#FF5B8EA7" />
+                        <TextBlock Foreground="White"
+                                   FontSize="17">
+<Run Text="Folder:" />
+<Run Text="{Binding DownloadFolder, Mode=OneWay}"
+                            FontSize="14"
+                            Foreground="#FFDADADA" />
+                        </TextBlock>
 
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border  Background="#7F808080"
+                     CornerRadius="5" Margin="10,5,10,5" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Websites:"
+                               Foreground="White"
+                               FontSize="20" />
+                    <Button Margin="10,5,10,0"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource ModernButton}"
+                            Content="Add Website"
+                            Width="100"
+                            Command="{Binding AddWebsiteCommand}"
+                            Background="#FFFF7B95" />
 
+                </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

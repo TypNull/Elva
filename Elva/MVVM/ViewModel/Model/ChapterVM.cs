@@ -59,7 +59,13 @@ namespace Elva.MVVM.ViewModel.Model
             DownloadProgress = 0;
             ProgressableContainer<GetRequest> container = await _chapter.DownloadAsync(Path.Combine(_holdingComic.GetComicDestination(), "Images\\"));
             container.Progress.ProgressChanged += (o, f) => DownloadProgress = (int)(100f * f);
+            container.StateChanged += Container_StateChanged;
         }
 
+        private void Container_StateChanged(object? sender, Requests.Options.RequestState e)
+        {
+            if (e == Requests.Options.RequestState.Compleated)
+                DownloadProgress = 100;
+        }
     }
 }

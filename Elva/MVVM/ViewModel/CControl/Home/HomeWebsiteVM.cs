@@ -32,7 +32,7 @@ namespace Elva.MVVM.ViewModel.CControl.Home
         private Website _websiteObject = null!;
         [ObservableProperty]
         private string _websiteLogo;
-        private SettingsDatabaseManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         public string WebsiteName => WebsiteObject.Name + WebsiteObject.Suffix;
 
@@ -40,21 +40,22 @@ namespace Elva.MVVM.ViewModel.CControl.Home
         {
             _websiteObject = website;
             _websiteLogo = _websiteObject.GetLogoPath();
-            _settingsManager = App.Current.ServiceProvider.GetRequiredService<SettingsDatabaseManager>();
+            _settingsManager = App.Current.ServiceProvider.GetRequiredService<SettingsManager>();
             LoadItemsFromDatabase();
             _ = LoadNewItems();
         }
 
         private void LoadItemsFromDatabase()
         {
-            IEnumerable<WebsiteHomeReference> references = _settingsManager.Context.WebsiteReferences.Where(x => x.WebsiteID == WebsiteName);
-
+            (string url, ReferenceType typ)[]? references = _settingsManager.GetHomeComics(WebsiteObject);
+            if (references == null)
+                return;
             NewItems = ReferencesToCollection(references, ReferenceType.New);
             RecommendedItems = ReferencesToCollection(references, ReferenceType.Recommended);
             ChangeVisibility();
         }
 
-        private ObservableCollection<ComicVM> ReferencesToCollection(IEnumerable<WebsiteHomeReference> references, ReferenceType typ) => new(references.Where(x => x.Type == typ).Select(c => new ComicVM(new(c.Url, c.Url, WebsiteObject))));
+        private ObservableCollection<ComicVM> ReferencesToCollection((string url, ReferenceType typ)[] values, ReferenceType typ) => new(values.Where(x => x.typ == typ).Select(c => new ComicVM(new(c.url, c.url, WebsiteObject))));
 
         private void ChangeVisibility()
         {
@@ -75,9 +76,14 @@ namespace Elva.MVVM.ViewModel.CControl.Home
             RecommendedItems = new(recoComic.Select(c => new ComicVM(c)));
 
             ChangeVisibility();
-            AddToDatabase(RecommendedItems, ReferenceType.Recommended);
-            AddToDatabase(NewItems, ReferenceType.New);
-            _settingsManager.SaveData();
+
+            List<(string url, ReferenceType typ)> list = new();
+            foreach (ComicVM value in RecommendedItems)
+                list.Add((value.Url, ReferenceType.Recommended));
+            foreach (ComicVM value in NewItems)
+                list.Add((value.Url, ReferenceType.New));
+            _settingsManager.SetHomeComics(WebsiteObject, list.ToArray());
+            _settingsManager.SaveSettings();
         }
 
         private void ResizeArray(ref Comic[] comics, int length)
@@ -86,18 +92,6 @@ namespace Elva.MVVM.ViewModel.CControl.Home
                 Array.Resize(ref comics, length);
         }
 
-        private void AddToDatabase(IEnumerable<ComicVM> values, ReferenceType type)
-        {
-            foreach (ComicVM value in values)
-            {
-                _settingsManager.Add(new WebsiteHomeReference()
-                {
-                    Type = type,
-                    Url = value.Url,
-                    WebsiteID = WebsiteName,
-                });
-            }
-        }
 
         [RelayCommand]
         public void OpenWebsiteInfo()

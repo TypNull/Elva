@@ -82,10 +82,9 @@
                                     <xrpb:RadialProgressBar Value="{Binding DownloadProgress,TargetNullValue=0,Mode=OneWay}"
                                                             Width="27"
                                                             Height="27"
-                                                            ArcWidth="1"
+                                                            ArcWidth="2.3"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            ArcMode="Fill"
                                                             Foreground="Black">
                                         <xrpb:RadialProgressBar.Style>
                                             <Style TargetType="{x:Type xrpb:RadialProgressBar}">
