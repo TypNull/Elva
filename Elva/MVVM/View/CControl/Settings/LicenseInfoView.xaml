@@ -19,11 +19,71 @@
                      Margin="10,5,10,5"
                      Padding="10">
                 <StackPanel>
-                    <TextBlock Text="AngleSharp" Cursor="Hand">
+                    <TextBlock  Margin="0,5,0,5" Text="AngleSharp - MIT License" Cursor="Hand" Foreground="White">
                         <TextBlock.InputBindings>
                             <MouseBinding Gesture="LeftClick"
                                           Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
-                                          CommandParameter="" />
+                                          CommandParameter="https://anglesharp.github.io/" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5"
+                               Text="CommunityToolkit.Mvvm - MIT License"
+                               Cursor="Hand"
+                               Foreground="White">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                          CommandParameter="https://github.com/CommunityToolkit/dotnet/" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5"
+                               Text="LottieSharp - MIT License"
+                               Cursor="Hand"
+                               Foreground="White">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                          CommandParameter="https://github.com/quicoli/LottieSharp/" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5"
+                               Text="Microsoft.EntityFrameworkCore.Sqlite - MIT License"
+                               Cursor="Hand"
+                               Foreground="White">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                          CommandParameter="https://learn.microsoft.com/en-us/ef/core/" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5"
+                               Text="Microsoft.Extensions.DependencyInjection - MIT License"
+                               Cursor="Hand"
+                               Foreground="White">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                          CommandParameter="https://dot.net/" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5"
+                               Text="Shard.WebsiteScraper - MIT License"
+                               Cursor="Hand"
+                               Foreground="White">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                          CommandParameter="https://github.com/TypNull/WebsiteScraper/" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5"
+                               Text="Xaml Radial Progress Bar - Apache-2.0 License"
+                               Cursor="Hand"
+                               Foreground="White">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                          CommandParameter="https://github.com/panthernet/XamlRadialProgressBar" />
                         </TextBlock.InputBindings>
                     </TextBlock>
                 </StackPanel>
