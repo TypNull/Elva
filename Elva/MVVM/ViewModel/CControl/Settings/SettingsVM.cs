@@ -15,7 +15,6 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
 {
     internal partial class SettingsVM : ViewModelObject
     {
-
         private WebsiteManager _websiteManager;
         private SettingsManager _settingsManager;
 
@@ -39,9 +38,12 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         {
             _websiteManager = App.Current.ServiceProvider.GetRequiredService<WebsiteManager>();
             _settingsManager = App.Current.ServiceProvider.GetRequiredService<SettingsManager>();
-            _version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Not found";
+            string? versionString = Environment.GetEnvironmentVariable("ClickOnce_CurrentVersion");
+            if (string.IsNullOrEmpty(versionString))
+                _version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Not found";
+            else
+                _version = versionString;
             _isKillSwitchEnabled = _settingsManager.IsKillSwitchEnabled;
-            //System.Deployment.Application.ApplicationDeployment.CurrentDeployment
         }
 
         [RelayCommand]
