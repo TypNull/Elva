@@ -45,6 +45,9 @@
             <DataTemplate DataType="{x:Type  vm4:SettingsVM}">
                 <view4:SettingsView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm4:LicenseInfoVM}">
+                <view4:LicenseInfoView />
+            </DataTemplate>
 
 
             <DataTemplate DataType="{x:Type  vm2:SourceVM}">

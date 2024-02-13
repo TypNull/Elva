@@ -42,7 +42,19 @@
                                    Cursor="Hand">
                                             <Run Text="Chapter:" />
                                             <Run Text="{Binding Number, Mode=OneTime}" />
-                                            <Run Text="–" />
+                                            <Run Text="-">
+          <Run.Style>
+    <Style TargetType="Run">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Title, Mode=OneTime}"
+                                            Value="">
+                <Setter Property="Foreground"
+                                                Value="Transparent" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</Run.Style>
+</Run>
                                             <Run Text="{Binding Title, Mode=OneTime}" />
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">

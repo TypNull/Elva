@@ -21,6 +21,18 @@ namespace Elva.MVVM.Model.Database
         private string _actualComicPath = Path.Combine(IOManager.LocalDataPath, "actualComic.data");
         private readonly Timer _saveTimer;
 
+        public bool IsKillSwitchEnabled
+        {
+            get => _settings.IsKillSwitchEnabled; set
+            {
+                if (IsKillSwitchEnabled != value)
+                {
+                    _settings.IsKillSwitchEnabled = value;
+                    SaveSettings();
+                }
+            }
+        }
+
         public SettingsManager()
         {
             _settings = new();

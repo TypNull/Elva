@@ -33,7 +33,7 @@ namespace Elva.MVVM.Model.Database
             Directory.CreateDirectory(IOManager.LocalDataPath);
             _context.Database.EnsureCreated();
             // Version = _context.Database.SqlQuery<long>($"PRAGMA user_version").FirstOrDefault();
-            Debug.WriteLine(Version);
+            Debug.WriteLine("Database Version: " + Version);
         }
 
         private void DbSaveTimer_Elapsed(object? sender, ElapsedEventArgs e)

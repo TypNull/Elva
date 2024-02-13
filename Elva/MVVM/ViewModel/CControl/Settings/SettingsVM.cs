@@ -1,10 +1,13 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Elva.Core;
 using Elva.MVVM.Model.Database;
 using Elva.MVVM.Model.Manager;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using WebsiteScraper.WebsiteUtilities;
 
 namespace Elva.MVVM.ViewModel.CControl.Settings
@@ -14,6 +17,11 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
 
         private WebsiteManager _websiteManager;
         private SettingsManager _settingsManager;
+
+        [ObservableProperty]
+        private string _version;
+        [ObservableProperty]
+        private bool _isKillSwitchEnabled = true;
         public string DownloadFolder
         {
             get => IOManager.DownloadPath;
@@ -30,6 +38,9 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         {
             _websiteManager = App.Current.ServiceProvider.GetRequiredService<WebsiteManager>();
             _settingsManager = App.Current.ServiceProvider.GetRequiredService<SettingsManager>();
+            _version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Not found";
+            _isKillSwitchEnabled = _settingsManager.IsKillSwitchEnabled;
+            //System.Deployment.Application.ApplicationDeployment.CurrentDeployment
         }
 
         [RelayCommand]
@@ -47,5 +58,20 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
                 _websiteManager.AddWebsite(website);
             }
         }
+
+        [RelayCommand]
+        private void KillSwitch()
+        {
+            IsKillSwitchEnabled = !IsKillSwitchEnabled;
+            _settingsManager.IsKillSwitchEnabled = IsKillSwitchEnabled;
+        }
+
+        [RelayCommand]
+        private void OpenLicenseInfo() => Navigation.NavigateTo<LicenseInfoVM>();
+
+
+        [RelayCommand]
+        private void OpenWebsite(string url) => Process.Start("explorer", url);
+
     }
 }

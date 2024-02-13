@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="Elva.MVVM.View.CControl.Settings.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Elva.MVVM.View.CControl.Settings"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
             <Border Background="#7F808080"
@@ -16,9 +17,11 @@
                     <TextBlock Text="Download:"
                                Foreground="White"
                                FontSize="20" />
-                    <StackPanel Margin="0,5,0,5" Orientation="Horizontal">
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal">
                         <Button Margin="10,0,10,0"
-                                Height="25" Width="70"
+                                Height="25"
+                                Width="70"
                                 Style="{StaticResource ModernButton}"
                                 Content="Change"
                                 Command="{Binding ChangeDownloadFolderCommand}"
@@ -35,7 +38,9 @@
                 </StackPanel>
             </Border>
             <Border  Background="#7F808080"
-                     CornerRadius="5" Margin="10,5,10,5" Padding="10">
+                     CornerRadius="5"
+                     Margin="10,5,10,5"
+                     Padding="10">
                 <StackPanel>
                     <TextBlock Text="Websites:"
                                Foreground="White"
@@ -50,6 +55,111 @@
                             Background="#FFFF7B95" />
 
                 </StackPanel>
+            </Border>
+            <Border  Background="#7F808080"
+                     CornerRadius="5"
+                     Margin="10,5,10,5"
+                     Padding="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="VPN:"
+                               Foreground="White"
+                               FontSize="20" />
+                    <Button Margin="10,5,5,5"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Width="200"
+                            Command="{Binding KillSwitchCommand}">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource ModernButton}">
+                                <Setter Property="Background"
+                                        Value="#FF7BFFA4" />
+                                <Setter Property="Content"
+                                        Value="Kill Switch: Enabled" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsKillSwitchEnabled}" Value="False">
+                                        <Setter Property="Content"
+                                                Value="Kill Switch: Disabled" />
+                                        <Setter Property="Background"
+                                                Value="#FFCDCDCD" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+            <Border  Background="#7F808080"
+                     CornerRadius="5"
+                     Margin="10,5,10,5"
+                     Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="ҽʅʋα"
+                               Margin="0,-20,0,0"
+                               FontSize="70">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="1,1"
+                                                 StartPoint="0,0">
+                                <GradientStop Color="#FFF58D90" />
+                                <GradientStop Color="#FF7A91FF"
+                                              Offset="1" />
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Margin="10"
+                               Grid.Row="1"
+                               Foreground="White"
+                               FontSize="15">
+                        <Run Text="Version:" />
+                        <Run Text="{Binding Version}" />
+                    </TextBlock>
+                    <StackPanel  Grid.RowSpan="1"
+                                 Grid.Column="1">
+                        <TextBlock Foreground="White" Cursor="Hand"
+                                   FontSize="15">
+                            <Run Text="Repository:" />
+                            <Run Text="https://github.com/typnull/elva/"
+                                 Foreground="LightGray" />
+                            <TextBlock.InputBindings>
+     <MouseBinding Gesture="LeftClick"
+                                Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                CommandParameter="https://github.com/typnull/elva/" />
+ </TextBlock.InputBindings>
+                        </TextBlock>
+                        <TextBlock Foreground="White"
+                                   FontSize="15">
+                            <Run Text="License:" />
+                            <Run Text="Hallo"
+                            Foreground="LightGray" />
+                        </TextBlock>
+                        <Button HorizontalAlignment="Left"
+                                Background="Transparent"
+                                Foreground="White"
+                                Height="20"
+                                Width="110"
+                                Content="License details"
+                                Command="{Binding OpenLicenseInfoCommand}"
+                                Style="{StaticResource ModernButton}" />
+                        <TextBlock Foreground="White"
+                                   FontSize="15">
+<Run Text="Issues with elva or a feature Request?" />
+<Run Text="Please report on GitHub issues"
+                            Foreground="LightGray" />
+                        </TextBlock>
+                       
+                    </StackPanel>
+                   
+
+                </Grid>
             </Border>
         </StackPanel>
     </ScrollViewer>

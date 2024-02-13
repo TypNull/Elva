@@ -65,11 +65,16 @@
                 <TextBlock Grid.Column="1"
                            Cursor="Hand"
                            Foreground="Black"
-                           Margin="5,5,10,0" 
+                           Margin="5,5,10,0"
                            MaxHeight="35"
                            FontSize="13.3"
                            TextWrapping="Wrap"
-                           Text="{Binding Path=Title, Mode=OneWay}" />
+                           Text="{Binding Path=Title, Mode=OneWay}">
+                      <TextBlock.InputBindings>
+      <MouseBinding Gesture="LeftClick"
+                    Command="{Binding OpenInfoCommand, Mode=OneTime}" />
+  </TextBlock.InputBindings>
+                </TextBlock>
 
                 <Grid Grid.Column="1"
                       Grid.Row="1"

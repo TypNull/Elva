@@ -47,6 +47,7 @@ namespace Elva
             services.AddSingleton<SearchVM>();
             services.AddSingleton<InfoVM>();
             services.AddSingleton<SettingsVM>();
+            services.AddSingleton<LicenseInfoVM>();
             services.AddSingleton<SearchBarVM>();
         }
 
@@ -54,9 +55,16 @@ namespace Elva
         {
             base.OnStartup(e);
             _serviceProvider.GetRequiredService<ComicDatabaseManager>().LoadData();
-            _serviceProvider.GetRequiredService<SettingsManager>().LoadSettings();
+            SettingsManager settingsManager = _serviceProvider.GetRequiredService<SettingsManager>();
+            settingsManager.LoadSettings();
             ConnectionManager.Initialize();
-            ConnectionManager.ConnectionChanged += (o, s) => { if (ConnectionManager.ConnectionIsSave) RequestHandler.CreateMainCTS(); else RequestHandler.CancelMainCTS(); };
+            ConnectionManager.ConnectionChanged += (o, s) =>
+            {
+                if ((!ConnectionManager.ConnectionIsSave && settingsManager.IsKillSwitchEnabled) || !ConnectionManager.ConnectionIsAvailable)
+                    RequestHandler.CancelMainCTS();
+                else if (ConnectionManager.ConnectionIsAvailable)
+                    RequestHandler.CreateMainCTS();
+            };
 
             _serviceProvider.GetRequiredService<INavigationService>().NavigateTo<HomeVM>();
             _serviceProvider.GetRequiredService<MainWindow>().Show();

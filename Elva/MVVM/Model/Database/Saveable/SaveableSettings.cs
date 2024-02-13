@@ -7,5 +7,7 @@ namespace Elva.MVVM.Model.Database.Saveable
     {
         public string DownloadPath { get; set; } = IOManager.DownloadPath;
         public Dictionary<string, (string url, ReferenceType typ)[]> HomeWebsiteComics { get; set; } = new();
+
+        public bool IsKillSwitchEnabled { get; set; } = true;
     }
 }
