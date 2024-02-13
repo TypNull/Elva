@@ -11,10 +11,10 @@ namespace Elva.MVVM.Model.Manager
 {
     internal static class IOManager
     {
-        public static string TempPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Downloader\\New\\Temp\\");
-        public static string LocalDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Downloader\\New\\LocalData\\");
-        public static string DataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Downloader\\New\\Data\\");
-        public static string DownloadPath { get; private set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Downloader\\New\\Downloads\\");
+        public static string TempPath => Path.Combine(Path.GetTempPath(), "Elva\\");
+        public static string LocalDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Elva\\");
+        public static string DataPath => Path.Combine(Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName)!, "data\\");
+        public static string DownloadPath { get; private set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Elva\\");
         public static event EventHandler<string>? DownloadPathChanged;
 
         public static string GetLogoPath(this Website website)

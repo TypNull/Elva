@@ -73,6 +73,8 @@ namespace Elva.MVVM.Model.Database
 
         public void LoadSettings()
         {
+            if (!File.Exists(_settingsPath))
+                return;
             try
             {
                 _settings = JsonSerializer.Deserialize<SaveableSettings>(File.ReadAllText(_settingsPath), new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }) ?? new();
