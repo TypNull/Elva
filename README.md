@@ -17,9 +17,9 @@ Please note that Elva is still in development and not yet ready for use. However
 - VPN network connection is required for proper application functionality 🌐🔒
 
 ## ToDo
-- Save settings file 💾
 - Create PDF, ZIP, and CBZ files 📦
 - Directly copy to devices such as E-Readers (e.g., Tolino, Kindle) and smartphones (e.g., Android) 📱
+- Included reader
 
 ## First Pictures
 

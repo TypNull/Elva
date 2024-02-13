@@ -138,7 +138,7 @@
                         <TextBlock Foreground="White"
                                    FontSize="15">
                             <Run Text="License:" />
-                            <Run Text="Hallo"
+                            <Run Text="MIT"
                             Foreground="LightGray" />
                         </TextBlock>
                         <Button HorizontalAlignment="Left"

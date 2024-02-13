@@ -4,6 +4,7 @@ using Elva.Core;
 using Elva.MVVM.Model.Database;
 using Elva.MVVM.Model.Manager;
 using Microsoft.Extensions.DependencyInjection;
+using Requests;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -64,6 +65,10 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         {
             IsKillSwitchEnabled = !IsKillSwitchEnabled;
             _settingsManager.IsKillSwitchEnabled = IsKillSwitchEnabled;
+            if ((!ConnectionManager.ConnectionIsSave && IsKillSwitchEnabled) || !ConnectionManager.ConnectionIsAvailable)
+                RequestHandler.CancelMainCTS();
+            else if (ConnectionManager.ConnectionIsAvailable)
+                RequestHandler.CreateMainCTS();
         }
 
         [RelayCommand]
