@@ -1,50 +1,58 @@
-﻿<img align="left" src="https://i.imgur.com/TBfPmju.png" alt="logo" width="400"/>
-
 ## Introduction
-Elva is a manga and comic downloader written in C# with WPF that is currently under development. 🖥️
+ҽʅʋα is a free manga and comic downloader written in C# with WPF that is currently under development. 🖥️
 
-Elva is a fast and beautiful WPF application that allows users to search various websites and download manga and comics. It utilizes the Shard.WebsiteScraper library to gather the necessary data from websites and facilitate the download process. 📥💻
+ҽʅʋα is a fast and beautiful WPF application that allows users to search various websites and download manga and comics. It uses the Shard.WebsiteScraper library to gather the necessary data from any included website. 📥💻
 
-Please be mindful when using Elva to download manga and comics. While the download itself is fast and convenient, it is important to consider the impact on the comic or manga providers' servers and hosting costs. We do not want to cause any harm or disruption to their systems.
+You can download ҽʅʋα here: [Download ҽʅʋα](https://typnull.github.io/Elva/Elva.application)
+Websites to download from can be found here: [Supported Websites](https://github.com/TypNull/WebsiteScraper/tree/master/Websites) 
 
-Please note that Elva is still in development and not yet ready for use. However, if you are interested in exploring it, you can download the source code and build it yourself. 🔧
+Please be mindful when using ҽʅʋα to download manga and comics. While the download itself is fast and convenient, it is important to consider the impact on the comic or manga providers' servers and hosting costs. It is easy to mass download manga or comics and tey will probably never be read so please be mindfull
+We do not want to cause any harm or disruption to their systems.
+
+Please note that ҽʅʋα is still in development and not yet ready for stable use. However, if you are interested in exploring it, you can now download the alpha release. 🔧
 
 ## Features
 
-- Download manga and comics from various websites 📖
+- Download manga and comics from various websites with one click 📖
 - Search manga and comics on different websites and combine searches 🔍
-- Expand functionality using the Shard.WebsiteScraper and Website Creator library 🧩
-- VPN network connection is required for proper application functionality 🌐🔒
+- Expand functionality using the Shard.WebsiteScraper and Website Creator application 🧩
+- VPN network connection is empfohlen for proper application functionality 🌐🔒
 
 ## ToDo
 - Create PDF, ZIP, and CBZ files 📦
 - Directly copy to devices such as E-Readers (e.g., Tolino, Kindle) and smartphones (e.g., Android) 📱
-- Included reader
+- Included comic reader
+- Update websites from repository
 
-## First Pictures
+## Pictures
 
 ![Home](https://i.imgur.com/5I7EhSN.png)
 Home page displaying new and recommended items from the websites
 
 ![Search](https://i.imgur.com/v9Vx4BN.png)
-Search for your desired comic
+Search for your desired comic on variouse website.
+Specify the search parameter that are given from the website. 
+Search more than one website at a time
 
 ![Info](https://i.imgur.com/isaqR8q.png)
-Access detailed information about a comic and download its chapters
+Access detailed information about a comic and download its chapters.
+To download all images of an manga or comic press download all. 
+To download one chapter press the download button next to the chapter.
 
 ## Getting Started
 
-To get started with Elva, follow these steps:
+To get started with ҽʅʋα, follow these steps:
 
-1. Clone the repository to your local machine.
-2. Open the solution in a compatible IDE (e.g., Visual Studio).
-3. Build the solution to restore dependencies and compile the code.
-4. Ensure that you have a VPN network connection established.
-5. Run the application and explore its features. 🚀
+1. [Download ҽʅʋα](https://typnull.github.io/Elva/Elva.application)
+2. [Download websites](https://github.com/TypNull/WebsiteScraper/tree/master/Websites)
+3. Add websites in settings
+4. Test and Enjoy
 
 ## Contributing
 
 Contributions to this project are welcome. 👥
+
+If you only want to add a new website then consider using the [Website Creator](https://github.com/TypNull/WebsiteScraper/releases/tag/v.1.0.0). It should be relatively easy to add a new one. Examples are included as wsfs files. Load them and it should be selfexplayning. If not please open a issue on https://github.com/TypNull/WebsiteScraper/issues
 
 ## License
 
