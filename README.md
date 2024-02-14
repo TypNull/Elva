@@ -1,3 +1,4 @@
+<img align="left" src="https://i.imgur.com/TBfPmju.png" alt="logo" width="400"/>
 ## Introduction
 ҽʅʋα is a free manga and comic downloader written in C# with WPF that is currently under development. 🖥️
 
