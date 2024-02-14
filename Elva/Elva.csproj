@@ -88,4 +88,8 @@
     <Resource Include="Recource\Image\Window\settings.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
 </Project>
