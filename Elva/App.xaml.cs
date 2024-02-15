@@ -26,7 +26,7 @@ namespace Elva
         {
             IServiceCollection services = new ServiceCollection();
             services.AddSingleton(provider => new MainWindow { DataContext = provider.GetRequiredService<MainWindowVM>() });
-            services.AddSingleton(provider => IOManager.LoadWebsites());
+            services.AddSingleton(provider => new WebsiteManager(IOManager.LoadWebsites()));
             services.AddSingleton<ComicDatabaseManager>();
             services.AddSingleton<SettingsManager>();
             services.AddSingleton<SearchManager>();

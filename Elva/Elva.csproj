@@ -35,6 +35,7 @@
     <None Remove="Recource\Image\Search\clean.png" />
     <None Remove="Recource\Image\Search\nothing_found.png" />
     <None Remove="Recource\Image\Search\reload.png" />
+    <None Remove="Recource\Image\Window\back.png" />
     <None Remove="Recource\Image\Window\book.png" />
     <None Remove="Recource\Image\Window\home.png" />
     <None Remove="Recource\Image\Window\logo.ico" />
@@ -90,6 +91,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Recource\Image\Window\back.png" />
   </ItemGroup>
 
 </Project>

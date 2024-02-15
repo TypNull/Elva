@@ -24,37 +24,57 @@ Please note that ҽʅʋα is still in development and not yet ready for stable u
 - Create PDF, ZIP, and CBZ files 📦
 - Directly copy to devices such as E-Readers (e.g., Tolino, Kindle) and smartphones (e.g., Android) 📱
 - Included comic reader
-- Update websites from repository
+
+## Getting Started
+
+To begin using ҽʅʋα, please complete the following steps:
+
+1. [Download ҽʅʋα](https://typnull.github.io/Elva/Elva.application)
+2. Install ҽʅʋα on your PC and open it
+3. Enable a VPN connection or disable the VPN kill switch in the Settings
+4. Press `Update websites from repository`
+5. Test and enjoy the features of ҽʅʋα
+
 
 ## Pictures
 
-![Home](https://i.imgur.com/5I7EhSN.png)
+<details >
+ <summary>Show Pictures</summary>
+
+### Home
+
 Home page displaying new and recommended items from the websites
 
-![Search](https://i.imgur.com/v9Vx4BN.png)
-Search for your desired comic on variouse website.
-Specify the search parameter that are given from the website. 
-Search more than one website at a time
+![Home](https://i.imgur.com/5I7EhSN.png)
 
-![Info](https://i.imgur.com/isaqR8q.png)
+### Search
+
+- Search for your desired comic on variouse website.
+- Specify the search parameter that are given from the website. 
+- Search more than one website at a time.
+
+![Search](https://i.imgur.com/v9Vx4BN.png)
+
+### Info
+
 Access detailed information about a comic and download its chapters.
 To download all images of an manga or comic press download all. 
 To download one chapter press the download button next to the chapter.
 
-## Getting Started
+![Info](https://i.imgur.com/isaqR8q.png)
 
-To get started with ҽʅʋα, follow these steps:
+### Settings
 
-1. [Download ҽʅʋα](https://typnull.github.io/Elva/Elva.application)
-2. [Download websites](https://github.com/TypNull/WebsiteScraper/tree/master/Websites)
-3. Add websites in settings
-4. Test and Enjoy
+Modify the destination folder for downloading images. Additionally, refresh the list of websites by either updating existing ones or adding new ones.
+
+![Settings](https://i.imgur.com/IuuJxYp.png)
+</details>
 
 ## Contributing
 
 Contributions to this project are welcome. 👥
 
-If you only want to add a new website then consider using the [Website Creator](https://github.com/TypNull/WebsiteScraper/releases/tag/v.1.0.0). It should be relatively easy to add a new one. Examples are included as wsfs files. Load them and it should be selfexplayning. If not please open a issue on https://github.com/TypNull/WebsiteScraper/issues
+If you only want to add a new website then consider using the [Website Creator](https://github.com/TypNull/WebsiteScraper/releases/tag/v.1.0.0). It should be relatively easy to add a new one. Examples are included as `.wsfs` files. Load them and it should be selfexplayning. If not please open a issue on https://github.com/TypNull/WebsiteScraper/issues
 
 ## License
 

@@ -9,10 +9,17 @@
     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Margin="5,0,0,0"
-                        Width="50"
-                        Height="50" Command="{Binding BackToSettingsCommand}" />
-                <TextBlock Margin="10" Text="Licenses" FontSize="30" Foreground="White" />
+                <Image Margin="5,5,0,0"
+                       Height="30"
+                       Width="30"
+                       Cursor="Hand"
+                       Source="\Recource\Image\Window\back.png">
+                    <Image.InputBindings>
+                        <MouseBinding  Gesture="LeftClick"
+                                       Command="{Binding BackToSettingsCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <TextBlock Margin="5,10,10,10" Text="Licenses" FontSize="30" Foreground="White" />
             </StackPanel>
             <Border  Background="#7F808080"
                      CornerRadius="5"

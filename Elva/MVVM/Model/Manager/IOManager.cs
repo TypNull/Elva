@@ -1,9 +1,14 @@
-﻿using System;
+﻿using DownloadAssistant.Base;
+using DownloadAssistant.Request;
+using Requests;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using WebsiteScraper.WebsiteUtilities;
 
@@ -26,7 +31,7 @@ namespace Elva.MVVM.Model.Manager
         }
 
 
-        public static WebsiteManager LoadWebsites()
+        public static Website[] LoadWebsites()
         {
             Directory.CreateDirectory(DataPath);
             FileInfo[] files = new DirectoryInfo(DataPath).GetFiles("*.wsf");
@@ -50,9 +55,9 @@ namespace Elva.MVVM.Model.Manager
                 }
             }
             if (websites.Count == 0)
-                return new();
+                return Array.Empty<Website>();
 
-            return new(websites.DistinctBy(x => x.Name + x.Suffix).ToArray());
+            return websites.DistinctBy(x => x.Name + x.Suffix).ToArray();
         }
 
         public static void DeserializeWebsiteImage(string path)
@@ -96,6 +101,33 @@ namespace Elva.MVVM.Model.Manager
             (char)21, (char)22, (char)23, (char)24, (char)25, (char)26, (char)27, (char)28, (char)29, (char)30,
             (char)31, ':', '?', '\\', '/'
           };
+
+
+        public static async Task DownloadWebsitesFromRepoAsync()
+        {
+            RequestContainer<IRequest> requests = new();
+            requests.Add(new OwnRequest(async (token) =>
+            {
+                HttpGet get = new(new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.github.com/repos/TypNull/WebsiteScraper/contents/Websites")));
+                HttpResponseMessage resonse = await get.LoadResponseAsync();
+                string jsonString = await resonse.Content.ReadAsStringAsync();
+                JsonElement[]? json = JsonSerializer.Deserialize<JsonElement[]>(jsonString);
+                if (json?.Length <= 0)
+                    return false;
+                foreach (JsonElement item in json!)
+                {
+                    if (Path.GetExtension(item.GetProperty("name").ToString()) == ".wsf")
+                        requests.Add(new GetRequest(item.GetProperty("download_url").ToString(), new()
+                        {
+                            Filename = item.GetProperty("name").ToString(),
+                            DirectoryPath = DataPath
+                        }));
+                }
+                return true;
+            }));
+            await requests.Task;
+            return;
+        }
 
         /// <summary>
         /// Removes all invalid Characters for a filename out of a string

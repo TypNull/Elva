@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using WebsiteScraper.WebsiteUtilities;
 
 namespace Elva.MVVM.ViewModel.CControl.Settings
@@ -22,6 +23,8 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         private string _version;
         [ObservableProperty]
         private bool _isKillSwitchEnabled = true;
+        [ObservableProperty]
+        private bool _isUpdateingWebsitesEnabled = true;
         public string DownloadFolder
         {
             get => IOManager.DownloadPath;
@@ -79,6 +82,22 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
 
         [RelayCommand]
         private void OpenWebsite(string url) => Process.Start("explorer", url);
+
+        [RelayCommand]
+        private void UpdateWebsites()
+        {
+            IsUpdateingWebsitesEnabled = false;
+            Task.Run(async () =>
+            {
+                await IOManager.DownloadWebsitesFromRepoAsync();
+                Website[] websites = IOManager.LoadWebsites();
+                foreach (Website website in websites)
+                {
+                    if (!_websiteManager.Websites.Any(x => (x.Name + x.Suffix) == (website.Name + website.Suffix)))
+                        App.Current.Dispatcher.Invoke(() => _websiteManager.AddWebsite(website));
+                }
+            });
+        }
 
     }
 }

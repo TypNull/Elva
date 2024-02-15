@@ -53,6 +53,26 @@
                             Width="100"
                             Command="{Binding AddWebsiteCommand}"
                             Background="#FFFF7B95" />
+                    <Button Margin="10,5,10,0"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Content="Update websites from repository"
+                            Width="200"
+                            IsEnabled="{Binding IsUpdateingWebsitesEnabled}"
+                            Command="{Binding UpdateWebsitesCommand}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                                <Setter Property="Background"
+                                        Value="#FFFF7B7B" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Background"
+                                                Value="#7FFF7B7B" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
                 </StackPanel>
             </Border>
@@ -124,22 +144,32 @@
                     </TextBlock>
                     <StackPanel  Grid.RowSpan="1"
                                  Grid.Column="1">
-                        <TextBlock Foreground="White" Cursor="Hand"
+                        <TextBlock Foreground="White" 
                                    FontSize="15">
                             <Run Text="Repository:" />
                             <Run Text="https://github.com/typnull/elva/"
-                                 Foreground="LightGray" />
-                            <TextBlock.InputBindings>
-     <MouseBinding Gesture="LeftClick"
-                                Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
-                                CommandParameter="https://github.com/typnull/elva/" />
- </TextBlock.InputBindings>
+                                 Foreground="LightGray"
+                                 Cursor="Hand">
+                                <Run.InputBindings>
+                                    <MouseBinding Gesture="LeftClick"
+                                                  Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                                  CommandParameter="https://github.com/typnull/Elva/" />
+                                </Run.InputBindings>
+                            </Run>
+                           
                         </TextBlock>
                         <TextBlock Foreground="White"
                                    FontSize="15">
                             <Run Text="License:" />
                             <Run Text="MIT"
-                            Foreground="LightGray" />
+                                 Foreground="LightGray"
+                                 Cursor="Hand">
+<Run.InputBindings>
+    <MouseBinding Gesture="LeftClick"
+                                    Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                    CommandParameter="https://github.com/TypNull/Elva/blob/master/LICENSE.txt" />
+</Run.InputBindings>
+                                </Run>
                         </TextBlock>
                         <Button HorizontalAlignment="Left"
                                 Background="Transparent"
@@ -150,12 +180,19 @@
                                 Command="{Binding OpenLicenseInfoCommand}"
                                 Style="{StaticResource ModernButton}" />
                         <TextBlock Foreground="White"
-                                   FontSize="15">
-<Run Text="Issues with elva or a feature Request?" />
-<Run Text="Please report on GitHub issues"
-                            Foreground="LightGray" />
+                                   FontSize="15" >
+<Run Text="Issues with elva or a feature request?" />
+<Run Text="Please report on GitHub" Cursor="Hand"
+                            Foreground="LightGray">
+     <Run.InputBindings>
+     <MouseBinding Gesture="LeftClick"
+                                    Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                    CommandParameter="https://github.com/typnull/Elva/issues" />
+ </Run.InputBindings>
+</Run>
+                           
                         </TextBlock>
-                       
+
                     </StackPanel>
                    
 
