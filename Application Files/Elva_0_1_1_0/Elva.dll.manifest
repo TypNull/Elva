@@ -90,13 +90,13 @@
       <dsig:DigestValue>AB281pWSgsEKEpubnt+oWekhmcHU48wP10ywO9DX5TY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Elva.dll" size="516608">
+  <file name="Elva.dll" size="526336">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ohRhw/c+v9Y90mk+KVQgkt/N/g5SUGTmnkB++KSJWE4=</dsig:DigestValue>
+      <dsig:DigestValue>N1uSB6TKBF53Kz82Q8cNjtBu2o84jfW0gNLwub5LNHw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.exe" size="157184">
@@ -105,7 +105,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>NxhMlgZu/WAY2NFKLgB2u4ugg9S4FL80pBpLMxBlSGc=</dsig:DigestValue>
+      <dsig:DigestValue>ndvP5g9+aIpDLULYSbzxwWkhk1ZPGz4+6dClU0fbtCw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.runtimeconfig.json" size="527">
