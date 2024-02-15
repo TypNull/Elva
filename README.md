@@ -6,10 +6,10 @@
 ҽʅʋα is a fast and beautiful WPF application that allows users to search various websites and download manga and comics. It uses the Shard.WebsiteScraper library to gather the necessary data from any included website. 📥💻
 
 You can download ҽʅʋα here: [Download ҽʅʋα](https://typnull.github.io/Elva/Elva.application)
+
 Websites to download from can be found here: [Supported Websites](https://github.com/TypNull/WebsiteScraper/tree/master/Websites) 
 
-Please be mindful when using ҽʅʋα to download manga and comics. While the download itself is fast and convenient, it is important to consider the impact on the comic or manga providers' servers and hosting costs. It is easy to mass download manga or comics and tey will probably never be read so please be mindfull
-We do not want to cause any harm or disruption to their systems.
+When using ҽʅʋα to download manga and comics, please keep in mind the potential impact on the servers and hosting costs of the comic or manga providers. Although the download process is quick and convenient, it is crucial to consider the consequences. Mass downloading manga or comics that may never be read can be harmful and disruptive to their systems. Let's be responsible and avoid causing any harm or disruption.
 
 Please note that ҽʅʋα is still in development and not yet ready for stable use. However, if you are interested in exploring it, you can now download the alpha release. 🔧
 
