@@ -58,6 +58,8 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.7" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="itext7" Version="8.0.3" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.3" />
     <PackageReference Include="LottieSharp" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />

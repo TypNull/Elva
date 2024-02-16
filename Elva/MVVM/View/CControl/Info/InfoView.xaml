@@ -7,6 +7,8 @@
              xmlns:sys="clr-namespace:System;assembly=netstandard"
              xmlns:con="clr-namespace:Elva.Core.Converter"
              mc:Ignorable="d"
+             xmlns:xrpb="http://XamlRadialProgressBar/DotNet"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignHeight="450"
              d:DesignWidth="800">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -83,8 +85,20 @@
                     </Grid.OpacityMask>
                 </Grid>
             </Border>
-            <Border x:Name="infoBorder" Grid.Column="1"
+            <Border x:Name="infoBorder"
+                    Grid.Column="1"
                     Margin="0,20,0,0">
+                <Border.Resources>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource RedButton}">
+                        <Setter Property="Margin"
+                                Value="5" />
+                        <Setter Property="Width"
+                                Value="110" />
+                        <Setter Property="Height"
+                                Value="40" />
+                    </Style>
+                </Border.Resources>
                 <StackPanel>
                     <TextBlock MaxHeight="60">
                 <Run Text="Name:&#009;"
@@ -118,21 +132,84 @@
                     </TextBlock>
                     <WrapPanel VerticalAlignment="Bottom"
                                Orientation="Horizontal">
-                        <WrapPanel.Resources>
-                            <Style TargetType="Button" BasedOn="{StaticResource RedButton}">
-                                <Setter Property="Margin"
-                                        Value="5" />
-                                <Setter Property="Width"
-                                        Value="110" />
-                                <Setter Property="Height"
-                                        Value="40" />
-                            </Style>
-                        </WrapPanel.Resources>
                         <Button Content="Read First" />
                         <Button Content="Read Last" />
                         <Button Content="Continue" />
                         <Button Content="Download All"
                                 Command="{Binding StartDownloadAllCommand}" />
+                        
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,10"
+                               IsEnabled="{Binding Comic.CanExport}">
+                        <Button Content="Export as:"
+                                Command="{Binding ExportCommand}"/>
+                        <ComboBox Style="{StaticResource ModernComboBox}"
+                                  Grid.Column="1"
+                                  TextBlock.FontSize="15"
+                                  Height="30"
+                                  Width="100"
+                                  SelectedIndex="{Binding SelectedIndex,Mode=TwoWay,FallbackValue=0}">
+                            <ComboBoxItem>PDF</ComboBoxItem>
+                         <!--   <ComboBoxItem>ZIP</ComboBoxItem>
+                            <ComboBoxItem>CBZ</ComboBoxItem>-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ExportChangedCommand}" CommandParameter="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ComboBox}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <Grid Margin="5,0,0,0">
+                            <xrpb:RadialProgressBar Value="{Binding Comic.ExportProgress,TargetNullValue=0,Mode=OneWay}"
+                                                    Width="35"
+                                                    Height="35"
+                                                    ArcWidth="2.3"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="Black">
+                                <xrpb:RadialProgressBar.Style>
+                                    <Style TargetType="{x:Type xrpb:RadialProgressBar}">
+                                        <Setter Property="Visibility"
+                                                Value="Visible" />
+                                        <Style.Triggers>
+                                            <Trigger Value="100"
+                                                     Property="Value">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible" />
+                                            </Trigger>
+                                            <Trigger Value="0"
+                                                     Property="Value">
+                                                <Setter Property="Visibility"
+                                                        Value="Hidden" />
+                                            </Trigger>
+                                            <Trigger Value="-1"
+                                                     Property="Value">
+                                                <Setter Property="Visibility"
+                                                        Value="Hidden" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </xrpb:RadialProgressBar.Style>
+                            </xrpb:RadialProgressBar>
+
+                            <Image RenderOptions.BitmapScalingMode="Fant"
+                                   MaxHeight="25">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source"
+                                                Value="/Recource/Image/Comic/check_mark.png" />
+                                        <Setter Property="Visibility"
+                                                Value="Hidden" />
+                                        <Style.Triggers>
+                                            <DataTrigger Value="100"
+                                                         Binding="{Binding Comic.ExportProgress}">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
                     </WrapPanel>
                 </StackPanel>
             </Border>

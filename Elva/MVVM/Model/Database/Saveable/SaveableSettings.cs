@@ -9,5 +9,6 @@ namespace Elva.MVVM.Model.Database.Saveable
         public Dictionary<string, (string url, ReferenceType typ)[]> HomeWebsiteComics { get; set; } = new();
 
         public bool IsKillSwitchEnabled { get; set; } = true;
+        public int LastExportIndex { get; set; }
     }
 }

@@ -19,7 +19,10 @@ namespace Elva.MVVM.ViewModel.Model
             get => _downloadProgress; private set
             {
                 if (DownloadProgress >= 99)
+                {
                     SetProperty(ref _downloadProgress, 100);
+                    _holdingComic.CanExport = true;
+                }
                 else
                     SetProperty(ref _downloadProgress, value);
             }
@@ -57,9 +60,9 @@ namespace Elva.MVVM.ViewModel.Model
             if (DownloadProgress != -1f)
                 return;
             DownloadProgress = 0;
-            ProgressableContainer<GetRequest> container = await _chapter.DownloadAsync(Path.Combine(_holdingComic.GetComicDestination(), "Images\\"));
-            container.Progress.ProgressChanged += (o, f) => DownloadProgress = (int)(100f * f);
-            container.StateChanged += Container_StateChanged;
+            ProgressableContainer<GetRequest> _downloadRequests = await _chapter.DownloadAsync(Path.Combine(_holdingComic.GetComicDestination(), "Images\\"));
+            _downloadRequests.Progress.ProgressChanged += (o, f) => DownloadProgress = (int)(100f * f);
+            _downloadRequests.StateChanged += Container_StateChanged;
         }
 
         private void Container_StateChanged(object? sender, Requests.Options.RequestState e)

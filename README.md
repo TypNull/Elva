@@ -21,7 +21,7 @@ Please note that ҽʅʋα is still in development and not yet ready for stable u
 - VPN network connection is empfohlen for proper application functionality 🌐🔒
 
 ## ToDo
-- Create PDF, ZIP, and CBZ files 📦
+- Create ZIP, and CBZ files 📦
 - Directly copy to devices such as E-Readers (e.g., Tolino, Kindle) and smartphones (e.g., Android) 📱
 - Included comic reader
 

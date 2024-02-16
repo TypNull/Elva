@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Elva.MVVM.Model.Database;
 using Elva.MVVM.Model.Database.Saveable;
+using Elva.MVVM.Model.Export;
 using Elva.MVVM.Model.Manager;
 using Elva.MVVM.ViewModel.CControl.Info;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using WebsiteScraper.Downloadable;
 using WebsiteScraper.Downloadable.Books;
@@ -23,6 +25,10 @@ namespace Elva.MVVM.ViewModel.Model
         private SaveableComic _scomic;
         [ObservableProperty]
         private SolidColorBrush _background = new();
+        private bool _canExport;
+        private bool _isExporting;
+        [ObservableProperty]
+        public int _exportProgress;
 
         public bool IsVisible => _comic?.Title.Equals(_comic.Url) == false;
         public string Url => _comic.Url;
@@ -38,6 +44,8 @@ namespace Elva.MVVM.ViewModel.Model
         public float FirstChapterNumber => _comic.Chapter.FirstOrDefault()?.Number ?? -1;
         public string AlternativeTitles => string.Join("; ", _comic.AlternativeTitles);
 
+        public bool CanExport { get => _canExport && !_isExporting; set => SetProperty(ref _canExport, value); }
+
         public ChapterVM[] ChapterVMs => _chapterVMs.Value;
 
         private ComicDatabaseManager _dbManager;
@@ -47,7 +55,7 @@ namespace Elva.MVVM.ViewModel.Model
         public ComicVM(Comic comic)
         {
             _comic = comic;
-            _chapterVMs = new(Array.Empty<ChapterVM>());
+            _chapterVMs = new([]);
             _infoVM = new(App.Current.ServiceProvider.GetRequiredService<InfoVM>);
             _dbManager = App.Current.ServiceProvider.GetRequiredService<ComicDatabaseManager>();
             if (_dbManager.TryGetSaved(comic.Url, out _scomic!))
@@ -67,14 +75,20 @@ namespace Elva.MVVM.ViewModel.Model
             IOManager.DownloadPathChanged += IOManager_DownloadPathChanged;
             comic.PropertyChanged += Comic_PropertyChanged;
             CreateColor();
+            _canExport = ChapterVMs.Any(x => x.DownloadProgress == 100);
         }
 
         private void IOManager_DownloadPathChanged(object? sender, string e)
         {
+            CanExport = false;
             foreach (ChapterVM chapter in ChapterVMs)
                 chapter.CheckDonwloaded();
         }
 
+        /// <summary>
+        /// builds the path to the Comic destination
+        /// </summary>
+        /// <returns>Directory path to comic destination</returns>
         public string GetComicDestination()
         {
             string[] words = IOManager.RemoveInvalidFileNameChars(Title).Split(' ');
@@ -146,6 +160,23 @@ namespace Elva.MVVM.ViewModel.Model
                 values[k] = temp;
             }
             Background.Color = Color.FromRgb(values[0], values[1], values[2]);
+        }
+
+        internal void Export(int exportAs)
+        {
+            CanExport = false;
+            _isExporting = true;
+            ExportProgress = 0;
+            if (exportAs == 1)
+            {
+                Task.Run(() =>
+                {
+                    PDFExport export = new(this, new Progress<int>(x => ExportProgress = x));
+                    export.CreatePDF();
+                    _isExporting = false;
+                    CanExport = true;
+                });
+            }
         }
     }
 }

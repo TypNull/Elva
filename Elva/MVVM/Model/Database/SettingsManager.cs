@@ -21,15 +21,25 @@ namespace Elva.MVVM.Model.Database
         private string _actualComicPath = Path.Combine(IOManager.LocalDataPath, "actualComic.data");
         private readonly Timer _saveTimer;
 
+        public int LastExportIndex
+        {
+            get => _settings.LastExportIndex; set
+            {
+                if (LastExportIndex == value)
+                    return;
+                _settings.LastExportIndex = value;
+                SaveSettings();
+            }
+        }
+
         public bool IsKillSwitchEnabled
         {
             get => _settings.IsKillSwitchEnabled; set
             {
-                if (IsKillSwitchEnabled != value)
-                {
-                    _settings.IsKillSwitchEnabled = value;
-                    SaveSettings();
-                }
+                if (IsKillSwitchEnabled == value)
+                    return;
+                _settings.IsKillSwitchEnabled = value;
+                SaveSettings();
             }
         }
 
@@ -100,7 +110,5 @@ namespace Elva.MVVM.Model.Database
         public void SetActualComic(string website, string url) => _actualComic = new(url, website);
 
         public (string url, string websiteID)? GetActualComic() => _actualComic;
-
-
     }
 }

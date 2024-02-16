@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="/Style/ModernButton.xaml" />
                 <ResourceDictionary Source="/Style/ModernSearchBar.xaml" />
                 <ResourceDictionary Source="/Style/ModernTextBox.xaml" />
+                <ResourceDictionary Source="/Style/ModernComboBox.xaml" />
                 <ResourceDictionary Source="/Style/FilterButton.xaml" />
                 <ResourceDictionary Source="/Style/TextBlockTextBox.xaml" />
                 <ResourceDictionary Source="/Style/ModernRadioButton.xaml" />
