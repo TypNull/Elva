@@ -18,7 +18,7 @@ Please note that ҽʅʋα is still in development and not yet ready for stable u
 - Download manga and comics from various websites with one click 📖
 - Search manga and comics on different websites and combine searches 🔍
 - Expand functionality using the Shard.WebsiteScraper and Website Creator application 🧩
-- VPN network connection is empfohlen for proper application functionality 🌐🔒
+- VPN network connection is recommended for proper application functionality 🌐🔒
 
 ## ToDo
 - Create ZIP, and CBZ files 📦
