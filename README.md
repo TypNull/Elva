@@ -19,9 +19,9 @@ Please note that ҽʅʋα is still in development and not yet ready for stable u
 - Search manga and comics on different websites and combine searches 🔍
 - Expand functionality using the Shard.WebsiteScraper and Website Creator application 🧩
 - VPN network connection is recommended for proper application functionality 🌐🔒
+- Create  PDF, ZIP, and CBZ files 📦
 
 ## ToDo
-- Create ZIP, and CBZ files 📦
 - Directly copy to devices such as E-Readers (e.g., Tolino, Kindle) and smartphones (e.g., Android) 📱
 - Included comic reader
 

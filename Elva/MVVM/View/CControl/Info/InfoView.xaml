@@ -150,8 +150,8 @@
                                   Width="100"
                                   SelectedIndex="{Binding SelectedIndex,Mode=TwoWay,FallbackValue=0}">
                             <ComboBoxItem>PDF</ComboBoxItem>
-                         <!--   <ComboBoxItem>ZIP</ComboBoxItem>
-                            <ComboBoxItem>CBZ</ComboBoxItem>-->
+                         <ComboBoxItem>ZIP</ComboBoxItem>
+                            <ComboBoxItem>CBZ</ComboBoxItem>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ExportChangedCommand}" CommandParameter="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ComboBox}}" />

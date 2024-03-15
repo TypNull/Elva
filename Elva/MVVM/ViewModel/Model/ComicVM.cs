@@ -167,16 +167,12 @@ namespace Elva.MVVM.ViewModel.Model
             CanExport = false;
             _isExporting = true;
             ExportProgress = 0;
-            if (exportAs == 1)
+            Task.Run(() =>
             {
-                Task.Run(() =>
-                {
-                    PDFExport export = new(this, new Progress<int>(x => ExportProgress = x));
-                    export.CreatePDF();
-                    _isExporting = false;
-                    CanExport = true;
-                });
-            }
+                Exporter.CreateExport(this, (ExportFormat)Enum.ToObject(typeof(ExportFormat), exportAs), new Progress<byte>(x => ExportProgress = x));
+                _isExporting = false;
+                CanExport = true;
+            });
         }
     }
 }
