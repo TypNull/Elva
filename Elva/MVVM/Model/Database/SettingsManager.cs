@@ -21,6 +21,8 @@ namespace Elva.MVVM.Model.Database
         private string _actualComicPath = Path.Combine(IOManager.LocalDataPath, "actualComic.data");
         private readonly Timer _saveTimer;
 
+        public IReadOnlyCollection<string> Favorites => _settings.Favorites;
+
         public int LastExportIndex
         {
             get => _settings.LastExportIndex; set
@@ -55,9 +57,13 @@ namespace Elva.MVVM.Model.Database
 
         private void _saveTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
+            SaveSettingsDirect();
+        }
+
+        public void SaveSettingsDirect()
+        {
             try
             {
-                Debug.WriteLine(IOManager.DownloadPath);
                 _settings.DownloadPath = IOManager.DownloadPath;
                 _settings.HomeWebsiteComics = _homeList;
                 if (!_settings.Equals(_lastSavedSettings))
@@ -78,7 +84,6 @@ namespace Elva.MVVM.Model.Database
             {
 
             }
-
         }
 
         public void LoadSettings()
@@ -110,5 +115,16 @@ namespace Elva.MVVM.Model.Database
         public void SetActualComic(string website, string url) => _actualComic = new(url, website);
 
         public (string url, string websiteID)? GetActualComic() => _actualComic;
+
+        public void AddToFavorite(string url)
+        {
+            _settings.Favorites.Add(url);
+            SaveSettings();
+        }
+        public void RemoveFavorite(string url)
+        {
+            _settings.Favorites.Remove(url);
+            SaveSettings();
+        }
     }
 }

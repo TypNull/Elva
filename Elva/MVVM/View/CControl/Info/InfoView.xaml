@@ -56,6 +56,7 @@
             </Grid.RowDefinitions>
             <Border Margin="0,20,0,0" x:Name="imageBorder" HorizontalAlignment="Center" Padding="5">
                 <Grid>
+                   
                     <Image MaxHeight="350"
                            MaxWidth="350"
                            RenderOptions.BitmapScalingMode="Fant"
@@ -73,6 +74,33 @@
                             </PriorityBinding>
                         </Image.Source>
                     </Image>
+                    <Border Background="#A5BDBDBD"
+                            Height="30"
+                            Width="30"
+                            Cursor="Hand"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="5" Padding="3">
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source"
+                                            Value="\Recource\Image\Comic\star.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Comic.IsFavorite,Mode=OneWay}"
+                                                     Value="True">
+                                            <Setter Property="Source"
+                                                    Value="\Recource\Image\Comic\full_star.png"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Border.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding FavoriteCommand, Mode=OneTime}" />
+                        </Border.InputBindings>
+                    </Border>
                     <Grid.OpacityMask>
                         <VisualBrush>
                             <VisualBrush.Visual>
@@ -99,12 +127,36 @@
                                 Value="40" />
                     </Style>
                 </Border.Resources>
+
                 <StackPanel>
-                    <TextBlock MaxHeight="60">
-                <Run Text="Name:&#009;"
-                        FontWeight="DemiBold" />
-                <Run Text="{Binding Comic.Title,Mode=OneWay}" />
-                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Name:&#009;"
+                                   FontWeight="DemiBold" />
+                        <TextBox MaxHeight="60"
+                                 Text="{Binding Comic.Title,Mode=OneWay}">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox"
+                                       BasedOn="{StaticResource TextBlockTextBox}">
+                                    <Setter Property="Margin"
+                                            Value="5" />
+                                    <Setter Property="FontSize"
+                                            Value="15" />
+                                    <Setter Property="TextWrapping"
+                                            Value="Wrap" />
+                                    <Setter Property="FontFamily"
+                                            Value="Arial" />
+                                    <Setter Property="Foreground"
+                                            Value="#FFCECECE" />
+                                    <Setter Property="VerticalAlignment"
+                                            Value="Top" />
+                                    <Setter Property="HorizontalAlignment"
+                                            Value="Left" />
+                                    <Setter Property="TextAlignment"
+                                            Value="Left" />
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </StackPanel>
                     <TextBlock  MaxHeight="60">
                 <Run Text="Alternativ names:  "
                         FontWeight="DemiBold" />
@@ -137,12 +189,12 @@
                         <Button Content="Continue" />
                         <Button Content="Download All"
                                 Command="{Binding StartDownloadAllCommand}" />
-                        
+
                     </WrapPanel>
                     <WrapPanel Margin="0,10,0,10"
                                IsEnabled="{Binding Comic.CanExport}">
                         <Button Content="Export as:"
-                                Command="{Binding ExportCommand}"/>
+                                Command="{Binding ExportCommand}" />
                         <ComboBox Style="{StaticResource ModernComboBox}"
                                   Grid.Column="1"
                                   TextBlock.FontSize="15"
@@ -150,11 +202,12 @@
                                   Width="100"
                                   SelectedIndex="{Binding SelectedIndex,Mode=TwoWay,FallbackValue=0}">
                             <ComboBoxItem>PDF</ComboBoxItem>
-                         <ComboBoxItem>ZIP</ComboBoxItem>
+                            <ComboBoxItem>ZIP</ComboBoxItem>
                             <ComboBoxItem>CBZ</ComboBoxItem>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding ExportChangedCommand}" CommandParameter="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ComboBox}}" />
+                                    <i:InvokeCommandAction Command="{Binding ExportChangedCommand}"
+                                                           CommandParameter="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ComboBox}}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>

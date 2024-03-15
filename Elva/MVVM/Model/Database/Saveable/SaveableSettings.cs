@@ -10,5 +10,22 @@ namespace Elva.MVVM.Model.Database.Saveable
 
         public bool IsKillSwitchEnabled { get; set; } = true;
         public int LastExportIndex { get; set; }
+        public List<string> Favorites { get; set; } = new();
+
+        public virtual bool Equals(SaveableSettings? x)
+        {
+            if (base.Equals(x))
+                if (Favorites.Equals(Favorites))
+                    return true;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+
+
     }
 }

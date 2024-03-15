@@ -31,6 +31,18 @@ namespace Elva.MVVM.ViewModel.Model
         public int _exportProgress;
 
         public bool IsVisible => _comic?.Title.Equals(_comic.Url) == false;
+        public bool IsFavorite
+        {
+            get => _favoriteManager.IsFavorite(Url); set
+            {
+                if (value)
+                    _favoriteManager.AddFavorite(Url);
+                else
+                    _favoriteManager.RemoveFavorite(Url);
+                OnPropertyChanged();
+            }
+        }
+
         public string Url => _comic.Url;
         public string Title => _comic.Title;
         public string Description => _comic.Description;
@@ -49,6 +61,7 @@ namespace Elva.MVVM.ViewModel.Model
         public ChapterVM[] ChapterVMs => _chapterVMs.Value;
 
         private ComicDatabaseManager _dbManager;
+        private FavoriteManager _favoriteManager;
         private Lazy<ChapterVM[]> _chapterVMs;
         private Lazy<InfoVM> _infoVM;
 
@@ -57,6 +70,7 @@ namespace Elva.MVVM.ViewModel.Model
             _comic = comic;
             _chapterVMs = new([]);
             _infoVM = new(App.Current.ServiceProvider.GetRequiredService<InfoVM>);
+            _favoriteManager = App.Current.ServiceProvider.GetRequiredService<FavoriteManager>();
             _dbManager = App.Current.ServiceProvider.GetRequiredService<ComicDatabaseManager>();
             if (_dbManager.TryGetSaved(comic.Url, out _scomic!))
             {

@@ -11,8 +11,6 @@ namespace Elva.MVVM.Model.Database.Saveable
             return x?.Url.Equals(y?.Url) == true;
         }
 
-
-
         public int GetHashCode([DisallowNull] SaveableOnlineData obj)
         {
             return obj.Url.GetHashCode();

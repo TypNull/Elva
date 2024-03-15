@@ -6,14 +6,16 @@
              xmlns:local="clr-namespace:Elva.MVVM.View.CControl.Home"
              xmlns:ccontrol="clr-namespace:Elva.MVVM.ViewModel.CControl.Home"
              d:DataContext="{d:DesignInstance Type=ccontrol:HomeVM}"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer x:Name="FistScollViewer" VerticalScrollBarVisibility="Auto"
                   VerticalAlignment="Top"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
-            
-        <ItemsControl ScrollViewer.CanContentScroll="True"
+            <local:HomeComicListView Tag="Favorites"
+                                     Visibility="{Binding Path=DataContext.FavoritesVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}"
+                                     DataContext="{Binding Favorites}" />
+            <ItemsControl ScrollViewer.CanContentScroll="True"
                       ItemsSource="{Binding Websites}"
                       VirtualizingStackPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>
@@ -31,7 +33,7 @@
         </ItemsControl>
         <TextBlock Grid.Row="0"
                    Text="Websites"
-                   Foreground="White"
+                   Foreground="LightGray"
                    HorizontalAlignment="Left"
                    FontSize="28"
                    FontWeight="Medium" />

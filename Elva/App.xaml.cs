@@ -30,6 +30,7 @@ namespace Elva
             services.AddSingleton<ComicDatabaseManager>();
             services.AddSingleton<SettingsManager>();
             services.AddSingleton<SearchManager>();
+            services.AddSingleton<FavoriteManager>();
 
             AddViewModels(services);
 
@@ -57,6 +58,7 @@ namespace Elva
             _serviceProvider.GetRequiredService<ComicDatabaseManager>().LoadData();
             SettingsManager settingsManager = _serviceProvider.GetRequiredService<SettingsManager>();
             settingsManager.LoadSettings();
+            _serviceProvider.GetRequiredService<FavoriteManager>().UpdateBrowserBookmarks();
             ConnectionManager.Initialize();
             ConnectionManager.ConnectionChanged += (o, s) =>
             {
@@ -68,6 +70,12 @@ namespace Elva
 
             _serviceProvider.GetRequiredService<INavigationService>().NavigateTo<HomeVM>();
             _serviceProvider.GetRequiredService<MainWindow>().Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            _serviceProvider.GetRequiredService<SettingsManager>().SaveSettingsDirect();
         }
 
     }

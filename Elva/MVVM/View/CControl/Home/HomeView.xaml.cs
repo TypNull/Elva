@@ -13,6 +13,8 @@ namespace Elva.MVVM.View.CControl.Home
             InitializeComponent();
         }
 
+
+
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseWheelEventArgs mouseWheelEventArgs = new(e.MouseDevice, e.Timestamp, e.Delta);
