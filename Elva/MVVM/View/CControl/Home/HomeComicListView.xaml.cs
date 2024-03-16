@@ -25,7 +25,7 @@ namespace Elva.MVVM.View.CControl.Home
             if (_gridWidth != (int)e.NewSize.Width)
             {
                 _gridWidth = (int)e.NewSize.Width;
-                int colums = _gridWidth / 350;
+                int colums = _gridWidth / 150;
                 _columns = colums < 1 ? 1 : colums;
             }
             ((UniformGridPanel)sender).Columns = _columns;
@@ -35,7 +35,7 @@ namespace Elva.MVVM.View.CControl.Home
             if (_gridWidth != (int)e.NewSize.Width)
             {
                 _gridWidth = (int)e.NewSize.Width;
-                int colums = _gridWidth / 325;
+                int colums = _gridWidth / 150;
                 _columns = colums < 1 ? 1 : colums;
             }
             ((UniformGrid)sender).Columns = _columns;

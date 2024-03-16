@@ -5,6 +5,7 @@ using Elva.MVVM.ViewModel.Model;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using WebsiteScraper.Downloadable.Books;
 
@@ -31,17 +32,16 @@ namespace Elva.MVVM.ViewModel.CControl.Home
             _websiteManagaer.WebsiteAdded += (s, e) => SetWebsiteCollection();
         }
 
-        private void FavoriteChanged(object? sender, string[] e)
-        {
-            SetFavoriteCollection();
-        }
+        private void FavoriteChanged(object? sender, string[] e) => SetFavoriteCollection();
 
         private void SetFavoriteCollection()
         {
-            string[] favorites = ResizeArray(_favoriteManager.Favorites.ToArray(), 6);
-            if (favorites.Length == Favorites?.Count && (Favorites?.All(x => favorites.Contains(x.Url)) ?? false))
+            Debug.WriteLine(_favoriteManager.Favorites.Count);
+            string[] favorites = ResizeArray(_favoriteManager.Favorites.AsEnumerable().Reverse().ToArray(), 9);
+            if (favorites.Length == Favorites?.Count && favorites.All(x => Favorites.Select(y => y.Url).Contains(x)))
                 return;
-            Favorites = new ObservableCollection<ComicVM>(favorites.Select(x => new ComicVM(new Comic(x, x, _websiteManagaer.UrlToWebsite(x) ?? new()))).Where(x => !string.IsNullOrEmpty(x.Website)).Reverse());
+
+            Favorites = new ObservableCollection<ComicVM>(favorites.Select(x => new ComicVM(new Comic(x, x, _websiteManagaer.GetWebsite(new Uri(x).Host) ?? new()))).Where(x => !string.IsNullOrEmpty(x.Website)));
             FavoritesVisible = Favorites.Any();
         }
 

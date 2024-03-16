@@ -15,7 +15,6 @@ namespace Elva.MVVM.Model.Manager
         {
             _settingsManager = App.Current.ServiceProvider.GetRequiredService<SettingsManager>();
             Favorites.AddRange(_settingsManager.Favorites);
-            UpdateBrowserBookmarks();
         }
 
         public bool IsFavorite(string url)

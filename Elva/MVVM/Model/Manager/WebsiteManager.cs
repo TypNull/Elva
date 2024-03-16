@@ -23,14 +23,7 @@ namespace Elva.MVVM.Model.Manager
             if (wholeName.Length == 0)
                 return null;
             return Array.Find(Websites, x => x.Name.ToLower() == wholeName.Split('.')[0].ToLower().Trim()
-            || (x.Name + x.Suffix).ToLower() == wholeName.ToLower().Trim());
-        }
-
-        public Website? UrlToWebsite(string url)
-        {
-            if (url.Length == 0)
-                return null;
-            return GetWebsite(new Uri(url).Host);
+            || wholeName.ToLower().Trim().Contains((x.Name + x.Suffix).ToLower()));
         }
     }
 }

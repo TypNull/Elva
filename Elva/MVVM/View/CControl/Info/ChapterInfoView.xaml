@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock  Text="Chapters:"
                     FontWeight="DemiBold"
@@ -29,8 +30,8 @@
         <ItemsControl  Grid.Row="1"
                        VirtualizingPanel.IsVirtualizing="True"
                        VirtualizingPanel.VirtualizationMode="Recycling"
-                       Margin="5"
-                       ItemsSource="{Binding ChapterVMs,Mode=OneWay}">
+                       Margin="5,5,5,0"
+                       ItemsSource="{Binding ChapterList,Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
@@ -168,5 +169,72 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <TextBlock Grid.Row="2"
+                   Margin="0,5,0,0"
+                   HorizontalAlignment="Center">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize"
+                            Value="15" />
+                    <Setter Property="Text"
+                            Value="Show less" />
+                    <Setter Property="FontFamily"
+                                Value="Arial" />
+                    <Setter Property="Foreground"
+                            Value="#FFCECECE" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked,ElementName=arrow}"
+                                 Value="false">
+                            <Setter Property="Text"
+                                    Value="Show More" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <ToggleButton Cursor="Hand"
+                      x:Name="arrow"
+                      Grid.Row="2"
+                      Width="50"
+                      Height="30"
+                      Command="{Binding ExpandChaptersCommand}"
+                      Margin="0,20,0,5"
+                      RenderTransformOrigin="0.5,0.5">
+            <ToggleButton.Style>
+                <Style TargetType="ToggleButton">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+            <ToggleButton.Content>
+                <Grid  Background="#02FFFFFF">
+                    <Path Grid.Row="2"
+                          Data="M0,0L0.67,0 4,2.67 7.25,0 8,0 8,0.67 4,4 0,0.75z"
+                          RenderTransformOrigin="0.5,0.5"
+                          Stretch="Fill"
+                          Fill="LightGray"
+                          Width="30"
+                          Height="15" />
+                </Grid>
+            </ToggleButton.Content>
+            <ToggleButton.RenderTransform>
+                <RotateTransform />
+            </ToggleButton.RenderTransform>
+        </ToggleButton>
     </Grid>
 </UserControl>

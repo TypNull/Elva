@@ -44,6 +44,7 @@
     <None Remove="Recource\Image\Window\search.png" />
     <None Remove="Recource\Image\Window\setting.png" />
     <None Remove="Recource\Image\Window\settings.png" />
+    <None Remove="Recource\Image\Window\website.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,6 +102,7 @@
 
   <ItemGroup>
     <Resource Include="Recource\Image\Window\back.png" />
+    <Resource Include="Recource\Image\Window\website.png" />
   </ItemGroup>
 
 </Project>

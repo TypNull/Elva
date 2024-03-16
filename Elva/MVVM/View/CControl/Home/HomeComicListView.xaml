@@ -14,7 +14,7 @@
                         <Setter.Value>
                             <DataTemplate>
                                 <Grid>
-                                    <local:HomeItemView DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Grid}}" />
+                                    <local:HomeSmallItemView DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Grid}}" />
                                 </Grid>
                             </DataTemplate>
                         </Setter.Value>
@@ -22,20 +22,18 @@
                     <Setter Property="ItemsPanel">
                         <Setter.Value>
                             <ItemsPanelTemplate>
-                                <celement:UniformGridPanel VirtualizingPanel.IsVirtualizing="True"
+                                <WrapPanel Height="160" VirtualizingPanel.IsVirtualizing="True"
                                                            VirtualizingPanel.VirtualizationMode="Recycling"
-                                                           ItemHeight="160"
-                                                           Rows="1"
-                                                           SizeChanged="UniformGridPanel_SizeChanged" />
+                                                           ItemHeight="160" ItemWidth="200" />
                             </ItemsPanelTemplate>
                         </Setter.Value>
                     </Setter>
                     <Setter Property="ItemContainerStyle">
                         <Setter.Value>
                             <Style TargetType="ContentPresenter">
-                                <Setter Property="Margin"
-                                        Value="0,10,10,0" />
-                                <Setter Property="HorizontalAlignment"
+                            <Setter Property="Margin"
+                                    Value="0,0,5,0" />
+                            <Setter Property="HorizontalAlignment"
                                         Value="Left" />
                             </Style>
                         </Setter.Value>
