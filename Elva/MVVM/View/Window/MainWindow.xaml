@@ -139,6 +139,13 @@
                          ext:MarkupExtensions.Icon="\Recource\Image\Window\book.png"
                          CommandParameter="Info" 
                          Tag="InfoVM" />
+            <RadioButton Content="Websites"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="14"
+                         ext:MarkupExtensions.Icon="\Recource\Image\Window\website.png"
+                         CommandParameter="WebsiteMenu"
+                         Tag="WebsiteMenuVM" />
             <RadioButton  Content="Settings"
               Height="50"
               Foreground="White"

@@ -60,7 +60,9 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.7" />
+    <PackageReference Include="ClickOnceApplicationDeploymentWrapper" Version="1.0.6" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="FrameworkExtract.System.Deployment" Version="4.0.30319" />
     <PackageReference Include="itext7" Version="8.0.3" />
     <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.3" />
     <PackageReference Include="LottieSharp" Version="2.3.0" />
@@ -104,5 +106,15 @@
     <Resource Include="Recource\Image\Window\back.png" />
     <Resource Include="Recource\Image\Window\website.png" />
   </ItemGroup>
+
+  
+	<Target Name="AutoSetMinimumRequiredVersion" BeforeTargets="GenerateDeploymentManifest">
+		<FormatVersion Version="$(ApplicationVersion)" Revision="$(ApplicationRevision)">
+			<Output PropertyName="MinimumRequiredVersion" TaskParameter="OutputVersion" />
+		</FormatVersion>
+		<FormatVersion Version="$(ApplicationVersion)" Revision="$(ApplicationRevision)">
+			<Output PropertyName="_DeploymentBuiltMinimumRequiredVersion" TaskParameter="OutputVersion" />
+		</FormatVersion>
+	</Target>
 
 </Project>

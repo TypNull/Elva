@@ -5,6 +5,7 @@ using Elva.MVVM.ViewModel.CControl.Home;
 using Elva.MVVM.ViewModel.CControl.Info;
 using Elva.MVVM.ViewModel.CControl.Search;
 using Elva.MVVM.ViewModel.CControl.Settings;
+using Elva.MVVM.ViewModel.CControl.WebsiteMenu;
 using Elva.MVVM.ViewModel.Window;
 using Microsoft.Extensions.DependencyInjection;
 using Requests;
@@ -38,7 +39,6 @@ namespace Elva
             services.AddSingleton<Func<Type, ViewModelObject>>(provider => viewModelType => (ViewModelObject)provider.GetRequiredService(viewModelType));
 
             _serviceProvider = services.BuildServiceProvider();
-
         }
 
         private static void AddViewModels(IServiceCollection services)
@@ -47,6 +47,7 @@ namespace Elva
             services.AddSingleton<HomeVM>();
             services.AddSingleton<SearchVM>();
             services.AddSingleton<InfoVM>();
+            services.AddSingleton<WebsiteMenuVM>();
             services.AddSingleton<SettingsVM>();
             services.AddSingleton<LicenseInfoVM>();
             services.AddSingleton<SearchBarVM>();
@@ -58,7 +59,6 @@ namespace Elva
             _serviceProvider.GetRequiredService<ComicDatabaseManager>().LoadData();
             SettingsManager settingsManager = _serviceProvider.GetRequiredService<SettingsManager>();
             settingsManager.LoadSettings();
-            _serviceProvider.GetRequiredService<FavoriteManager>().UpdateBrowserBookmarks();
             ConnectionManager.Initialize();
             ConnectionManager.ConnectionChanged += (o, s) =>
             {
@@ -75,8 +75,10 @@ namespace Elva
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
+            OwnRequest? request = _serviceProvider.GetRequiredService<SettingsVM>().UpdateRequest;
             _serviceProvider.GetRequiredService<SettingsManager>().SaveSettingsDirect();
+            if (request != null)
+                request.Task.Wait(600000);
         }
-
     }
 }
