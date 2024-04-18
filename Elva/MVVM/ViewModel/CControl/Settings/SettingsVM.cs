@@ -5,6 +5,8 @@ using Elva.MVVM.Model.Database;
 using Elva.MVVM.Model.Manager;
 using Microsoft.Extensions.DependencyInjection;
 using Requests;
+using Requests.Options;
+using RFBApplicationDeployment;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
     {
         private WebsiteManager _websiteManager;
         private SettingsManager _settingsManager;
+        private ClickOnceApplicationDeployment? _deploymentApp;
 
         [ObservableProperty]
         private string _version;
@@ -25,6 +28,12 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         private bool _isKillSwitchEnabled = true;
         [ObservableProperty]
         private bool _isUpdateingWebsitesEnabled = true;
+        [ObservableProperty]
+        private bool _isUpdateAvailable = false;
+        [ObservableProperty]
+        private bool _isUpdateing = false;
+        [ObservableProperty]
+        private string updateText = "Update Available!";
         public string DownloadFolder
         {
             get => IOManager.DownloadPath;
@@ -37,6 +46,8 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         }
         public event EventHandler? OnChangeDownloadFolder;
         public event EventHandler? OnAddWebsite;
+        public OwnRequest? UpdateRequest { get; private set; }
+
         public SettingsVM(INavigationService navigation) : base(navigation)
         {
             _websiteManager = App.Current.ServiceProvider.GetRequiredService<WebsiteManager>();
@@ -47,6 +58,21 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
             else
                 _version = versionString;
             _isKillSwitchEnabled = _settingsManager.IsKillSwitchEnabled;
+            new OwnRequest(async (token) =>
+            {
+                ClickOnceApplicationDeployment.SetupEntryApplication("https://typnull.github.io/Elva/Elva.application");
+                _deploymentApp = ClickOnceApplicationDeployment.EntryApplication;
+                if (await _deploymentApp.CheckUpdateAvailableAsync(token))
+                {
+                    _isUpdateAvailable = true;
+
+                    UpdateCheckResults res = await _deploymentApp.CheckForDetailedUpdateAsync(token);
+                    if (res.Cancelled)
+                        return false;
+                    UpdateText = "Update Available!\nNew Version: " + res.AvailableVersion;
+                }
+                return true;
+            }, new RequestOptions<VoidStruct, VoidStruct>() { Priority = RequestPriority.High });
         }
 
         [RelayCommand]
@@ -97,6 +123,29 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
                         App.Current.Dispatcher.Invoke(() => _websiteManager.AddWebsite(website));
                 }
             });
+        }
+
+        [RelayCommand]
+        private void UpdateApplication()
+        {
+            if (IsUpdateAvailable && !IsUpdateing)
+            {
+                IsUpdateing = true;
+                UpdateText = "Pending...\nPlease wait";
+                UpdateRequest = new(async (token) =>
+                {
+                    await _deploymentApp!.UpdateAsync(token);
+                    return true;
+                }, new RequestOptions<VoidStruct, VoidStruct>()
+                {
+                    RequestCancelled = (_) => { UpdateText = "Update cancelled!"; IsUpdateing = false; },
+                    RequestCompleated = (_, _) => { UpdateText = "Update completed!\nPlease restart Elva"; },
+                    RequestFailed = (_, _) => { UpdateText = "Update failed!\nPlease try again"; IsUpdateing = false; },
+                    RequestStarted = (_) => { UpdateText = "Updating...\nPlease do not cut the Connection"; },
+                    DelayBetweenAttemps = new TimeSpan(10000),
+                    Priority = RequestPriority.High
+                });
+            }
         }
 
     }

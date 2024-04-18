@@ -11,8 +11,10 @@
              xmlns:view2="clr-namespace:Elva.MVVM.View.CControl.Search"
              xmlns:vm3="clr-namespace:Elva.MVVM.ViewModel.CControl.Info"
              xmlns:view3="clr-namespace:Elva.MVVM.View.CControl.Info"
-              xmlns:vm4="clr-namespace:Elva.MVVM.ViewModel.CControl.Settings"
-             xmlns:view4="clr-namespace:Elva.MVVM.View.CControl.Settings"
+              xmlns:vm4="clr-namespace:Elva.MVVM.ViewModel.CControl.WebsiteMenu"
+             xmlns:view4="clr-namespace:Elva.MVVM.View.CControl.WebsiteMenu"
+             xmlns:vm5="clr-namespace:Elva.MVVM.ViewModel.CControl.Settings"
+             xmlns:view5="clr-namespace:Elva.MVVM.View.CControl.Settings"
              xmlns:sys="clr-namespace:System;assembly=netstandard">
     <Application.Resources>
         <ResourceDictionary>
@@ -43,11 +45,14 @@
             <DataTemplate DataType="{x:Type  vm3:InfoVM}">
                 <view3:InfoView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type  vm4:SettingsVM}">
-                <view4:SettingsView />
+            <DataTemplate DataType="{x:Type  vm4:WebsiteMenuVM}">
+                <view4:WebsiteMenuView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type  vm4:LicenseInfoVM}">
-                <view4:LicenseInfoView />
+            <DataTemplate DataType="{x:Type  vm5:SettingsVM}">
+                <view5:SettingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm5:LicenseInfoVM}">
+                <view5:LicenseInfoView />
             </DataTemplate>
 
 

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Elva.MVVM.View.CControl.Settings"
              mc:Ignorable="d"
-             d:DesignHeight="450"
+             d:DesignHeight="500"
              d:DesignWidth="800">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
@@ -135,13 +135,64 @@
                             </LinearGradientBrush>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock Margin="10"
-                               Grid.Row="1"
-                               Foreground="White"
-                               FontSize="15">
-                        <Run Text="Version:" />
-                        <Run Text="{Binding Version}" />
-                    </TextBlock>
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Margin="10,5,10,5"
+                                   Foreground="White"
+                                   FontSize="15">
+     <Run Text="Version:" />
+     <Run Text="{Binding Version}" />
+                        </TextBlock>
+                        <TextBlock Margin="15,0,10,5"
+                                   Foreground="Gray"
+                                   FontSize="12"
+                                   Text="No Updates Available">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility"
+                                            Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsUpdateAvailable}" Value="true">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Visibility="{Binding IsUpdateAvailable,Converter={StaticResource BoolToVis}}" Margin="10,5,10,5"
+                                   Foreground="PaleVioletRed"
+                                   FontSize="14"
+                                   Text="{Binding UpdateText}" />
+                        <Button Content="Update"
+                                Width="90"
+                                Height="30"
+                                Margin="10,5,10,5"
+                                HorizontalAlignment="Left"
+                                Command="{Binding UpdateApplicationCommand}">
+                            <Button.Style>
+                                <Style TargetType="Button"
+                                       BasedOn="{StaticResource ModernChapterButton}">
+                                    <Setter Property="Visibility"
+                                            Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsUpdateing}"
+                                                     Value="true">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsUpdateAvailable}"
+                                                     Value="false">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                   
+                 
+
                     <StackPanel  Grid.RowSpan="1"
                                  Grid.Column="1">
                         <TextBlock Foreground="White" 
