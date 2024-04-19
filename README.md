@@ -13,6 +13,8 @@ When using ҽʅʋα to download manga and comics, please keep in mind the potent
 
 Please note that ҽʅʋα is still in development and not yet ready for stable use. However, if you are interested in exploring it, you can now download the alpha release. 🔧
 
+[![Release](https://github.com/TypNull/Elva/actions/workflows/release.yml/badge.svg)](https://github.com/TypNull/Elva/actions/workflows/release.yml)
+
 ## Features
 
 - Download manga and comics from various websites with one click 📖
