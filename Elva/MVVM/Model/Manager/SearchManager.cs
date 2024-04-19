@@ -47,9 +47,9 @@ namespace Elva.MVVM.Model.Manager
         public SearchManager()
         {
             Website[] websites = App.Current.ServiceProvider.GetRequiredService<WebsiteManager>().Websites;
-            ActualSearch = new(websites.Length > 0 ? new[] { websites[0] } : Array.Empty<Website>());
+            ActualSearch = new(websites.Length > 0 ? [websites[0]] : []);
             ActualSearch.PropertyChanged += ActualSearch_PropertyChanged;
-            _searchObjects = new();
+            _searchObjects = [];
         }
 
         private void ActualSearch_PropertyChanged(object? sender, PropertyChangedEventArgs e) => OnSearchChanged?.Invoke(sender, e);

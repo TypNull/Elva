@@ -58,10 +58,11 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
             else
                 _version = versionString;
             _isKillSwitchEnabled = _settingsManager.IsKillSwitchEnabled;
-            new OwnRequest(async (token) =>
+            _ = new OwnRequest(async (token) =>
             {
                 ClickOnceApplicationDeployment.SetupEntryApplication("https://typnull.github.io/Elva/Elva.application");
                 _deploymentApp = ClickOnceApplicationDeployment.EntryApplication;
+
                 if (await _deploymentApp.CheckUpdateAvailableAsync(token))
                 {
                     _isUpdateAvailable = true;
@@ -107,7 +108,7 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
 
 
         [RelayCommand]
-        private void OpenWebsite(string url) => Process.Start("explorer", url);
+        private static void OpenWebsite(string url) => Process.Start("explorer", url);
 
         [RelayCommand]
         private void UpdateWebsites()
@@ -134,8 +135,8 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
                 UpdateText = "Pending...\nPlease wait";
                 UpdateRequest = new(async (token) =>
                 {
-                    await _deploymentApp!.UpdateAsync(token);
-                    return true;
+                    bool update = await _deploymentApp!.UpdateAsync(token);
+                    return update;
                 }, new RequestOptions<VoidStruct, VoidStruct>()
                 {
                     RequestCancelled = (_) => { UpdateText = "Update cancelled!"; IsUpdateing = false; },
