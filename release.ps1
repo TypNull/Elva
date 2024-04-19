@@ -3,8 +3,8 @@ param (
     [switch]$OnlyBuild=$false
 )
 
-$appName = "Elva" # 👈 Replace with your application project name.
-$projDir = "Elva" # 👈 Replace with your project directory (where .csproj resides).
+$appName = "Elva"
+$projDir = "Elva"
 
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
@@ -23,7 +23,9 @@ Write-Output "Tag: $tag"
 
 # Parse tag into a three-number version.
 $version = $tag.Split('-')[0].TrimStart('v')
+if ($version.Split('.').Length -eq 3) { 
 $version = "$version.0"
+}
 Write-Output "Version: $version"
 
 # Clean output directory.
