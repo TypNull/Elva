@@ -9,7 +9,9 @@
       "Elva/1.0.0": {
         "dependencies": {
           "AngleSharp": "1.0.7",
+          "ClickOnceApplicationDeploymentWrapper": "1.0.6",
           "CommunityToolkit.Mvvm": "8.2.2",
+          "FrameworkExtract.System.Deployment": "4.0.30319",
           "LottieSharp": "2.3.0",
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.12",
           "Microsoft.Extensions.DependencyInjection": "8.0.0",
@@ -41,11 +43,30 @@
           }
         }
       },
+      "ClickOnceApplicationDeploymentWrapper/1.0.6": {
+        "dependencies": {
+          "System.Security.Principal.Windows": "4.0.0"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/ClickOnceApplicationDeployment.dll": {
+            "assemblyVersion": "1.0.0.6",
+            "fileVersion": "1.0.0.6"
+          }
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.2": {
         "runtime": {
           "lib/net6.0/CommunityToolkit.Mvvm.dll": {
             "assemblyVersion": "8.2.0.0",
             "fileVersion": "8.2.2.1"
+          }
+        }
+      },
+      "FrameworkExtract.System.Deployment/4.0.30319": {
+        "runtime": {
+          "lib/netstandard2.0/System.Deployment.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.7.2558.0"
           }
         }
       },
@@ -932,6 +953,17 @@
           "System.Runtime": "4.3.1"
         }
       },
+      "System.Security.Claims/4.0.1": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.1",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Security.Principal": "4.0.1"
+        }
+      },
       "System.Security.Cryptography.Algorithms/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
@@ -992,6 +1024,29 @@
           "System.Runtime": "4.3.1",
           "System.Threading": "4.3.0",
           "System.Threading.Tasks": "4.3.0"
+        }
+      },
+      "System.Security.Principal/4.0.1": {
+        "dependencies": {
+          "System.Runtime": "4.3.1"
+        }
+      },
+      "System.Security.Principal.Windows/4.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.0.0",
+          "Microsoft.Win32.Primitives": "4.3.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.1",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.Handles": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Security.Claims": "4.0.1",
+          "System.Security.Principal": "4.0.1",
+          "System.Text.Encoding": "4.3.0",
+          "System.Threading": "4.3.0"
         }
       },
       "System.Text.Encoding/4.3.0": {
@@ -1115,12 +1170,26 @@
       "path": "bouncycastle.cryptography/2.2.1",
       "hashPath": "bouncycastle.cryptography.2.2.1.nupkg.sha512"
     },
+    "ClickOnceApplicationDeploymentWrapper/1.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KwsT2vsQLpYq0OQX5XxZDsEWxSn5fO3zj1RrhfQjh46ufsTYss27RnbJXZNrvSeafWuZmWu0kHJslby00yxzIA==",
+      "path": "clickonceapplicationdeploymentwrapper/1.0.6",
+      "hashPath": "clickonceapplicationdeploymentwrapper.1.0.6.nupkg.sha512"
+    },
     "CommunityToolkit.Mvvm/8.2.2": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-r0g0k9tGYdrnz8R7T3x5UiokDffeevzK/2P/9SBL6fqLgN8B157MIi/bVUWI1KAz6ZorZrK9AdABCWUeXZZsvA==",
       "path": "communitytoolkit.mvvm/8.2.2",
       "hashPath": "communitytoolkit.mvvm.8.2.2.nupkg.sha512"
+    },
+    "FrameworkExtract.System.Deployment/4.0.30319": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XORWUNRWjTSpsdHYMEtLc9uU1T4FRy/aaeojp3G1uFZRzZQ8RLjPQ9if8+u0KK2BJ2mAdNLnABabTMA7iDUKVQ==",
+      "path": "frameworkextract.system.deployment/4.0.30319",
+      "hashPath": "frameworkextract.system.deployment.4.0.30319.nupkg.sha512"
     },
     "itext/8.0.3": {
       "type": "package",
@@ -1724,6 +1793,13 @@
       "path": "system.runtime.serialization.primitives/4.3.0",
       "hashPath": "system.runtime.serialization.primitives.4.3.0.nupkg.sha512"
     },
+    "System.Security.Claims/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4Jlp0OgJLS/Voj1kyFP6MJlIYp3crgfH8kNQk2p7+4JYfc1aAmh9PZyAMMbDhuoolGNtux9HqSOazsioRiDvCw==",
+      "path": "system.security.claims/4.0.1",
+      "hashPath": "system.security.claims.4.0.1.nupkg.sha512"
+    },
     "System.Security.Cryptography.Algorithms/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1751,6 +1827,20 @@
       "sha512": "sha512-7bDIyVFNL/xKeFHjhobUAQqSpJq9YTOpbEs6mR233Et01STBMXNAc/V+BM6dwYGc95gVh/Zf+iVXWzj3mE8DWg==",
       "path": "system.security.cryptography.primitives/4.3.0",
       "hashPath": "system.security.cryptography.primitives.4.3.0.nupkg.sha512"
+    },
+    "System.Security.Principal/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-On+SKhXY5rzxh/S8wlH1Rm0ogBlu7zyHNxeNBiXauNrhHRXAe9EuX8Yl5IOzLPGU5Z4kLWHMvORDOCG8iu9hww==",
+      "path": "system.security.principal/4.0.1",
+      "hashPath": "system.security.principal.4.0.1.nupkg.sha512"
+    },
+    "System.Security.Principal.Windows/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iFx15AF3RMEPZn3COh8+Bb2Thv2zsmLd93RchS1b8Mj5SNYeGqbYNCSn5AES1+gq56p4ujGZPrl0xN7ngkXOHg==",
+      "path": "system.security.principal.windows/4.0.0",
+      "hashPath": "system.security.principal.windows.4.0.0.nupkg.sha512"
     },
     "System.Text.Encoding/4.3.0": {
       "type": "package",

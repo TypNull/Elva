@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Elva.exe" version="0.1.2.0" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Elva.exe" version="0.1.3.1" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Recource\Image\Window\logo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -72,6 +72,15 @@
       <dsig:DigestValue>ghU8DmiDSg9A4gA4QlQpo+P5z02rvJGRtHbP5WGKFB0=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="ClickOnceApplicationDeployment.dll" size="53248">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>xoBnMXm9/nTvLm6sm5Ai1FYhNcUdgQ0YUcmA+L7USDI=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="CommunityToolkit.Mvvm.dll" size="117392">
     <hash>
       <dsig:Transforms>
@@ -90,22 +99,22 @@
       <dsig:DigestValue>fqpBE+jvtodXH9AS/AkPJDjlIJnPrri3TIH9kkC6cr8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Elva.deps.json" size="77740">
+  <file name="Elva.deps.json" size="81529">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>xZZJllguEXw2wspZKRIFFbSvuA5RFztPZuQ2Hf1g8r4=</dsig:DigestValue>
+      <dsig:DigestValue>1DAnnQPEdfO3GYTmSYZBnSHQ3AuvzBpMH765E/Yvi+g=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Elva.dll" size="539136">
+  <file name="Elva.dll" size="558080">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>cv/ev8PuWZLUH55wxYMNXgq2Satynktx/Fuvm6nr8tE=</dsig:DigestValue>
+      <dsig:DigestValue>p4XX6T6O63R2ZsLPn3Un78yuY4cX8lQl3IsV/pEdGgI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.exe" size="157184">
@@ -114,7 +123,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>FdmPVi9/6/E32iKmN1AYkOngUmZFaYlprSL4fED5zwA=</dsig:DigestValue>
+      <dsig:DigestValue>SqXt0FqLTMjXwoQxVQ38HXcv5cyNP2P1iKVEZo7SBzE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.runtimeconfig.json" size="527">
@@ -756,6 +765,15 @@
       <dsig:DigestValue>ne0tW3iqPdxjKMRWb2YYcjdTiRdHRhs3RGAyddp3YXI=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="System.Deployment.dll" size="554672">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>cEJQFU3MM3fzgX7Q0eI4QnXX9Bgiw8tYYvzM7sHdtr8=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="WebsiteScraper.dll" size="63488">
     <hash>
       <dsig:Transforms>
@@ -774,4 +792,5 @@
       <dsig:DigestValue>rIhLdl+GnxRNk/S0GhXshyQ0Vt49Bfs9X/JjwlqN3t8=</dsig:DigestValue>
     </hash>
   </file>
+  <fileAssociation extension=".comic" description="Elva comic format" progid="elva.comic" defaultIcon="Recource\Image\Window\logo.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />
 </asmv1:assembly>
