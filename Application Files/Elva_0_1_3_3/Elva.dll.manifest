@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Elva.exe" version="0.1.3.2" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Elva.exe" version="0.1.3.3" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Recource\Image\Window\logo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -114,7 +114,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>qO1KF1hRU3BmXQ0q+SqPChdCuf6QwYBIm/hVo2LF558=</dsig:DigestValue>
+      <dsig:DigestValue>bwDFDp/Ru8XQEGtCGIaFCLVRUkMPRdJMitOzYs/s3rg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.exe" size="157184">
@@ -123,7 +123,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>kxbj2fB7ZL1WtGR4lyIuWzz7+NTXAU/7l2xMWr0rH5c=</dsig:DigestValue>
+      <dsig:DigestValue>G2r8+uG+TclBhovjayFc3c/43OW+ppzP7qIRjA2fnAM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.runtimeconfig.json" size="527">
