@@ -12,14 +12,16 @@
     <PackageTags>manga; downloader; comic; wpf; c#</PackageTags>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <StartupObject>Elva.App</StartupObject>
+    <IncludeSymbols>False</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="C:\Users\Maik\.nuget\packages\lottiesharp\2.3.0\contentFiles\any\net6.0-windows7.0\lottie_sharp.ico" />
     <Content Remove="C:\Users\Sandmann\.nuget\packages\lottiesharp\2.3.0\contentFiles\any\net6.0-windows7.0\lottie_sharp.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\Sandmann\.nuget\packages\lottiesharp\2.3.0\contentFiles\any\net6.0-windows7.0\lottie_sharp.ico" />
     <None Remove="Recource\Animation\loading-1.json" />
     <None Remove="Recource\Animation\loading.json" />
     <None Remove="Recource\Animation\menu.json" />
@@ -93,18 +95,12 @@
     <Resource Include="Recource\Image\Search\reload.png" />
     <Resource Include="Recource\Image\Window\book.png" />
     <Resource Include="Recource\Image\Window\home.png" />
-    <Resource Include="Recource\Image\Window\logo.ico" />
     <Resource Include="Recource\Image\Window\search.png" />
     <Resource Include="Recource\Image\Window\settings.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Recource\Image\Window\back.png" />
-    <Resource Include="Recource\Image\Window\website.png" />
   </ItemGroup>
 
   
@@ -116,5 +112,17 @@
 			<Output PropertyName="_DeploymentBuiltMinimumRequiredVersion" TaskParameter="OutputVersion" />
 		</FormatVersion>
 	</Target>
+
+  
+	<ItemGroup>
+	  <_DeploymentManifestIconFile Remove="Recource\Image\Window\logo.ico" />
+	</ItemGroup>
+
+  
+	<ItemGroup>
+	  <Content Include="Recource\Image\Window\logo.ico">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
 
 </Project>

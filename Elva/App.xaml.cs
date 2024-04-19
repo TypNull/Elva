@@ -77,8 +77,7 @@ namespace Elva
             base.OnExit(e);
             OwnRequest? request = _serviceProvider.GetRequiredService<SettingsVM>().UpdateRequest;
             _serviceProvider.GetRequiredService<SettingsManager>().SaveSettingsDirect();
-            if (request != null)
-                request.Task.Wait(600000);
+            request?.Task.Wait(600000);
         }
     }
 }
