@@ -97,6 +97,7 @@
     <Resource Include="Recource\Image\Window\home.png" />
     <Resource Include="Recource\Image\Window\search.png" />
     <Resource Include="Recource\Image\Window\settings.png" />
+    <Resource Include="Recource\Image\Window\website.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -68,7 +68,7 @@ namespace Elva.MVVM.ViewModel.CControl.Info
             _settingsManager.LastExportIndex = SelectedIndex;
 
         [RelayCommand]
-        private void Favorite() => _comic!.IsFavorite = !_comic.IsFavorite;
+        private void Favorite() => Comic!.IsFavorite = !Comic.IsFavorite;
 
     }
 }
