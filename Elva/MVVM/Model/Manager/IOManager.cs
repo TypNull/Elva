@@ -1,5 +1,5 @@
 ﻿using DownloadAssistant.Base;
-using DownloadAssistant.Request;
+using DownloadAssistant.Requests;
 using Requests;
 using System;
 using System.Collections.Generic;
