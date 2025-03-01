@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 
@@ -15,6 +17,7 @@ namespace Elva.MVVM.Model.Manager
 
     internal static class ConnectionManager
     {
+        private static readonly string[] VpnProviders = ["Surfshark", "CyberGhost", "Mullvad", "Private Internet Access", "Windscribe", "TunnelBear", "Hotspot Shield", "HideMyAss", "ZenMate", "IPVanish", "Buffered", "TorGuard", "GhostPath", "Trust.Zone"];
 
         public static EventHandler? _connectionChanged;
         public static event EventHandler ConnectionChanged
@@ -47,7 +50,7 @@ namespace Elva.MVVM.Model.Manager
 
         public static void EnabledConnection()
         {
-            Debug.WriteLine("Internet conection enabled");
+            Debug.WriteLine("Internet connection enabled");
             InternetConnection = TypeOfConnection.NotAvailable;
             if (!_update?.IsAlive ?? true)
                 UpdateNetworkConnection();
@@ -55,7 +58,7 @@ namespace Elva.MVVM.Model.Manager
 
         public static void DisableConnection()
         {
-            Debug.WriteLine("Internet conection disabled");
+            Debug.WriteLine("Internet connection disabled");
             _update?.Join();
             InternetConnection = TypeOfConnection.Disabled;
             _connectionChanged?.Invoke(InternetConnection, EventArgs.Empty);
@@ -70,7 +73,7 @@ namespace Elva.MVVM.Model.Manager
             {
                 InternetConnection = TypeOfConnection.NotAvailable;
                 _connectionChanged?.Invoke(InternetConnection, EventArgs.Empty);
-                Debug.WriteLine("Internet conection not available");
+                Debug.WriteLine("Internet connection not available");
                 return;
             }
 
@@ -86,25 +89,31 @@ namespace Elva.MVVM.Model.Manager
             {
                 NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
                 bool connectionIsSave = false;
+
                 foreach (NetworkInterface iface in interfaces)
-                    if (iface.OperationalStatus == OperationalStatus.Up && iface.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                                      (iface.NetworkInterfaceType == NetworkInterfaceType.Ppp ||
-                                      iface.NetworkInterfaceType.ToString() == "53" && (iface.Description.Contains("VPN") || iface.Name.Contains("VPN"))))
+                {
+                    if (iface.OperationalStatus == OperationalStatus.Up && iface.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                     {
-                        InternetConnection = TypeOfConnection.Save;
-                        connectionIsSave = true;
-                        Debug.WriteLine("Internet conection with VPN detected");
-                        break;
+                        if (iface.NetworkInterfaceType == NetworkInterfaceType.Ppp ||
+                            iface.NetworkInterfaceType.ToString() == "53" && (
+                            iface.Description.Contains("VPN") || iface.Name.Contains("VPN") ||
+                            VpnProviders.Any(provider => iface.Description.Contains(provider))))
+                        {
+                            InternetConnection = TypeOfConnection.Save;
+                            connectionIsSave = true;
+                            Debug.WriteLine("Internet connection with VPN detected");
+                            break;
+                        }
                     }
+                }
 
                 if (!connectionIsSave)
                 {
                     InternetConnection = TypeOfConnection.Available;
-                    Debug.WriteLine("Internet conection available");
+                    Debug.WriteLine("Internet connection available");
                 }
                 _connectionChanged?.Invoke(InternetConnection, EventArgs.Empty);
             };
         }
-
     }
 }

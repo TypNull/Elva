@@ -3,26 +3,29 @@ using CommunityToolkit.Mvvm.Input;
 using Elva.Core;
 using Elva.MVVM.Model;
 using Elva.MVVM.Model.Manager;
+using Elva.MVVM.ViewModel.CControl.Settings;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Media;
 using WebsiteScraper.WebsiteUtilities;
 
 namespace Elva.MVVM.ViewModel.CControl.Search
 {
     internal partial class SearchBarVM : ViewModelObject
     {
-        private const string _false = "#FF0000";
-        private const string _normal = "#CFCFCF";
-
         [ObservableProperty]
         private string _websiteText = string.Empty;
+
         [ObservableProperty]
         private string _tagText = string.Empty;
+
         [ObservableProperty]
         private string _input = string.Empty;
+
         [ObservableProperty]
-        private string _color = _normal;
+        private bool _hasError = false;
 
         private string[] _texts = new string[4];
         private string _searched = string.Empty;
@@ -31,15 +34,21 @@ namespace Elva.MVVM.ViewModel.CControl.Search
         private WebsiteManager _websiteManager;
         private CommandInterpreter _comInterpreter;
 
+        // Property for the view to bind to
+        public Brush Foreground => HasError ? Application.Current.Resources["SearchBarError"] as SolidColorBrush : Application.Current.Resources["SearchBarNormal"] as SolidColorBrush;
+
         public SearchBarVM(INavigationService navigation) : base(navigation)
         {
             _comInterpreter = new();
             _searchManager = GetService<SearchManager>();
             _websiteManager = GetService<WebsiteManager>();
-            _searchManager.OnSearchChanged += SearchChanged; ;
+            _searchManager.OnSearchChanged += SearchChanged;
             PropertyChanged += OnPropertyChanged;
             WebsiteText = string.Join(" + ", _searchManager.ActualSearch.Websites.Select(x => x.Name + x.Suffix).ToArray());
             WebsiteText = string.IsNullOrWhiteSpace(WebsiteText) ? ">No website found<" : WebsiteText;
+
+            // Subscribe to theme changes
+            GetService<SettingsVM>().OnThemeChanged += (sender, theme) => OnPropertyChanged(nameof(Foreground));
         }
 
         private void SearchChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -52,14 +61,14 @@ namespace Elva.MVVM.ViewModel.CControl.Search
         private void OnPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Input))
-                Color = _normal;
+                HasError = false;
+
+            if (e.PropertyName == nameof(HasError))
+                OnPropertyChanged(nameof(Foreground));
         }
-
-
 
         public void SetTagText(System.ComponentModel.PropertyChangedEventArgs e)
         {
-
             if (e.PropertyName?.StartsWith("RadioTags") == true)
             {
                 IEnumerable<KeyValuePair<string, RadioTag>> radioTags = _searchManager.ActualSearch.RadioTags.Where(x => x.Value.EnabledKey != x.Value.DefaultKey);
@@ -109,7 +118,7 @@ namespace Elva.MVVM.ViewModel.CControl.Search
         {
             if (Input.Trim().Length < 3)
             {
-                Color = _false;
+                HasError = true;
                 return;
             }
             string[][] parts = SplitInput();
@@ -143,8 +152,7 @@ namespace Elva.MVVM.ViewModel.CControl.Search
                 Navigation.NavigateTo<SearchVM>();
             }
             Input = back.Trim();
-            if (back != string.Empty)
-                Color = _false;
+            HasError = !string.IsNullOrEmpty(back);
         }
 
         private string[][] SplitInput()

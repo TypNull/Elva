@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DownloadAssistant.Request;
+using Elva.MVVM.Model;
 using Requests;
 using System;
 using System.IO;
@@ -51,24 +52,45 @@ namespace Elva.MVVM.ViewModel.Model
             if (Directory.Exists(downloadD) && Directory.GetFiles(downloadD, $"{Order}_0.*").Any())
                 DownloadProgress = 100;
             else
-                _downloadProgress = -1;
+                DownloadProgress = -1;
         }
 
         [RelayCommand]
         public async Task StartDownloadAsync()
         {
+            bool silent = false;
             if (DownloadProgress != -1f)
                 return;
+
+            if (!silent)
+            {
+                ToastNotification.Show($"Starting download for {Title}", ToastType.Info);
+            }
+
             DownloadProgress = 0;
             ProgressableContainer<GetRequest> _downloadRequests = await _chapter.DownloadAsync(Path.Combine(_holdingComic.GetComicDestination(), "Images\\"));
             _downloadRequests.Progress.ProgressChanged += (o, f) => DownloadProgress = (int)(100f * f);
-            _downloadRequests.StateChanged += Container_StateChanged;
+            _downloadRequests.StateChanged += (sender, e) => Container_StateChanged(sender, e, silent);
         }
 
-        private void Container_StateChanged(object? sender, Requests.Options.RequestState e)
+        // Update Container_StateChanged to accept silent parameter
+        private void Container_StateChanged(object? sender, Requests.Options.RequestState e, bool silent = false)
         {
             if (e == Requests.Options.RequestState.Compleated)
+            {
                 DownloadProgress = 100;
+                if (!silent)
+                {
+                    ToastNotification.Show($"Download completed for {Title}", ToastType.Success);
+                }
+            }
+            else if (e == Requests.Options.RequestState.Failed)
+            {
+                DownloadProgress = -1;
+                // Always show errors, even in silent mode
+                ToastNotification.Show($"Download failed for {Title}", ToastType.Error);
+            }
         }
+
     }
 }

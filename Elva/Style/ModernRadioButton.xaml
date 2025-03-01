@@ -12,20 +12,20 @@
                                   Width="25">
                                 <Border Name="RadioOuter"
                                         Background="Transparent"
-                                        BorderBrush="#FF65DDFE"
+                                        BorderBrush="{DynamicResource ButtonPrimary}"
                                         BorderThickness="2"
                                         CornerRadius="8" />
                                 <Border CornerRadius="4"
                                         Margin="6"
                                         Name="RadioMark"
-                                        Background="#FF65DDFE"
+                                        Background="{DynamicResource ButtonSecondary}"
                                         Visibility="Hidden" />
                             </Grid>
                         </BulletDecorator.Bullet>
                         <TextBlock Margin="3,1,0,0"
-                                   Foreground="White"
+                                   Foreground="{DynamicResource TextPrimary}"
                                    FontSize="16">
-                        <ContentPresenter />
+                            <ContentPresenter />
                         </TextBlock>
                     </BulletDecorator>
                     <ControlTemplate.Triggers>
@@ -36,7 +36,7 @@
                                     Value="Visible" />
                             <Setter TargetName="RadioOuter"
                                     Property="BorderBrush"
-                                    Value="#FF52586C" />
+                                    Value="{DynamicResource ButtonHover}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

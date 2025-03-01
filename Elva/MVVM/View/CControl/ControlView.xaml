@@ -1,16 +1,17 @@
 ﻿<UserControl x:Class="Elva.MVVM.View.CControl.ControlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <Border HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Margin="10,10,10,10"
             Height="40"
             Width="130"
-            Background="#FF363845"
+            Background="{DynamicResource BackgroundCard}"
             CornerRadius="4">
         <StackPanel  Orientation="Horizontal"
                      VerticalAlignment="Center"
@@ -37,9 +38,9 @@
                         <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
                                 Value="True" />
                         <Setter Property="Background"
-                                Value="#FFB1B1B1" />
+                                Value="{DynamicResource BackgroundSecondary}" />
                         <Setter Property="Foreground"
-                                Value="Black" />
+                                Value="{DynamicResource TextPrimary}" />
                         <Setter Property="FontSize"
                                 Value="12" />
                         <Setter Property="Margin"
@@ -55,7 +56,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="#FF969696" />
+                                    Value="{DynamicResource BackgroundTertiary}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -70,14 +71,12 @@
                 <Button.Style>
                     <Style TargetType="Button"
                            BasedOn="{StaticResource ButtonStyle}">
-                        <Style.Setters>
-                            <Setter Property="Button.Content"
-                                    Value="🗖" />
-                        </Style.Setters>
+                        <Setter Property="Content"
+                                Value="🗖" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding WindowState,RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                                          Value="Maximized">
-                                <Setter Property="Button.Content"
+                                <Setter Property="Content"
                                         Value="🗗" />
                             </DataTrigger>
                         </Style.Triggers>

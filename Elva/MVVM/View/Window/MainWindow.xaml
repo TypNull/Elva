@@ -3,13 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:ext="clr-namespace:Elva.Core"
-        xmlns:local="clr-namespace:Elva" xmlns:con="clr-namespace:Elva.Core.Converter"
+        xmlns:ext="clr-namespace:Elva.Core"
+        xmlns:local="clr-namespace:Elva"
+        xmlns:con="clr-namespace:Elva.Core.Converter"
         xmlns:lottie="clr-namespace:Elva.MVVM.View.CElement"
         xmlns:window="clr-namespace:Elva.MVVM.ViewModel.Window"
         d:DataContext="{d:DesignInstance Type=window:MainWindowVM}"
         mc:Ignorable="d"
-         Style="{StaticResource ModernWindow}"
+        Style="{StaticResource ModernWindow}"
         Icon="\Recource\Image\Window\logo.ico"
         Title="Elva">
     <Window.TaskbarItemInfo>
@@ -26,7 +27,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="Stack">
+        <StackPanel x:Name="Stack"
+                    Background="{DynamicResource BackgroundPrimary}">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type RadioButton}"
                        BasedOn="{StaticResource WindowMenuButton}">
@@ -52,15 +54,17 @@
                             Value="60" />
                 </Style>
             </StackPanel.Style>
-            <ToggleButton Margin="14,0,0,10" HorizontalAlignment="Left">
+            <ToggleButton Margin="14,0,0,10"
+                          HorizontalAlignment="Left">
                 <ToggleButton.Style>
                     <Style TargetType="ToggleButton">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ToggleButton">
-                                    <Border CornerRadius="5" Padding="5"
-                                            BorderBrush="White" BorderThickness="1">
-
+                                    <Border CornerRadius="5"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource TextPrimary}"
+                                            BorderThickness="1">
                                         <ContentPresenter />
                                     </Border>
                                 </ControlTemplate>
@@ -103,7 +107,6 @@
                                     </DoubleAnimation>
                                     <DoubleAnimation Storyboard.TargetName="menuButton"
                                                      Storyboard.TargetProperty="(lottie:LottieAnimationView.AnimationTime)"
-                                                    
                                                      To="0"
                                                      Duration="0:0:.4">
                                     </DoubleAnimation>
@@ -111,51 +114,59 @@
                             </BeginStoryboard>
                         </EventTrigger.Actions>
                     </EventTrigger>
-                    </ToggleButton.Triggers>
+                </ToggleButton.Triggers>
                 <lottie:LottieAnimationView x:Name="menuButton"
                                             Height="20"
                                             Width="20"
-                                            ResourcePath="pack://application:,,,/Recource/Animation/menu.json"/>
+                                            ResourcePath="pack://application:,,,/Recource/Animation/menu.json" />
             </ToggleButton>
             <RadioButton Content="Home"
                          Height="50"
-                         Foreground="White"
+                         Foreground="{DynamicResource TextPrimary}"
                          FontSize="14"
-                         ext:MarkupExtensions.Icon="\Recource\Image\Window\home.png"
+                         ext:MarkupExtensions.Icon="home.svg"
                          Tag="HomeVM"
                          CommandParameter="Home">
             </RadioButton>
             <RadioButton Content="Search"
                          Height="50"
-                         Foreground="White"
+                         Foreground="{DynamicResource TextPrimary}"
                          FontSize="14"
-                         ext:MarkupExtensions.Icon="\Recource\Image\Window\search.png"
+                         ext:MarkupExtensions.Icon="search.svg"
                          CommandParameter="Search"
                          Tag="SearchVM" />
             <RadioButton Content="Info"
                          Height="50"
-                         Foreground="White"
+                         Foreground="{DynamicResource TextPrimary}"
                          FontSize="14"
-                         ext:MarkupExtensions.Icon="\Recource\Image\Window\book.png"
-                         CommandParameter="Info" 
+                         ext:MarkupExtensions.Icon="book.svg"
+                         CommandParameter="Info"
                          Tag="InfoVM" />
             <RadioButton Content="Websites"
                          Height="50"
-                         Foreground="White"
+                         Foreground="{DynamicResource TextPrimary}"
                          FontSize="14"
-                         ext:MarkupExtensions.Icon="\Recource\Image\Window\website.png"
+                         ext:MarkupExtensions.Icon="website.svg"
                          CommandParameter="WebsiteMenu"
                          Tag="WebsiteMenuVM" />
-            <RadioButton  Content="Settings"
-              Height="50"
-              Foreground="White"
-              FontSize="14"
-              ext:MarkupExtensions.Icon="\Recource\Image\Window\settings.png"
-              CommandParameter="Settings" 
-              Tag="SettingsVM" />
+            <RadioButton Content="Settings"
+                         Height="50"
+                         Foreground="{DynamicResource TextPrimary}"
+                         FontSize="14"
+                         ext:MarkupExtensions.Icon="settings.svg"
+                         CommandParameter="Settings"
+                         Tag="SettingsVM" />
         </StackPanel>
         <ContentControl Grid.Column="1"
                         Margin="10,0,10,10"
                         Content="{Binding Navigation.CurrentView}" />
+
+        <StackPanel x:Name="ToastContainer"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Margin="0,60,20,0"
+                    Panel.ZIndex="1000"
+                    Width="350" />
     </Grid>
 </Window>

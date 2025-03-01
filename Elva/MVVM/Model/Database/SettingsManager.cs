@@ -23,6 +23,18 @@ namespace Elva.MVVM.Model.Database
 
         public IReadOnlyCollection<string> Favorites => _settings.Favorites;
 
+        public string Theme
+        {
+            get => _settings.Theme;
+            set
+            {
+                if (Theme == value)
+                    return;
+                _settings.Theme = value;
+                SaveSettings();
+            }
+        }
+
         public int LastExportIndex
         {
             get => _settings.LastExportIndex; set

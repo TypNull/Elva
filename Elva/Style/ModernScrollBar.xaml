@@ -17,7 +17,7 @@
                                 VerticalAlignment="Stretch"
                                 Width="Auto"
                                 Height="Auto"
-                                Background="DarkGray" />
+                                Background="{DynamicResource ScrollBarColor}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Tag"
@@ -40,7 +40,7 @@
         <Setter Property="Stylus.IsFlicksEnabled"
                 Value="False" />
         <Setter Property="Foreground"
-                Value="#FFC2C2C2" />
+                Value="{DynamicResource ScrollBarColor}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Width"
@@ -81,14 +81,14 @@
                         <Trigger SourceName="Thumb"
                                  Property="IsMouseOver"
                                  Value="true">
-                            <Setter Value="{DynamicResource ButtonSelectBrush}"
+                            <Setter Value="{DynamicResource BackgroundTertiary}"
                                     TargetName="Thumb"
                                     Property="Background" />
                         </Trigger>
                         <Trigger SourceName="Thumb"
                                  Property="IsDragging"
                                  Value="true">
-                            <Setter Value="{DynamicResource DarkBrush}"
+                            <Setter Value="{DynamicResource BackgroundTertiary}"
                                     TargetName="Thumb"
                                     Property="Background" />
                         </Trigger>
@@ -106,8 +106,8 @@
                                     <RotateTransform Angle="-90" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter   TargetName="PART_Track"
-                                      Property="LayoutTransform">
+                            <Setter TargetName="PART_Track"
+                                    Property="LayoutTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="-90" />
                                 </Setter.Value>

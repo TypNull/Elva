@@ -13,6 +13,11 @@ namespace Elva.MVVM.View.CControl
     public partial class ControlView : UserControl
     {
         private Window Window { get; init; }
+
+        // Use ResourceDictionary references for dynamic theme support
+        private SolidColorBrush HoverBrush => TryFindResource("BackgroundTertiary") as SolidColorBrush;
+        private SolidColorBrush NormalBrush => TryFindResource("BackgroundSecondary") as SolidColorBrush;
+
         public ControlView()
         {
             InitializeComponent();
@@ -23,22 +28,19 @@ namespace Elva.MVVM.View.CControl
                 HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(Window).Handle);
                 source.AddHook(new HwndSourceHook(HwndSourceHook));
             };
-
         }
 
         [RelayCommand]
         private void CloseWindow() => Window.Close();
+
         [RelayCommand]
-        private void MaximizeWindow() { Window.WindowState = Window.WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal; }
+        private void MaximizeWindow()
+        {
+            Window.WindowState = Window.WindowState != WindowState.Maximized ? WindowState.Maximized : WindowState.Normal;
+        }
+
         [RelayCommand]
         private void MinimizeWindow() => Window.WindowState = WindowState.Minimized;
-
-
-
-        private readonly SolidColorBrush _hoverColor = new((Color)ColorConverter.ConvertFromString("#FF969696"));
-        private readonly SolidColorBrush _transparentColor = new((Color)ColorConverter.ConvertFromString("#FFB1B1B1"));
-
-
 
         private const int WM_NCHITTEST = 0x0084;
         private const int HTMAXBUTTON = 9;
@@ -76,18 +78,16 @@ namespace Elva.MVVM.View.CControl
 
         private void SnapLayout(IntPtr lparam, ref bool handled)
         {
-            _ = lparam.ToInt32();
             int x = lparam.ToInt32() & 0xffff;
             int y = lparam.ToInt32() >> 16;
             Rect rect = new(MaxButton.PointToScreen(new Point()), new Size(MaxButton.Width, MaxButton.Height));
             if (rect.Contains(new Point(x, y)))
             {
-                MaxButton.Background = _hoverColor;
+                MaxButton.Background = HoverBrush;
                 handled = true;
             }
             else
-                MaxButton.Background = _transparentColor;
+                MaxButton.Background = NormalBrush;
         }
     }
 }
-

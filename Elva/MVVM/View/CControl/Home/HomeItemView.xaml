@@ -13,10 +13,10 @@
              Visibility="{Binding IsVisible,Converter={StaticResource BoolToVis}}">
     <Grid>
         <Border Height="150"
-                CornerRadius="9"
+                Style="{StaticResource AnimatedCardStyle}"
                 Background="{Binding Background, Mode=OneTime}">
             <Grid>
-               
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="85" />
                     <ColumnDefinition />
@@ -30,10 +30,9 @@
                 <Grid Grid.RowSpan="2"
                       Width="70"
                       Height="110">
-                    <Image
-                           RenderOptions.BitmapScalingMode="LowQuality"
+                    <Image RenderOptions.BitmapScalingMode="LowQuality"
                            Cursor="Hand"
-                        Stretch="Uniform">
+                           Stretch="Uniform">
                         <Image.Source>
                             <PriorityBinding>
                                 <Binding Path="CoverPath"
@@ -64,16 +63,16 @@
                 </Grid>
                 <TextBlock Grid.Column="1"
                            Cursor="Hand"
-                           Foreground="Black"
+                           Foreground="{DynamicResource TextDark}"
                            Margin="5,5,10,0"
                            MaxHeight="35"
                            FontSize="13.3"
                            TextWrapping="Wrap"
                            Text="{Binding Path=Title, Mode=OneWay}">
-                      <TextBlock.InputBindings>
-      <MouseBinding Gesture="LeftClick"
-                    Command="{Binding OpenInfoCommand, Mode=OneTime}" />
-  </TextBlock.InputBindings>
+                    <TextBlock.InputBindings>
+                        <MouseBinding Gesture="LeftClick"
+                                      Command="{Binding OpenInfoCommand, Mode=OneTime}" />
+                    </TextBlock.InputBindings>
                 </TextBlock>
 
                 <Grid Grid.Column="1"
@@ -88,7 +87,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button Style="{StaticResource ModernChapterButton}"
-                        MaxHeight="30"
+                            MaxHeight="30"
                             MinWidth="40"
                             Margin="5"
                             Command="{Binding OpenChapterInBrowserCommand}"
@@ -100,7 +99,7 @@
                         </TextBlock>
                     </Button>
                     <Button Style="{StaticResource ModernChapterButton}"
-                        MaxHeight="30"
+                            MaxHeight="30"
                             Grid.Row="1"
                             MinWidth="40"
                             Margin="5"
@@ -112,14 +111,14 @@
                             <Run Text="{Binding LastChapterNumber ,Mode=OneWay}" />
                         </TextBlock>
                     </Button>
-                    <Border   Grid.Column="1"
+                    <Border Grid.Column="1"
                               Grid.RowSpan="2"
-                              HorizontalAlignment="Left"
-                              Margin="10,5,10,10"
-                              CornerRadius="5"
-                              Background="#4CF0F8FF"
-                              BorderBrush="#4C7B93A7"
-                              BorderThickness="1">
+                            HorizontalAlignment="Left"
+                            Margin="10,5,10,10"
+                            CornerRadius="5"
+                            Background="{DynamicResource PanelBackgroundLight}"
+                            BorderBrush="#4C7B93A7"
+                            BorderThickness="1">
                         <TextBlock Margin="5"
                                    FontSize="0.1"
                                    TextAlignment="Left"
@@ -128,12 +127,12 @@
                                    VerticalAlignment="Top"
                                    Grid.Column="1"
                                    Grid.RowSpan="2">
-            <Run Text="Desription:&#x0a;"
+        <Run Text="Desription:&#x0a;"
                             FontSize="11"
                             FontWeight="DemiBold"
                             FontFamily="Arial"
-                            Foreground="#FF333333" />
-            <Run  Text="{Binding Path=Description, Mode=OneWay}"
+                            Foreground="{DynamicResource TextDark}" />
+        <Run Text="{Binding Path=Description, Mode=OneWay}"
                             FontSize="10" />
                         </TextBlock>
                     </Border>

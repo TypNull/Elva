@@ -5,7 +5,7 @@
            x:Key="FilterButton">
         <Style.Setters>
             <Setter Property="Foreground"
-                    Value="White" />
+                    Value="{DynamicResource TextPrimary}" />
             <Setter Property="FontSize"
                     Value="14" />
             <Setter Property="Margin"
@@ -15,7 +15,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <Border  CornerRadius="3,3,0,0">
+                        <Border CornerRadius="3,3,0,0">
                             <TextBlock Text="{TemplateBinding Property=Content}"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
@@ -23,12 +23,12 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="Background"
-                                            Value="#0C000000" />
+                                            Value="#26FFFFFF" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton}}"
                                                      Value="True">
                                             <Setter Property="Background"
-                                                    Value="#FF487C95" />
+                                                    Value="{DynamicResource FilterBackgroundDark}" />
                                             <Setter Property="Margin"
                                                     Value="0,0,0,-2" />
                                         </DataTrigger>
@@ -55,11 +55,10 @@
                                 Background="{TemplateBinding Background}">
                             <Grid VerticalAlignment="Stretch"
                                   HorizontalAlignment="Stretch">
-
                                 <TextBlock Text="{TemplateBinding Property=Content}"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Center"
-                                           Foreground="#FF414141"
+                                           Foreground="{DynamicResource TextPrimary}"
                                            Margin="10,5,10,5"
                                            FontSize="16" />
                             </Grid>
@@ -67,30 +66,27 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
             <Setter Property="Background"
-                    Value="#FF65DDFE" />
+                    Value="#6495ED" />
             <Setter Property="IsThreeState"
                     Value="True" />
         </Style.Setters>
-
         <Style.Triggers>
             <Trigger Property="IsChecked"
                      Value="True">
                 <Setter Property="Background"
-                        Value="#FF65FE8A" />
+                        Value="#64CF87" />
             </Trigger>
             <Trigger Property="IsChecked"
                      Value="{x:Null}">
                 <Setter Property="Background"
-                        Value="#FFFE9988" />
+                        Value="#E57373" />
             </Trigger>
             <Trigger Property="IsChecked"
                      Value="False">
                 <Setter Property="Background"
-                        Value="#FF65DDFE" />
+                        Value="#6495ED" />
             </Trigger>
         </Style.Triggers>
-
     </Style>
 </ResourceDictionary>

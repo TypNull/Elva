@@ -31,6 +31,9 @@ namespace Elva.MVVM.Model.Manager
             Favorites.Add(url);
             _settingsManager.AddToFavorite(url);
             FavoriteChanged?.Invoke(this, Favorites.ToArray());
+
+            // Notify the user
+            ToastNotification.Show("Added to favorites", ToastType.Success);
         }
 
         public void RemoveFavorite(string url)

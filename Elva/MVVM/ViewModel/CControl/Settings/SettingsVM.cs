@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Elva.Core;
+using Elva.MVVM.Model;
 using Elva.MVVM.Model.Database;
 using Elva.MVVM.Model.Manager;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,15 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
         private WebsiteManager _websiteManager;
         private SettingsManager _settingsManager;
         private ClickOnceApplicationDeployment? _deploymentApp;
+
+        [ObservableProperty]
+        private bool _isLightTheme;
+
+        [ObservableProperty]
+        private bool _isDarkTheme = true; // Default to dark theme
+
+        [ObservableProperty]
+        private bool _isSystemTheme;
 
         [ObservableProperty]
         private string _version;
@@ -65,7 +75,7 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
 
                 if (await _deploymentApp.CheckUpdateAvailableAsync(token))
                 {
-                    _isUpdateAvailable = true;
+                    // _isUpdateAvailable = true;
 
                     UpdateCheckResults res = await _deploymentApp.CheckForDetailedUpdateAsync(token);
                     if (res.Cancelled)
@@ -74,7 +84,15 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
                 }
                 return true;
             }, new RequestOptions<VoidStruct, VoidStruct>() { Priority = RequestPriority.High });
+
+            string savedTheme = _settingsManager.Theme;
+            IsLightTheme = savedTheme == "Light";
+            IsDarkTheme = savedTheme == "Dark";
+            IsSystemTheme = savedTheme == "System";
         }
+
+        // Add this to your SettingsVM class
+        public event EventHandler<string>? OnThemeChanged;
 
         [RelayCommand]
         private void ChangeDownloadFolder() => OnChangeDownloadFolder?.Invoke(this, EventArgs.Empty);
@@ -90,6 +108,29 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
                 IOManager.DeserializeWebsiteImage(IOManager.CopyFileTo(path, IOManager.DataPath));
                 _websiteManager.AddWebsite(website);
             }
+        }
+
+        [RelayCommand]
+        private void ThemeChanged(string theme)
+        {
+            // Update the theme properties
+            IsLightTheme = theme == "Light";
+            IsDarkTheme = theme == "Dark";
+            IsSystemTheme = theme == "System";
+
+            // Save the theme preference
+            _settingsManager.Theme = theme;
+
+
+            // Apply the theme
+            App.Current.ApplyTheme(theme);
+
+            // Trigger the theme changed event
+            OnThemeChanged?.Invoke(this, theme);
+
+
+            // Show toast notification
+            ToastNotification.Show($"{theme} theme applied", ToastType.Success);
         }
 
         [RelayCommand]
@@ -126,28 +167,28 @@ namespace Elva.MVVM.ViewModel.CControl.Settings
             });
         }
 
-        [RelayCommand]
-        private void UpdateApplication()
-        {
-            if (IsUpdateAvailable && !IsUpdateing)
-            {
-                IsUpdateing = true;
-                UpdateText = "Pending...\nPlease wait";
-                UpdateRequest = new(async (token) =>
-                {
-                    bool update = await _deploymentApp!.UpdateAsync(token);
-                    return update;
-                }, new RequestOptions<VoidStruct, VoidStruct>()
-                {
-                    RequestCancelled = (_) => { UpdateText = "Update cancelled!"; IsUpdateing = false; },
-                    RequestCompleated = (_, _) => { UpdateText = "Update completed!\nPlease restart Elva"; },
-                    RequestFailed = (_, _) => { UpdateText = "Update failed!\nPlease try again"; IsUpdateing = false; },
-                    RequestStarted = (_) => { UpdateText = "Updating...\nPlease do not cut the Connection"; },
-                    DelayBetweenAttemps = new TimeSpan(10000),
-                    Priority = RequestPriority.High
-                });
-            }
-        }
+        /* [RelayCommand]
+         private void UpdateApplication()
+         {
+             if (IsUpdateAvailable && !IsUpdateing)
+             {
+                 IsUpdateing = true;
+                 UpdateText = "Pending...\nPlease wait";
+                 UpdateRequest = new(async (token) =>
+                  {
+                      // bool update = await _deploymentApp!.UpdateAsync(token);
+                      return true;
+                  }, new RequestOptions<VoidStruct, VoidStruct>()
+                  {
+                      RequestCancelled = (_) => { UpdateText = "Update cancelled!"; IsUpdateing = false; },
+                      RequestCompleated = (_, _) => { UpdateText = "Update completed!\nPlease restart Elva"; },
+                      RequestFailed = (_, _) => { UpdateText = "Update failed!\nPlease try again"; IsUpdateing = false; },
+                      RequestStarted = (_) => { UpdateText = "Updating...\nPlease do not cut the Connection"; },
+                      DelayBetweenAttemps = new TimeSpan(10000),
+                      Priority = RequestPriority.High
+                  });
+             }
+         }*/
 
     }
 }

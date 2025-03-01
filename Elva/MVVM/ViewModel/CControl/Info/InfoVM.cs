@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Elva.Core;
+using Elva.MVVM.Model;
 using Elva.MVVM.Model.Database;
 using Elva.MVVM.Model.Manager;
 using Elva.MVVM.ViewModel.Model;
+using System.Collections.Generic;
 using System.Linq;
 using WebsiteScraper.WebsiteUtilities;
 
@@ -52,11 +54,28 @@ namespace Elva.MVVM.ViewModel.CControl.Info
                 _settingsManager.SaveSettings();
             }
         }
+
         [RelayCommand]
         private void StartDownloadAll()
         {
+            if (Comic.ChapterVMs.Length == 0) return;
+
+            List<string> chapterTitles = new();
+
             foreach (ChapterVM chapter in Comic.ChapterVMs)
+            {
+                chapterTitles.Add(chapter.Title);
                 _ = chapter.StartDownloadAsync();
+
+            }
+            if (chapterTitles.Count > 0)
+            {
+                string message = chapterTitles.Count == 1
+                    ? $"Downloading chapter: {chapterTitles[0]}"
+                    : $"Downloading {chapterTitles.Count} chapters";
+
+                ToastNotification.Show(message, ToastType.Info);
+            }
         }
 
         [RelayCommand]

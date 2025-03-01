@@ -12,26 +12,25 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
 
-    <Grid  HorizontalAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock  Text="Chapters:"
-                    FontWeight="DemiBold"
-                    Margin="10,5,5,5"
-                    FontSize="17"
-                    TextAlignment="Left"
-                    TextWrapping="Wrap"
-                    Foreground="#FF333333"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top" />
-        <ItemsControl  Grid.Row="1"
-                       VirtualizingPanel.IsVirtualizing="True"
-                       VirtualizingPanel.VirtualizationMode="Recycling"
-                       Margin="5,5,5,0"
-                       ItemsSource="{Binding ChapterList,Mode=OneWay}">
+        <TextBlock Text="Chapters:"
+                   FontWeight="DemiBold"
+                   Margin="10,5,5,5"
+                   FontSize="17"
+                   TextAlignment="Left"
+                   TextWrapping="Wrap"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+        <ItemsControl Grid.Row="1"
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+                      Margin="5,5,5,0"
+                      ItemsSource="{Binding ChapterList,Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
@@ -42,48 +41,48 @@
                         <TextBlock HorizontalAlignment="Left"
                                    FontSize="14"
                                    Cursor="Hand">
-                                            <Run Text="Chapter:" />
-                                            <Run Text="{Binding Number, Mode=OneTime}" />
-                                            <Run Text="-">
-                                                <Run.Style>
-                                                    <Style TargetType="Run">
-                                                        <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Title, Mode=OneTime}"
-                                                                             Value="">
-                                                                            <Setter Property="Foreground"
-                                                                                    Value="Transparent" />
-                                                                        </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Run.Style>
-                                            </Run>
-                                            <Run Text="{Binding Title, Mode=OneTime}" />
+                            <Run Text="Chapter:" />
+                            <Run Text="{Binding Number, Mode=OneTime}" />
+                            <Run Text="-">
+                                <Run.Style>
+                                    <Style TargetType="Run">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Title, Mode=OneTime}"
+                                                         Value="">
+                                                <Setter Property="Foreground"
+                                                        Value="Transparent" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Run.Style>
+                            </Run>
+                            <Run Text="{Binding Title, Mode=OneTime}" />
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Foreground"
-                                            Value="#FFDFDFDF" />
+                                            Value="{DynamicResource TextSecondary}" />
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver"
                                                  Value="True">
                                             <Setter Property="Foreground"
-                                                    Value="White" />
+                                                    Value="{DynamicResource TextPrimary}" />
                                             <Setter Property="TextDecorations"
                                                     Value="Underline" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
-                        </TextBlock >
+                        </TextBlock>
 
-                        <StackPanel  Margin="5,0,0,0"
-                                     Orientation="Horizontal"
-                                     Grid.Column="1"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Right">
+                        <StackPanel Margin="5,0,0,0"
+                                    Orientation="Horizontal"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right">
                             <TextBlock FontSize="14"
                                        Margin="0,0,0,5"
-                                       Foreground="#FF333333">
-                                            <Run Text="{Binding UploadDateTime, Mode=OneTime, StringFormat=dd. MMMM yyyy}" />
+                                       Foreground="{DynamicResource TextSecondary}">
+                                <Run Text="{Binding UploadDateTime, Mode=OneTime, StringFormat=dd. MMMM yyyy}" />
                             </TextBlock>
                             <Button Margin="15,0,5,0"
                                     MaxHeight="27"
@@ -98,7 +97,18 @@
                                                             ArcWidth="2.3"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            Foreground="Black">
+                                                            Foreground="{DynamicResource TextDark}">
+                                        <!-- Add animation to make progress more visually appealing -->
+                                        <xrpb:RadialProgressBar.Resources>
+                                            <Storyboard x:Key="ProgressPulse"
+                                                        RepeatBehavior="Forever">
+                                                <DoubleAnimation Storyboard.TargetProperty="ArcWidth"
+                                                                 From="2.3"
+                                                                 To="3.0"
+                                                                 Duration="0:0:0.5"
+                                                                 AutoReverse="True" />
+                                            </Storyboard>
+                                        </xrpb:RadialProgressBar.Resources>
                                         <xrpb:RadialProgressBar.Style>
                                             <Style TargetType="{x:Type xrpb:RadialProgressBar}">
                                                 <Setter Property="Visibility"
@@ -119,6 +129,17 @@
                                                         <Setter Property="Visibility"
                                                                 Value="Hidden" />
                                                     </Trigger>
+                                                    <!-- Use the converter to check if progress is in active download range -->
+                                                    <DataTrigger Binding="{Binding DownloadProgress, Converter={StaticResource ProgressRangeConverter}}"
+                                                                 Value="True">
+                                                        <DataTrigger.EnterActions>
+                                                            <BeginStoryboard Name="BeginProgressPulse"
+                                                                             Storyboard="{StaticResource ProgressPulse}" />
+                                                        </DataTrigger.EnterActions>
+                                                        <DataTrigger.ExitActions>
+                                                            <StopStoryboard BeginStoryboardName="BeginProgressPulse" />
+                                                        </DataTrigger.ExitActions>
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </xrpb:RadialProgressBar.Style>
@@ -169,72 +190,73 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <TextBlock Grid.Row="2"
-                   Margin="0,5,0,0"
-                   HorizontalAlignment="Center">
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize"
-                            Value="15" />
-                    <Setter Property="Text"
-                            Value="Show less" />
-                    <Setter Property="FontFamily"
+        <StackPanel Grid.Row="2"
+                    Visibility="{Binding ShowCollapsedMenu,Converter={StaticResource BoolToVis}}">
+            <TextBlock Margin="0,5,0,0"
+                       HorizontalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="15" />
+                        <Setter Property="Text"
+                                Value="Show less" />
+                        <Setter Property="FontFamily"
                                 Value="Arial" />
-                    <Setter Property="Foreground"
-                            Value="#FFCECECE" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked,ElementName=arrow}"
-                                 Value="false">
-                            <Setter Property="Text"
-                                    Value="Show More" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
-        <ToggleButton Cursor="Hand"
-                      x:Name="arrow"
-                      Grid.Row="2"
-                      Width="50"
-                      Height="30"
-                      Command="{Binding ExpandChaptersCommand}"
-                      Margin="0,20,0,5"
-                      RenderTransformOrigin="0.5,0.5">
-            <ToggleButton.Style>
-                <Style TargetType="ToggleButton">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ToggleButton">
-                                <ContentPresenter />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsChecked"
-                                 Value="True">
-                            <Setter Property="LayoutTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="180" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ToggleButton.Style>
-            <ToggleButton.Content>
-                <Grid  Background="#02FFFFFF">
-                    <Path Grid.Row="2"
-                          Data="M0,0L0.67,0 4,2.67 7.25,0 8,0 8,0.67 4,4 0,0.75z"
-                          RenderTransformOrigin="0.5,0.5"
-                          Stretch="Fill"
-                          Fill="LightGray"
-                          Width="30"
-                          Height="15" />
-                </Grid>
-            </ToggleButton.Content>
-            <ToggleButton.RenderTransform>
-                <RotateTransform />
-            </ToggleButton.RenderTransform>
-        </ToggleButton>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource TextSecondary}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=arrow}"
+                                         Value="false">
+                                <Setter Property="Text"
+                                        Value="Show more" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ToggleButton Cursor="Hand"
+                          x:Name="arrow"
+                          Width="50"
+                          Height="30"
+                          Command="{Binding ExpandChaptersCommand}"
+                          Margin="0,0,0,5"
+                          RenderTransformOrigin="0.5,0.5">
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="180" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+                <ToggleButton.Content>
+                    <Grid Background="#02FFFFFF">
+                        <Path Grid.Row="2"
+                              Data="M0,0L0.67,0 4,2.67 7.25,0 8,0 8,0.67 4,4 0,0.75z"
+                              RenderTransformOrigin="0.5,0.5"
+                              Stretch="Fill"
+                              Fill="{DynamicResource TextSecondary}"
+                              Width="30"
+                              Height="15" />
+                    </Grid>
+                </ToggleButton.Content>
+                <ToggleButton.RenderTransform>
+                    <RotateTransform />
+                </ToggleButton.RenderTransform>
+            </ToggleButton>
+        </StackPanel>
     </Grid>
 </UserControl>

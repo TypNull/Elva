@@ -5,7 +5,6 @@ using Elva.MVVM.ViewModel.Model;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using WebsiteScraper.Downloadable.Books;
 
@@ -36,7 +35,6 @@ namespace Elva.MVVM.ViewModel.CControl.Home
 
         private void SetFavoriteCollection()
         {
-            Debug.WriteLine(_favoriteManager.Favorites.Count);
             string[] favorites = ResizeArray(_favoriteManager.Favorites.AsEnumerable().Reverse().ToArray(), 9);
             if (favorites.Length == Favorites?.Count && favorites.All(x => Favorites.Select(y => y.Url).Contains(x)))
                 return;

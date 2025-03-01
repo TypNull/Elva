@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Elva.MVVM.Model.Database
@@ -73,7 +74,7 @@ namespace Elva.MVVM.Model.Database
             _dbSaveTimer.Start();
         }
 
-        public abstract void LoadData();
+        public abstract Task LoadDataAsync();
 
         internal bool TryGetSaved<TItem>(string id, out TItem? item) where TItem : SaveableOnlineData
         {

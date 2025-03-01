@@ -12,6 +12,8 @@
                         <Border Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}"
                                 CornerRadius="7"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource BorderPrimary}"
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter Margin="5,0,5,0"
                                               VerticalAlignment="Center"
@@ -27,11 +29,11 @@
            BasedOn="{StaticResource ModernButton}">
         <Style.Setters>
             <Setter Property="Background"
-                    Value="#FE6584" />
+                    Value="{StaticResource ButtonPrimary}" />
             <Setter Property="FontSize"
                     Value="15" />
             <Setter Property="Foreground"
-                    Value="#FFDADADA" />
+                    Value="{DynamicResource TextPrimary}" />
             <Setter Property="FontFamily"
                     Value="Gadugi" />
         </Style.Setters>
@@ -39,12 +41,14 @@
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Background"
-                        Value="#FF4C70" />
+                        Value="{DynamicResource ButtonHover}" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Background"
-                        Value="#FFCB6177" />
+                        Value="{DynamicResource ButtonDisabled}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource TextTertiary}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -54,15 +58,15 @@
            BasedOn="{StaticResource ModernButton}">
         <Setter Property="Background"
                 Value="#FFFDCA4D" />
-            <Setter Property="FontSize"
-                    Value="15" />
-            <Setter Property="Foreground"
-                    Value="#FFDADADA" />
-            <Setter Property="FontFamily"
-                    Value="Gadugi" />
-            <Setter Property="IsEnabled"
-                    Value="False" />
-            <Style.Triggers>
+        <Setter Property="FontSize"
+                Value="15" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextPrimary}" />
+        <Setter Property="FontFamily"
+                Value="Gadugi" />
+        <Setter Property="IsEnabled"
+                Value="False" />
+        <Style.Triggers>
             <Trigger Property="Tag">
                 <Trigger.Value>
                     <sys:Int32>-1</sys:Int32>
@@ -70,22 +74,20 @@
                 <Setter Property="IsEnabled"
                         Value="True" />
                 <Setter Property="Background"
-                        Value="#FE6584" />
+                        Value="{DynamicResource ButtonPrimary}" />
             </Trigger>
             <Trigger Property="Tag">
                 <Trigger.Value>
                     <sys:Int32>100</sys:Int32>
                 </Trigger.Value>
                 <Setter Property="Background"
-                        Value="#FFA5F684" />
-
+                        Value="{DynamicResource ButtonSecondary}" />
             </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Background"
-                        Value="#FFFF4C70" />
+                        Value="{DynamicResource ButtonHover}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

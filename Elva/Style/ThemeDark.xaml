@@ -1,0 +1,66 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Background Colors -->
+    <SolidColorBrush x:Key="BackgroundPrimary"
+                     Color="#1E1E2D" />
+    <SolidColorBrush x:Key="BackgroundSecondary"
+                     Color="#2D2D3F" />
+    <SolidColorBrush x:Key="BackgroundTertiary"
+                     Color="#252536" />
+    <SolidColorBrush x:Key="BackgroundCard"
+                     Color="#323242" />
+
+    <!-- New Chapter Button Background -->
+    <SolidColorBrush x:Key="ChapterButtonBackground"
+                     Color="#AEA9A9" />
+
+    <!-- Panel Colors -->
+    <SolidColorBrush x:Key="PanelBackground"
+                     Color="#2A2A3C" />
+    <SolidColorBrush x:Key="PanelBackgroundLight"
+                     Color="#4CF0F8FF" />
+
+    <!-- Button Colors -->
+    <SolidColorBrush x:Key="ButtonPrimary"
+                     Color="#FE6584" />
+    <SolidColorBrush x:Key="ButtonSecondary"
+                     Color="#12A76B" />
+    <SolidColorBrush x:Key="ButtonHover"
+                     Color="#CB6177" />
+    <SolidColorBrush x:Key="ButtonDisabled"
+                     Color="#4A4A69" />
+
+    <!-- Filter Colors -->
+    <SolidColorBrush x:Key="FilterBackground"
+                     Color="#4A6A8F" />
+    <SolidColorBrush x:Key="FilterBackgroundDark"
+                     Color="#3C597A" />
+
+    <!-- Text Colors -->
+    <SolidColorBrush x:Key="TextPrimary"
+                     Color="#EFEFEF" />
+    <SolidColorBrush x:Key="TextSecondary"
+                     Color="#CDCDCD" />
+    <SolidColorBrush x:Key="TextTertiary"
+                     Color="#AAAAAA" />
+    <SolidColorBrush x:Key="TextDark"
+                     Color="#FF242424" />
+
+    <!-- Border Colors -->
+    <SolidColorBrush x:Key="BorderPrimary"
+                     Color="#2C2C40" />
+    
+        <!-- Search Bar Colors -->
+    <SolidColorBrush x:Key="SearchBarNormal"
+                     Color="#CFCFCF" />
+    <SolidColorBrush x:Key="SearchBarError"
+                     Color="#FF5555" />
+
+    <!-- Comic Card Colors -->
+    <SolidColorBrush x:Key="ComicCardBackground"
+                     Color="#383850" />
+
+    <!-- Scroll Colors -->
+    <SolidColorBrush x:Key="ScrollBarColor"
+                     Color="#3A3A50" />
+</ResourceDictionary>

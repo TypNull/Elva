@@ -7,10 +7,11 @@ namespace Elva.MVVM.Model.Database.Saveable
     {
         public string DownloadPath { get; set; } = IOManager.DownloadPath;
         public Dictionary<string, (string url, ReferenceType typ)[]> HomeWebsiteComics { get; set; } = new();
-
         public bool IsKillSwitchEnabled { get; set; } = true;
         public int LastExportIndex { get; set; }
         public List<string> Favorites { get; set; } = new();
+        // New property for theme
+        public string Theme { get; set; } = "Dark"; // Default to dark theme
 
         public virtual bool Equals(SaveableSettings? x)
         {
@@ -24,8 +25,5 @@ namespace Elva.MVVM.Model.Database.Saveable
         {
             return base.GetHashCode();
         }
-
-
-
     }
 }

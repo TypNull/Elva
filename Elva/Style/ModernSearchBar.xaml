@@ -7,7 +7,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border CornerRadius="10"
-                            Background="#353340"
+                            Background="{DynamicResource BackgroundTertiary}"
+                            BorderBrush="{DynamicResource BorderPrimary}"
+                            BorderThickness="1"
                             MinWidth="100"
                             Height="40">
                         <Grid>
@@ -17,19 +19,19 @@
                                      Background="Transparent"
                                      VerticalAlignment="Center"
                                      Padding="5"
-                                     Foreground="{TemplateBinding Foreground}"
+                                     Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
                                      x:Name="SearchBox"
-                                     Margin="1" />
+                                     Margin="10,1,10,1" />
                             <TextBlock IsHitTestVisible="False"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
-                                       Margin="10,0,10,0"
-                                       FontSize="11"
-                                       Foreground="DarkGray"
+                                       Margin="18,0,10,0"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource TextTertiary}"
                                        Grid.Column="1">
-                                        <Run Text="Search with" />
-                                 <Run Text="{TemplateBinding ext:MarkupExtensions.Icon}" />
-                                 <Run Text="{TemplateBinding Tag}" />
+                            <Run Text="Search with" />
+                            <Run Text="{TemplateBinding ext:MarkupExtensions.Icon}" />
+                            <Run Text="{TemplateBinding Tag}" />
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -49,6 +51,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Foreground"
+                Value="{DynamicResource SearchBarNormal}" />
     </Style>
 
 </ResourceDictionary>

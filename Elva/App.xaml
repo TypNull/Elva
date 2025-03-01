@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Elva"
              xmlns:conv="clr-namespace:Elva.Core.Converter"
-               xmlns:view="clr-namespace:Elva.MVVM.View.CControl"
+             xmlns:view="clr-namespace:Elva.MVVM.View.CControl"
              xmlns:vm="clr-namespace:Elva.MVVM.ViewModel.CControl"
              xmlns:vm1="clr-namespace:Elva.MVVM.ViewModel.CControl.Home"
              xmlns:view1="clr-namespace:Elva.MVVM.View.CControl.Home"
@@ -11,7 +11,7 @@
              xmlns:view2="clr-namespace:Elva.MVVM.View.CControl.Search"
              xmlns:vm3="clr-namespace:Elva.MVVM.ViewModel.CControl.Info"
              xmlns:view3="clr-namespace:Elva.MVVM.View.CControl.Info"
-              xmlns:vm4="clr-namespace:Elva.MVVM.ViewModel.CControl.WebsiteMenu"
+             xmlns:vm4="clr-namespace:Elva.MVVM.ViewModel.CControl.WebsiteMenu"
              xmlns:view4="clr-namespace:Elva.MVVM.View.CControl.WebsiteMenu"
              xmlns:vm5="clr-namespace:Elva.MVVM.ViewModel.CControl.Settings"
              xmlns:view5="clr-namespace:Elva.MVVM.View.CControl.Settings"
@@ -19,6 +19,17 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- Theme dictionaries -->
+                <ResourceDictionary Source="/Style/ThemeDark.xaml"
+                                    x:Name="ThemeDictionary" />
+
+                <!-- Animation dictionary -->
+                <ResourceDictionary Source="/Style/Animations.xaml" />
+
+                <!-- Animated Cards -->
+                <ResourceDictionary Source="/Style/AnimatedCard.xaml" />
+
+                <!-- Existing style dictionaries -->
                 <ResourceDictionary Source="/Style/ModernWindow.xaml" />
                 <ResourceDictionary Source="/Style/WindowMenuButton.xaml" />
                 <ResourceDictionary Source="/Style/ModernScrollBar.xaml" />
@@ -29,13 +40,16 @@
                 <ResourceDictionary Source="/Style/FilterButton.xaml" />
                 <ResourceDictionary Source="/Style/TextBlockTextBox.xaml" />
                 <ResourceDictionary Source="/Style/ModernRadioButton.xaml" />
-               
             </ResourceDictionary.MergedDictionaries>
+
             <sys:String x:Key="NullImagePath">pack://application:,,,/Recource/Image/Comic/no_image.jpg</sys:String>
             <conv:DictionaryBoolConverter x:Key="DictionaryConverter" />
             <conv:MultiValueEqualityConverter x:Key="MultiEqualtityConverter" />
+            <conv:ProgressRangeConverter x:Key="ProgressRangeConverter" />
             <conv:MultiBindingConverter x:Key="MultiBindingConverter" />
+            <conv:BooleanToColorBrushConverter x:Key="BooleanToColorBrushConverter" />
             <conv:ImageConverter x:Key="ImageConverter" />
+
             <DataTemplate DataType="{x:Type  vm1:HomeVM}">
                 <view1:HomeView />
             </DataTemplate>
@@ -54,7 +68,6 @@
             <DataTemplate DataType="{x:Type  vm5:LicenseInfoVM}">
                 <view5:LicenseInfoView />
             </DataTemplate>
-
 
             <DataTemplate DataType="{x:Type  vm2:SourceVM}">
                 <view2:SourceView />

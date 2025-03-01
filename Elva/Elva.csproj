@@ -40,13 +40,19 @@
     <None Remove="Recource\Image\Search\nothing_found.png" />
     <None Remove="Recource\Image\Search\reload.png" />
     <None Remove="Recource\Image\Window\back.png" />
+    <None Remove="Recource\Image\Window\back.svg" />
     <None Remove="Recource\Image\Window\book.png" />
+    <None Remove="Recource\Image\Window\book.svg" />
     <None Remove="Recource\Image\Window\home.png" />
+    <None Remove="Recource\Image\Window\home.svg" />
     <None Remove="Recource\Image\Window\logo.ico" />
     <None Remove="Recource\Image\Window\search.png" />
+    <None Remove="Recource\Image\Window\search.svg" />
     <None Remove="Recource\Image\Window\setting.png" />
     <None Remove="Recource\Image\Window\settings.png" />
+    <None Remove="Recource\Image\Window\settings.svg" />
     <None Remove="Recource\Image\Window\website.png" />
+    <None Remove="Recource\Image\Window\website.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,16 +67,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.0.7" />
+    <PackageReference Include="AngleSharp" Version="1.1.2" />
     <PackageReference Include="ClickOnceApplicationDeploymentWrapper" Version="1.0.6" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="FrameworkExtract.System.Deployment" Version="4.0.30319" />
     <PackageReference Include="itext7" Version="8.0.3" />
     <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.3" />
     <PackageReference Include="LottieSharp" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
     <PackageReference Include="Shard.WebsiteScraper" Version="1.2.0" />
+    <PackageReference Include="SharpVectors" Version="1.8.4.2" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
     <PackageReference Include="XamlRadialProgressBar" Version="1.0.3" />
   </ItemGroup>
 
@@ -94,9 +104,21 @@
     <Resource Include="Recource\Image\Search\nothing_found.png" />
     <Resource Include="Recource\Image\Search\reload.png" />
     <Resource Include="Recource\Image\Window\book.png" />
+    <Resource Include="Recource\Icons\Dark\book.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Recource\Image\Window\home.png" />
+    <Resource Include="Recource\Icons\Dark\home.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Recource\Image\Window\search.png" />
+    <Resource Include="Recource\Icons\Dark\search.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Recource\Image\Window\settings.png" />
+    <Resource Include="Recource\Icons\Dark\settings.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Recource\Image\Window\website.png" />
   </ItemGroup>
 
@@ -118,12 +140,26 @@
 	<ItemGroup>
 	  <_DeploymentManifestIconFile Remove="Recource\Image\Window\logo.ico" />
 	</ItemGroup>
+	<ItemGroup>
+		<ApplicationDefinition Remove="App.xaml" />
+		<Page Include="App.xaml" />
+	</ItemGroup>
 
   
 	<ItemGroup>
 	  <Content Include="Recource\Image\Window\logo.ico">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+
+  
+	<ItemGroup>
+	  <Resource Include="Recource\Icons\Dark\back.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Recource\Icons\Dark\website.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 </Project>

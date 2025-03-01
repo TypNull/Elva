@@ -9,6 +9,8 @@ namespace Elva.MVVM.ViewModel.CControl.Info
     internal partial class ChapterInfoVM : ObservableObject
     {
         private bool _collapsed = true;
+        [ObservableProperty]
+        private bool _showCollapsedMenu = false;
         public ObservableCollection<ChapterVM> ChapterList { get; set; }
         private ObservableCollection<ChapterVM> _chapterShortVMs;
         private ObservableCollection<ChapterVM> _chapterVMs;
@@ -24,7 +26,12 @@ namespace Elva.MVVM.ViewModel.CControl.Info
         {
             _chapterVMs = new(chapterVMs);
             if (chapterVMs.Length > 50)
+            {
                 Array.Resize(ref chapterVMs, 50);
+                ShowCollapsedMenu = true;
+            }
+            else ShowCollapsedMenu = false;
+
             _chapterShortVMs = new(chapterVMs);
             _collapsed = true;
             ChapterList = _chapterShortVMs;

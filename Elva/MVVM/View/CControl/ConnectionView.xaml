@@ -8,9 +8,10 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.DataContext>
-        <vm:ConnectionVM/>
+        <vm:ConnectionVM />
     </UserControl.DataContext>
-    <Button Cursor="Hand" MaxHeight="55"
+    <Button Cursor="Hand"
+            MaxHeight="55"
             Command="{Binding ConnectionPressedCommand}"
             WindowChrome.IsHitTestVisibleInChrome="True">
         <Image RenderOptions.BitmapScalingMode="HighQuality">
@@ -62,5 +63,4 @@
             </Style>
         </Button.Style>
     </Button>
-
 </UserControl>

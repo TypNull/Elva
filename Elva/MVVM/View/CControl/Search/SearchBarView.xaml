@@ -18,7 +18,7 @@
              Style="{StaticResource ModernSearchBar}"
              Tag="{Binding TagText}"
              ext:MarkupExtensions.Icon="{Binding WebsiteText}"
-             Foreground="{Binding Color}">
+             Foreground="{Binding Foreground,Mode=OneWay}">
         <TextBox.InputBindings>
             <KeyBinding Key="Return"
                         Command="{Binding EnterCommand}" />

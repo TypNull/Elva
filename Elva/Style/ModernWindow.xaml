@@ -32,7 +32,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border BorderThickness="2"
-                            BorderBrush="#273037">
+                            BorderBrush="{DynamicResource BorderPrimary}">
                         <Border.Resources>
                             <core:WindowConverter x:Key="windowConverterConverter" />
                         </Border.Resources>
@@ -53,30 +53,29 @@
                                        Height="40"
                                        HorizontalAlignment="Left"
                                        Margin="10" />
-                                <search:SearchBarView Grid.Column="1"/>
-                                    <StackPanel Orientation="Horizontal"
+                                <search:SearchBarView  Grid.Column="1" />
+                                <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Right"
                                             Grid.Column="2">
                                     <windowheaderstyles:ConnectionView />
                                     <windowheaderstyles:ControlView />
                                 </StackPanel>
                             </Grid>
-                            <ContentPresenter
-                                Grid.Row="1" />
+                            <ContentPresenter Grid.Row="1" />
                         </Grid>
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius"
                                         Value="10" />
                                 <Setter Property="Background"
-                                        Value="#272537" />
+                                        Value="{DynamicResource BackgroundPrimary}" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Value="False">
                                                 <Condition.Binding>
-                                                    <MultiBinding  Delay="1000"
-                                                                   Converter="{StaticResource windowConverterConverter}">
+                                                    <MultiBinding Delay="1000"
+                                                                  Converter="{StaticResource windowConverterConverter}">
                                                         <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                                  Path="Height"
                                                                  Mode="OneWay" />
@@ -98,20 +97,18 @@
                                                     </MultiBinding>
                                                 </Condition.Binding>
                                             </Condition>
-                                            <Condition  Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WindowState}"
-                                                        Value="Normal" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WindowState}"
+                                                       Value="Normal" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="CornerRadius"
                                                 Value="0" />
                                     </MultiDataTrigger>
                                 </Style.Triggers>
-
                             </Style>
                         </Border.Style>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
-
         </Setter>
     </Style>
 </ResourceDictionary>

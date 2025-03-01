@@ -12,13 +12,13 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                  VerticalScrollBarVisibility="Auto"
+                  CanContentScroll="True">
         <Grid SizeChanged="Grid_SizeChanged">
             <Grid.Resources>
-              
                 <Style TargetType="Border">
                     <Setter Property="Background"
-                            Value="#35FFFFFF" />
+                            Value="{DynamicResource PanelBackground}" />
                     <Setter Property="CornerRadius"
                             Value="5" />
                 </Style>
@@ -35,7 +35,7 @@
                         <Setter Property="FontFamily"
                                 Value="Arial" />
                         <Setter Property="Foreground"
-                                Value="#FFCECECE" />
+                                Value="{DynamicResource TextSecondary}" />
                         <Setter Property="VerticalAlignment"
                                 Value="Top" />
                         <Setter Property="HorizontalAlignment"
@@ -54,9 +54,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Border Margin="0,20,0,0" x:Name="imageBorder" HorizontalAlignment="Center" Padding="5">
+            <Border Margin="0,20,0,0"
+                    x:Name="imageBorder"
+                    HorizontalAlignment="Center"
+                    Padding="5">
                 <Grid>
-                   
                     <Image MaxHeight="350"
                            MaxWidth="350"
                            RenderOptions.BitmapScalingMode="Fant"
@@ -80,7 +82,8 @@
                             Cursor="Hand"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            Margin="5" Padding="3">
+                            Margin="5"
+                            Padding="3">
                         <Image>
                             <Image.Style>
                                 <Style TargetType="Image">
@@ -90,7 +93,7 @@
                                         <DataTrigger Binding="{Binding Comic.IsFavorite,Mode=OneWay}"
                                                      Value="True">
                                             <Setter Property="Source"
-                                                    Value="\Recource\Image\Comic\full_star.png"/>
+                                                    Value="\Recource\Image\Comic\full_star.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -146,7 +149,7 @@
                                     <Setter Property="FontFamily"
                                             Value="Arial" />
                                     <Setter Property="Foreground"
-                                            Value="#FFCECECE" />
+                                            Value="{DynamicResource TextSecondary}" />
                                     <Setter Property="VerticalAlignment"
                                             Value="Top" />
                                     <Setter Property="HorizontalAlignment"
@@ -157,30 +160,30 @@
                             </TextBox.Style>
                         </TextBox>
                     </StackPanel>
-                    <TextBlock  MaxHeight="60">
-                <Run Text="Alternativ names:  "
-                        FontWeight="DemiBold" />
-                <Run Text="{Binding Comic.AlternativeTitles,Mode=OneWay}" />
+                    <TextBlock MaxHeight="60">
+                        <Run Text="Alternativ names:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.AlternativeTitles,Mode=OneWay}" />
                     </TextBlock>
                     <TextBlock MaxHeight="40">
-                <Run Text="Author:  "
-                        FontWeight="DemiBold" />
-                <Run Text="{Binding Comic.Author,Mode=OneWay}" />
-                    </TextBlock>
-                    <TextBlock  MaxHeight="20">
-                <Run Text="Genres:  "
-                        FontWeight="DemiBold" />
-                <Run Text="{Binding Comic.Genres,Mode=OneWay}" />
+                        <Run Text="Author:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Author,Mode=OneWay}" />
                     </TextBlock>
                     <TextBlock MaxHeight="20">
-                <Run Text="Status:  "
-                        FontWeight="DemiBold" />
-                <Run  Text="{Binding Comic.Status,Mode=OneWay}" />
+                        <Run Text="Genres:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Genres,Mode=OneWay}" />
                     </TextBlock>
                     <TextBlock MaxHeight="20">
-                <Run Text="Website:  "
-                        FontWeight="DemiBold" />
-                <Run Text="{Binding Comic.Website,Mode=OneWay}" />
+                        <Run Text="Status:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Status,Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock MaxHeight="20">
+                        <Run Text="Website:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Website,Mode=OneWay}" />
                     </TextBlock>
                     <WrapPanel VerticalAlignment="Bottom"
                                Orientation="Horizontal">
@@ -218,7 +221,7 @@
                                                     ArcWidth="2.3"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    Foreground="Black">
+                                                    Foreground="{DynamicResource TextDark}">
                                 <xrpb:RadialProgressBar.Style>
                                     <Style TargetType="{x:Type xrpb:RadialProgressBar}">
                                         <Setter Property="Visibility"
@@ -274,11 +277,11 @@
                                    Margin="5"
                                    FontSize="0.1"
                                    VerticalAlignment="Top">
-                <Run Text="Description:&#x0a;"
-                            FontSize="17"
-                            FontWeight="DemiBold" />
-                <Run  FontSize="13"
-                            Text="{Binding Comic.Description,Mode=OneWay}" />
+                            <Run Text="Description:&#x0a;"
+                                 FontSize="17"
+                                 FontWeight="DemiBold" />
+                            <Run FontSize="13"
+                                 Text="{Binding Comic.Description,Mode=OneWay}" />
                         </TextBlock>
                     </StackPanel>
                 </Border>
