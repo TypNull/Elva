@@ -1,13 +1,14 @@
-﻿using Elva.Core;
-using Elva.MVVM.Model;
-using Elva.MVVM.Model.Database;
-using Elva.MVVM.Model.Manager;
-using Elva.MVVM.ViewModel.CControl.Home;
-using Elva.MVVM.ViewModel.CControl.Info;
-using Elva.MVVM.ViewModel.CControl.Search;
-using Elva.MVVM.ViewModel.CControl.Settings;
-using Elva.MVVM.ViewModel.CControl.WebsiteMenu;
-using Elva.MVVM.ViewModel.Window;
+﻿using Elva.Common;
+using Elva.Common.Navigation;
+using Elva.Pages.Home.ViewModels;
+using Elva.Pages.Info.ViewModels;
+using Elva.Pages.Search.ViewModels;
+using Elva.Pages.Settings.ViewModels;
+using Elva.Pages.Shared.Models;
+using Elva.Pages.WebsiteMenu.ViewModels;
+using Elva.Pages.Windows.View;
+using Elva.Pages.Windows.ViewModel;
+using Elva.Services.Database;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -36,7 +37,7 @@ namespace Elva
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(options => options.AddSimpleConsole(c => { c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] "; c.UseUtcTimestamp = true; }).AddDebug());
             services.AddSingleton(provider => new MainWindow { DataContext = provider.GetRequiredService<MainWindowVM>() });
-            services.AddSingleton(provider => new WebsiteManager(IOManager.LoadWebsites()));
+            services.AddSingleton(_ => new WebsiteManager(IOManager.LoadWebsites()));
             services.AddSingleton<ComicDatabaseManager>();
             services.AddSingleton<SettingsManager>();
             services.AddSingleton<SearchManager>();
@@ -110,35 +111,23 @@ namespace Elva
         /// </summary>
         public void ApplyTheme(string theme)
         {
-            ResourceDictionary themeDictionary = null;
-
-            // Determine which theme to use
             if (theme == "System")
             {
-                // Check if system is using dark mode
                 bool systemUsesDarkTheme = IsSystemUseDarkTheme();
                 theme = systemUsesDarkTheme ? "Dark" : "Light";
             }
 
-            // Load the appropriate theme dictionary
-            string packUri = $"pack://application:,,,/Style/Theme{theme}.xaml";
-            themeDictionary = new ResourceDictionary() { Source = new Uri(packUri, UriKind.Absolute) };
-
-            // Remove any existing theme dictionaries
+            string packUri = $"pack://application:,,,/Resources/Styles/Theme{theme}.xaml";
+            ResourceDictionary themeDictionary = new() { Source = new Uri(packUri, UriKind.Absolute) };
             for (int i = Resources.MergedDictionaries.Count - 1; i >= 0; i--)
             {
                 ResourceDictionary dict = Resources.MergedDictionaries[i];
-                if (dict.Source != null && dict.Source.OriginalString.Contains("Theme"))
-                {
+                if (dict.Source?.OriginalString.Contains("Theme") == true)
                     Resources.MergedDictionaries.RemoveAt(i);
-                }
             }
 
-            // Add the new theme dictionary
             if (themeDictionary != null)
-            {
                 Resources.MergedDictionaries.Insert(0, themeDictionary);
-            }
         }
 
         /// <summary>
@@ -148,25 +137,17 @@ namespace Elva
         {
             try
             {
-                // Check Windows registry for dark mode setting
-                using Microsoft.Win32.RegistryKey? key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(
-                    @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+                using Microsoft.Win32.RegistryKey? key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
 
                 if (key != null)
                 {
-                    object value = key.GetValue("AppsUseLightTheme");
+                    object? value = key.GetValue("AppsUseLightTheme");
                     if (value != null && value is int lightThemeEnabled)
-                    {
-                        return lightThemeEnabled == 0; // 0 means dark theme is enabled
-                    }
+                        return lightThemeEnabled == 0;
                 }
             }
-            catch
-            {
-                // If we can't read the registry, default to dark theme
-            }
-
-            return true; // Default to dark theme if we can't determine
+            catch { }
+            return true;
         }
         public static void Log(string information, LogLevel logLevel = LogLevel.Information) => Current._logger.Log(logLevel, information);
         public static void Log<T>(string information, LogLevel logLevel = LogLevel.Information, bool time = false, [CallerMemberName] string callerName = "", [CallerLineNumber] long callerLineNumber = 0) =>

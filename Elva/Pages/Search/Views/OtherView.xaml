@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Elva.Pages.Search.Views.OtherView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Elva.Pages.Search.Views"
+             xmlns:search="clr-namespace:Elva.Pages.Search.Views"
+             d:DataContext="{d:DesignInstance Type=search:OtherVM}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ItemsControl Margin="5"
+                 x:Name="uc"
+                VirtualizingStackPanel.IsVirtualizing="True"
+         ItemsSource="{Binding RadioTags,Mode=OneWay}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <StackPanel>
+                    <TextBlock Margin="2"
+           Text="{Binding Key}"
+           Foreground="#FFEBEBEB"
+           FontSize="17" />
+                    <ItemsControl Margin="5"
+                 VirtualizingStackPanel.IsVirtualizing="True"
+          ItemsSource="{Binding Value,Mode=OneWay}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton  Content="{Binding}"
+       Margin="5" Style="{StaticResource ModernRadioButton}"
+                                               Command="{Binding DataContext.ChangeTagCommand ,ElementName=uc}">
+                                    <ToggleButton.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource MultiBindingConverter}">
+                                            <Binding Path="DataContext"  Mode="OneWay" RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
+                                            <Binding Path="Content" RelativeSource="{RelativeSource Self}"/>
+                                        </MultiBinding>
+                                    </ToggleButton.CommandParameter>
+                                    <ToggleButton.IsChecked>
+                                        <MultiBinding Converter="{StaticResource MultiEqualtityConverter}"
+            Mode="OneWay">
+                                            <Binding Path="Content"
+           RelativeSource="{RelativeSource Self}" />
+                                            <Binding Path="DataContext.SecondValue"
+           RelativeSource="{RelativeSource AncestorType=ItemsControl}"
+           Mode="OneWay" />
+                                        </MultiBinding>
+                                    </ToggleButton.IsChecked>
+                                </ToggleButton>
+                                
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <VirtualizingStackPanel/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
+</UserControl>

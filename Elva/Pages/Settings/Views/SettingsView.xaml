@@ -1,0 +1,299 @@
+﻿<UserControl x:Class="Elva.Pages.Settings.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Elva.Pages.Settings.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="500"
+             d:DesignWidth="800">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <Border Background="{DynamicResource PanelBackground}"
+                    CornerRadius="5"
+                    Margin="10,5,10,5"
+                    Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Appearance:"
+                               Foreground="{DynamicResource TextPrimary}"
+                               FontSize="20" />
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal">
+                        <TextBlock Text="Theme:"
+                                   Foreground="{DynamicResource TextPrimary}"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,10,0" />
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Light"
+                                         Margin="5,0,5,0"
+                                         GroupName="ThemeGroup"
+                                         IsChecked="{Binding IsLightTheme}"
+                                         Command="{Binding ThemeChangedCommand}"
+                                         CommandParameter="Light"
+                                         Style="{StaticResource ModernRadioButton}" />
+                            <RadioButton Content="Dark"
+                                         Margin="5,0,5,0"
+                                         GroupName="ThemeGroup"
+                                         IsChecked="{Binding IsDarkTheme}"
+                                         Command="{Binding ThemeChangedCommand}"
+                                         CommandParameter="Dark"
+                                         Style="{StaticResource ModernRadioButton}" />
+                            <RadioButton Content="System"
+                                         Margin="5,0,5,0"
+                                         GroupName="ThemeGroup"
+                                         IsChecked="{Binding IsSystemTheme}"
+                                         Command="{Binding ThemeChangedCommand}"
+                                         CommandParameter="System"
+                                         Style="{StaticResource ModernRadioButton}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource PanelBackground}"
+                    CornerRadius="5"
+                    Margin="10,5,10,5"
+                    Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Download:"
+                               Foreground="{DynamicResource TextPrimary}"
+                               FontSize="20" />
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal">
+                        <Button Margin="10,0,10,0"
+                                Height="25"
+                                Width="70"
+                                Style="{StaticResource ModernButton}"
+                                Content="Change"
+                                Command="{Binding ChangeDownloadFolderCommand}"
+                                Background="{DynamicResource ButtonPrimary}" />
+                        <TextBlock Foreground="{DynamicResource TextPrimary}"
+                                   FontSize="17">
+<Run Text="Folder:" />
+<Run Text="{Binding DownloadFolder, Mode=OneWay}"
+                            FontSize="14"
+                            Foreground="{DynamicResource TextSecondary}" />
+                        </TextBlock>
+
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource PanelBackground}"
+                    CornerRadius="5"
+                    Margin="10,5,10,5"
+                    Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Websites:"
+                               Foreground="{DynamicResource TextPrimary}"
+                               FontSize="20" />
+                    <Button Margin="10,5,10,0"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource ModernButton}"
+                            Content="Add Website"
+                            Width="100"
+                            Command="{Binding AddWebsiteCommand}"
+                            Background="{DynamicResource ButtonPrimary}" />
+                    <Button Margin="10,5,10,0"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Content="Update websites from repository"
+                            Width="200"
+                            IsEnabled="{Binding IsUpdateingWebsitesEnabled}"
+                            Command="{Binding UpdateWebsitesCommand}">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource ModernButton}">
+                                <Setter Property="Background"
+                                        Value="{DynamicResource ButtonPrimary}" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled"
+                                             Value="False">
+                                        <Setter Property="Background"
+                                                Value="{DynamicResource ButtonDisabled}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource PanelBackground}"
+                    CornerRadius="5"
+                    Margin="10,5,10,5"
+                    Padding="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="VPN:"
+                               Foreground="{DynamicResource TextPrimary}"
+                               FontSize="20" />
+                    <Button Margin="10,5,5,5"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Width="200"
+                            Command="{Binding KillSwitchCommand}">
+                        <Button.Style>
+                            <Style TargetType="Button"
+                                   BasedOn="{StaticResource ModernButton}">
+                                <Setter Property="Background"
+                                        Value="{DynamicResource ButtonSecondary}" />
+                                <Setter Property="Content"
+                                        Value="Kill Switch: Enabled" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource TextPrimary}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsKillSwitchEnabled}"
+                                                 Value="False">
+                                        <Setter Property="Content"
+                                                Value="Kill Switch: Disabled" />
+                                        <Setter Property="Background"
+                                                Value="{DynamicResource BackgroundSecondary}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource PanelBackground}"
+                    CornerRadius="5"
+                    Margin="10,5,10,5"
+                    Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="ҽʅʋα"
+                               Margin="0,-20,0,0"
+                               FontSize="70">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="1,1"
+                                                 StartPoint="0,0">
+                                <GradientStop Color="#FFF58D90" />
+                                <GradientStop Color="#FF7A91FF"
+                                              Offset="1" />
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Margin="10,5,10,5"
+                                   Foreground="{DynamicResource TextPrimary}"
+                                   FontSize="15">
+     <Run Text="Version:" />
+     <Run Text="{Binding Version}" />
+                        </TextBlock>
+                        <TextBlock Margin="15,0,10,5"
+                                   Foreground="{DynamicResource TextTertiary}"
+                                   FontSize="12"
+                                   Text="No Updates Available">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility"
+                                            Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsUpdateAvailable}"
+                                                     Value="true">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Visibility="{Binding IsUpdateAvailable,Converter={StaticResource BoolToVis}}"
+                                   Margin="10,5,10,5"
+                                   Foreground="PaleVioletRed"
+                                   FontSize="14"
+                                   Text="{Binding UpdateText}" />
+                        <Button Content="Update"
+                                Width="90"
+                                Height="30"
+                                Margin="10,5,10,5"
+                                HorizontalAlignment="Left"
+                                Command="{Binding UpdateApplicationCommand}"
+                                Background="{DynamicResource ButtonPrimary}">
+                            <Button.Style>
+                                <Style TargetType="Button"
+                                       BasedOn="{StaticResource ModernChapterButton}">
+                                    <Setter Property="Visibility"
+                                            Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsUpdateing}"
+                                                     Value="true">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsUpdateAvailable}"
+                                                     Value="false">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.RowSpan="1"
+                                Grid.Column="1">
+                        <TextBlock Foreground="{DynamicResource TextPrimary}"
+                                   FontSize="15">
+                            <Run Text="Repository:" />
+                            <Run Text="https://github.com/typnull/elva/"
+                                 Foreground="{DynamicResource TextSecondary}"
+                                 Cursor="Hand">
+                                <Run.InputBindings>
+                                    <MouseBinding Gesture="LeftClick"
+                                                  Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                                  CommandParameter="https://github.com/typnull/Elva/" />
+                                </Run.InputBindings>
+                            </Run>
+
+                        </TextBlock>
+                        <TextBlock Foreground="{DynamicResource TextPrimary}"
+                                   FontSize="15">
+                            <Run Text="License:" />
+                            <Run Text="MIT"
+                                 Foreground="{DynamicResource TextSecondary}"
+                                 Cursor="Hand">
+<Run.InputBindings>
+    <MouseBinding Gesture="LeftClick"
+                                    Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                    CommandParameter="https://github.com/TypNull/Elva/blob/master/LICENSE.txt" />
+</Run.InputBindings>
+                                </Run>
+                        </TextBlock>
+                        <Button HorizontalAlignment="Left"
+                                Background="Transparent"
+                                Foreground="{DynamicResource TextPrimary}"
+                                Height="20"
+                                Width="110"
+                                Content="License details"
+                                Command="{Binding OpenLicenseInfoCommand}"
+                                Style="{StaticResource ModernButton}" />
+                        <TextBlock Foreground="{DynamicResource TextPrimary}"
+                                   FontSize="15">
+<Run Text="Issues with elva or a feature request?" />
+<Run Text="Please report on GitHub"
+                            Cursor="Hand"
+                            Foreground="{DynamicResource TextSecondary}">
+     <Run.InputBindings>
+     <MouseBinding Gesture="LeftClick"
+                                    Command="{Binding OpenWebsiteCommand, Mode=OneTime}"
+                                    CommandParameter="https://github.com/typnull/Elva/issues" />
+ </Run.InputBindings>
+</Run>
+
+                        </TextBlock>
+
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

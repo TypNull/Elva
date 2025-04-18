@@ -1,0 +1,294 @@
+﻿<UserControl x:Class="Elva.Pages.Info.Views.InfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Elva.Pages.Info.Views"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             xmlns:con="clr-namespace:Elva.Common.Converters"
+             mc:Ignorable="d"
+             xmlns:xrpb="http://XamlRadialProgressBar/DotNet"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  CanContentScroll="True">
+        <Grid SizeChanged="Grid_SizeChanged">
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="Background"
+                            Value="{DynamicResource PanelBackground}" />
+                    <Setter Property="CornerRadius"
+                            Value="5" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Style.Setters>
+                        <Setter Property="Margin"
+                                Value="5" />
+                        <Setter Property="FontSize"
+                                Value="15" />
+                        <Setter Property="TextWrapping"
+                                Value="Wrap" />
+                        <Setter Property="TextTrimming"
+                                Value="CharacterEllipsis" />
+                        <Setter Property="FontFamily"
+                                Value="Arial" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource TextSecondary}" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Top" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Left" />
+                        <Setter Property="TextAlignment"
+                                Value="Left" />
+                    </Style.Setters>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border Margin="0,20,0,0"
+                    x:Name="imageBorder"
+                    HorizontalAlignment="Center"
+                    Padding="5">
+                <Grid>
+                    <Image MaxHeight="350"
+                           MaxWidth="350"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Stretch="Uniform">
+                        <Image.Source>
+                            <PriorityBinding>
+                                <Binding Path="Comic.CoverPath"
+                                         IsAsync="true"
+                                         TargetNullValue="{StaticResource NullImagePath}" />
+                                <Binding Path="Comic.CoverPath"
+                                         Converter="{StaticResource ImageConverter}"
+                                         FallbackValue="{StaticResource NullImagePath}"
+                                         TargetNullValue="{StaticResource NullImagePath}"
+                                         IsAsync="True" />
+                            </PriorityBinding>
+                        </Image.Source>
+                    </Image>
+                    <Border Background="#A5BDBDBD"
+                            Height="30"
+                            Width="30"
+                            Cursor="Hand"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="5"
+                            Padding="3">
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source"
+                                            Value="\Resources\Images\Comic\star.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Comic.IsFavorite,Mode=OneWay}"
+                                                     Value="True">
+                                            <Setter Property="Source"
+                                                    Value="\Resources\Images\Comic\full_star.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Border.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding FavoriteCommand, Mode=OneTime}" />
+                        </Border.InputBindings>
+                    </Border>
+                    <Grid.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Height="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualHeight}"
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth}"
+                                        Background="White"
+                                        CornerRadius="5" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Grid.OpacityMask>
+                </Grid>
+            </Border>
+            <Border x:Name="infoBorder"
+                    Grid.Column="1"
+                    Margin="0,20,0,0">
+                <Border.Resources>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource RedButton}">
+                        <Setter Property="Margin"
+                                Value="5" />
+                        <Setter Property="Width"
+                                Value="110" />
+                        <Setter Property="Height"
+                                Value="40" />
+                    </Style>
+                </Border.Resources>
+
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Name:&#009;"
+                                   FontWeight="DemiBold" />
+                        <TextBox MaxHeight="60"
+                                 Text="{Binding Comic.Title,Mode=OneWay}">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox"
+                                       BasedOn="{StaticResource TextBlockTextBox}">
+                                    <Setter Property="Margin"
+                                            Value="5" />
+                                    <Setter Property="FontSize"
+                                            Value="15" />
+                                    <Setter Property="TextWrapping"
+                                            Value="Wrap" />
+                                    <Setter Property="FontFamily"
+                                            Value="Arial" />
+                                    <Setter Property="Foreground"
+                                            Value="{DynamicResource TextSecondary}" />
+                                    <Setter Property="VerticalAlignment"
+                                            Value="Top" />
+                                    <Setter Property="HorizontalAlignment"
+                                            Value="Left" />
+                                    <Setter Property="TextAlignment"
+                                            Value="Left" />
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </StackPanel>
+                    <TextBlock MaxHeight="60">
+                        <Run Text="Alternativ names:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.AlternativeTitles,Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock MaxHeight="40">
+                        <Run Text="Author:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Author,Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock MaxHeight="20">
+                        <Run Text="Genres:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Genres,Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock MaxHeight="20">
+                        <Run Text="Status:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Status,Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock MaxHeight="20">
+                        <Run Text="Website:  "
+                             FontWeight="DemiBold" />
+                        <Run Text="{Binding Comic.Website,Mode=OneWay}" />
+                    </TextBlock>
+                    <WrapPanel VerticalAlignment="Bottom"
+                               Orientation="Horizontal">
+                        <Button Content="Read First" />
+                        <Button Content="Read Last" />
+                        <Button Content="Continue" />
+                        <Button Content="Download All"
+                                Command="{Binding StartDownloadAllCommand}" />
+
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,10"
+                               IsEnabled="{Binding Comic.CanExport}">
+                        <Button Content="Export as:"
+                                Command="{Binding ExportCommand}" />
+                        <ComboBox Style="{StaticResource ModernComboBox}"
+                                  Grid.Column="1"
+                                  TextBlock.FontSize="15"
+                                  Height="30"
+                                  Width="100"
+                                  SelectedIndex="{Binding SelectedIndex,Mode=TwoWay,FallbackValue=0}">
+                            <ComboBoxItem>PDF</ComboBoxItem>
+                            <ComboBoxItem>ZIP</ComboBoxItem>
+                            <ComboBoxItem>CBZ</ComboBoxItem>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ExportChangedCommand}"
+                                                           CommandParameter="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ComboBox}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <Grid Margin="5,0,0,0">
+                            <xrpb:RadialProgressBar Value="{Binding Comic.ExportProgress,TargetNullValue=0,Mode=OneWay}"
+                                                    Width="35"
+                                                    Height="35"
+                                                    ArcWidth="2.3"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{DynamicResource TextDark}">
+                                <xrpb:RadialProgressBar.Style>
+                                    <Style TargetType="{x:Type xrpb:RadialProgressBar}">
+                                        <Setter Property="Visibility"
+                                                Value="Visible" />
+                                        <Style.Triggers>
+                                            <Trigger Value="100"
+                                                     Property="Value">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible" />
+                                            </Trigger>
+                                            <Trigger Value="0"
+                                                     Property="Value">
+                                                <Setter Property="Visibility"
+                                                        Value="Hidden" />
+                                            </Trigger>
+                                            <Trigger Value="-1"
+                                                     Property="Value">
+                                                <Setter Property="Visibility"
+                                                        Value="Hidden" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </xrpb:RadialProgressBar.Style>
+                            </xrpb:RadialProgressBar>
+
+                            <Image RenderOptions.BitmapScalingMode="Fant"
+                                   MaxHeight="25">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source"
+                                                Value="/Resources/Images/Comic/check_mark.png" />
+                                        <Setter Property="Visibility"
+                                                Value="Hidden" />
+                                        <Style.Triggers>
+                                            <DataTrigger Value="100"
+                                                         Binding="{Binding Comic.ExportProgress}">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+            <StackPanel Grid.Row="2"
+                        Grid.ColumnSpan="2">
+                <Border Margin="0,20,0,0">
+                    <StackPanel>
+                        <TextBlock MaxHeight="100"
+                                   Margin="5"
+                                   FontSize="0.1"
+                                   VerticalAlignment="Top">
+                            <Run Text="Description:&#x0a;"
+                                 FontSize="17"
+                                 FontWeight="DemiBold" />
+                            <Run FontSize="13"
+                                 Text="{Binding Comic.Description,Mode=OneWay}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Margin="0,10,0,0">
+                    <local:ChapterInfoView DataContext="{Binding ChapterVM}" />
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

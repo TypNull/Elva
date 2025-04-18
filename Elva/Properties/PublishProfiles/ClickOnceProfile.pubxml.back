@@ -40,7 +40,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <TargetCulture>en</TargetCulture>
   </PropertyGroup>
   <ItemGroup>
-    <PublishFile Include="Recource\Image\Window\logo.ico">
+    <PublishFile Include="Resources\Images\Window\logo.ico">
       <Group>
       </Group>
       <TargetPath>
@@ -61,7 +61,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <Visible>False</Visible>
       <Description>Elva comic format</Description>
       <Progid>elva.comic</Progid>
-      <DefaultIcon>Recource\Image\Window\logo.ico</DefaultIcon>
+      <DefaultIcon>Resources\Images\Window\logo.ico</DefaultIcon>
     </FileAssociation>
   </ItemGroup>
 </Project>

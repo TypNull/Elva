@@ -5,7 +5,7 @@
     <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Recource\Image\Window\logo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Images\Window\logo.ico</ApplicationIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/TypNull/Elva</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -22,37 +22,47 @@
 
   <ItemGroup>
     <None Remove="C:\Users\Sandmann\.nuget\packages\lottiesharp\2.3.0\contentFiles\any\net6.0-windows7.0\lottie_sharp.ico" />
-    <None Remove="Recource\Animation\loading-1.json" />
-    <None Remove="Recource\Animation\loading.json" />
-    <None Remove="Recource\Animation\menu.json" />
-    <None Remove="Recource\Image\Comic\check_mark.png" />
-    <None Remove="Recource\Image\Comic\clock.png" />
-    <None Remove="Recource\Image\Comic\download.png" />
-    <None Remove="Recource\Image\Comic\full_star.png" />
-    <None Remove="Recource\Image\Comic\no_image.jpg" />
-    <None Remove="Recource\Image\Comic\star.png" />
-    <None Remove="Recource\Image\Connection\available.png" />
-    <None Remove="Recource\Image\Connection\disabled.png" />
-    <None Remove="Recource\Image\Connection\save.png" />
-    <None Remove="Recource\Image\Connection\unavailable.png" />
-    <None Remove="Recource\Image\Search\arrow.png" />
-    <None Remove="Recource\Image\Search\clean.png" />
-    <None Remove="Recource\Image\Search\nothing_found.png" />
-    <None Remove="Recource\Image\Search\reload.png" />
-    <None Remove="Recource\Image\Window\back.png" />
-    <None Remove="Recource\Image\Window\back.svg" />
-    <None Remove="Recource\Image\Window\book.png" />
-    <None Remove="Recource\Image\Window\book.svg" />
-    <None Remove="Recource\Image\Window\home.png" />
-    <None Remove="Recource\Image\Window\home.svg" />
-    <None Remove="Recource\Image\Window\logo.ico" />
-    <None Remove="Recource\Image\Window\search.png" />
-    <None Remove="Recource\Image\Window\search.svg" />
-    <None Remove="Recource\Image\Window\setting.png" />
-    <None Remove="Recource\Image\Window\settings.png" />
-    <None Remove="Recource\Image\Window\settings.svg" />
-    <None Remove="Recource\Image\Window\website.png" />
-    <None Remove="Recource\Image\Window\website.svg" />
+    <None Remove="Resources\Animation\Dark\menu.json" />
+    <None Remove="Resources\Animation\Light\menu.json" />
+    <None Remove="Resources\Animation\loading.json" />
+    <None Remove="Resources\Animation\menu.json" />
+    <None Remove="Resources\Icons\Dark\back.svg" />
+    <None Remove="Resources\Icons\Dark\book.svg" />
+    <None Remove="Resources\Icons\Dark\Cloud\cloud-block.svg" />
+    <None Remove="Resources\Icons\Dark\Cloud\cloud-lock.svg" />
+    <None Remove="Resources\Icons\Dark\Cloud\cloud-shield.svg" />
+    <None Remove="Resources\Icons\Dark\Cloud\cloud.svg" />
+    <None Remove="Resources\Icons\Dark\home.svg" />
+    <None Remove="Resources\Icons\Dark\search.svg" />
+    <None Remove="Resources\Icons\Dark\settings.svg" />
+    <None Remove="Resources\Icons\Dark\website.svg" />
+    <None Remove="Resources\Icons\Light\back.svg" />
+    <None Remove="Resources\Icons\Light\book.svg" />
+    <None Remove="Resources\Icons\Light\home.svg" />
+    <None Remove="Resources\Icons\Light\search.svg" />
+    <None Remove="Resources\Icons\Light\settings.svg" />
+    <None Remove="Resources\Icons\Light\website.svg" />
+    <None Remove="Resources\Images\Comic\check_mark.png" />
+    <None Remove="Resources\Images\Comic\clock.png" />
+    <None Remove="Resources\Images\Comic\download.png" />
+    <None Remove="Resources\Images\Comic\full_star.png" />
+    <None Remove="Resources\Images\Comic\no_image.jpg" />
+    <None Remove="Resources\Images\Comic\star.png" />
+    <None Remove="Resources\Images\Connection\available.png" />
+    <None Remove="Resources\Images\Connection\disabled.png" />
+    <None Remove="Resources\Images\Connection\save.png" />
+    <None Remove="Resources\Images\Connection\unavailable.png" />
+    <None Remove="Resources\Images\Search\arrow.png" />
+    <None Remove="Resources\Images\Search\clean.png" />
+    <None Remove="Resources\Images\Search\nothing_found.png" />
+    <None Remove="Resources\Images\Search\reload.png" />
+    <None Remove="Resources\Images\Window\back.png" />
+    <None Remove="Resources\Images\Window\book.png" />
+    <None Remove="Resources\Images\Window\home.png" />
+    <None Remove="Resources\Images\Window\logo.ico" />
+    <None Remove="Resources\Images\Window\search.png" />
+    <None Remove="Resources\Images\Window\settings.png" />
+    <None Remove="Resources\Images\Window\website.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -85,44 +95,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Recource\Animation\loading.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Recource\Animation\menu.json" />
-    <Resource Include="Recource\Image\Comic\check_mark.png" />
-    <Resource Include="Recource\Image\Comic\clock.png" />
-    <Resource Include="Recource\Image\Comic\download.png" />
-    <Resource Include="Recource\Image\Comic\full_star.png" />
-    <Resource Include="Recource\Image\Comic\no_image.jpg" />
-    <Resource Include="Recource\Image\Comic\star.png" />
-    <Resource Include="Recource\Image\Connection\available.png" />
-    <Resource Include="Recource\Image\Connection\disabled.png" />
-    <Resource Include="Recource\Image\Connection\save.png" />
-    <Resource Include="Recource\Image\Connection\unavailable.png" />
-    <Resource Include="Recource\Image\Search\arrow.png" />
-    <Resource Include="Recource\Image\Search\clean.png" />
-    <Resource Include="Recource\Image\Search\nothing_found.png" />
-    <Resource Include="Recource\Image\Search\reload.png" />
-    <Resource Include="Recource\Image\Window\book.png" />
-    <Resource Include="Recource\Icons\Dark\book.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Recource\Image\Window\home.png" />
-    <Resource Include="Recource\Icons\Dark\home.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Recource\Image\Window\search.png" />
-    <Resource Include="Recource\Icons\Dark\search.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Recource\Image\Window\settings.png" />
-    <Resource Include="Recource\Icons\Dark\settings.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Recource\Image\Window\website.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
@@ -135,29 +107,99 @@
 			<Output PropertyName="_DeploymentBuiltMinimumRequiredVersion" TaskParameter="OutputVersion" />
 		</FormatVersion>
 	</Target>
-
-  
-	<ItemGroup>
-	  <_DeploymentManifestIconFile Remove="Recource\Image\Window\logo.ico" />
-	</ItemGroup>
 	<ItemGroup>
 		<ApplicationDefinition Remove="App.xaml" />
+		<Resource Include="Resources\Animation\Dark\menu.json" />
+		<Resource Include="Resources\Animation\Light\menu.json" />
+		<Resource Include="Resources\Animation\loading.json" />
+		<Resource Include="Resources\Icons\Dark\back.svg" />
+		<Resource Include="Resources\Icons\Dark\book.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Icons\Dark\Cloud\cloud-block.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Icons\Dark\Cloud\cloud-lock.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Icons\Dark\Cloud\cloud-shield.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Icons\Dark\Cloud\cloud.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Icons\Dark\home.svg" />
+		<Resource Include="Resources\Icons\Dark\search.svg" />
+		<Resource Include="Resources\Icons\Dark\settings.svg" />
+		<Resource Include="Resources\Icons\Dark\website.svg" />
+		<Resource Include="Resources\Icons\Light\back.svg" />
+		<Resource Include="Resources\Icons\Light\book.svg" />
+		<Resource Include="Resources\Icons\Light\home.svg" />
+		<Resource Include="Resources\Icons\Light\search.svg" />
+		<Resource Include="Resources\Icons\Light\settings.svg" />
+		<Resource Include="Resources\Icons\Light\website.svg" />
+		<Resource Include="Resources\Images\Comic\check_mark.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Comic\clock.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Comic\download.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Comic\full_star.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Comic\no_image.jpg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Comic\star.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Search\arrow.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Search\clean.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Search\nothing_found.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Search\reload.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\Window\home.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
 		<Page Include="App.xaml" />
 	</ItemGroup>
-
-  
 	<ItemGroup>
-	  <Content Include="Recource\Image\Window\logo.ico">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-  
-	<ItemGroup>
-	  <Resource Include="Recource\Icons\Dark\back.svg">
+	  <Resource Include="Resources\Images\Connection\available.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Resource>
-	  <Resource Include="Recource\Icons\Dark\website.svg">
+	  <Resource Include="Resources\Images\Connection\disabled.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Connection\save.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Connection\unavailable.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Window\back.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Window\book.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Window\logo.ico" />
+	  <Resource Include="Resources\Images\Window\search.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Window\settings.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\Window\website.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Resource>
 	</ItemGroup>
