@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Elva.exe" version="0.1.4.0" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Elva.exe" version="0.1.4.1" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Resources\Images\Window\logo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -108,22 +108,22 @@
       <dsig:DigestValue>iARah9ghiy3d52Gbg3Eou/sB5pQMptn5ILaLzw0vGO0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Elva.dll" size="726016">
+  <file name="Elva.dll" size="744960">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>PNMbstduBCTsBbTpYhtF/tHl7BgLYEGezM/qMdkVmso=</dsig:DigestValue>
+      <dsig:DigestValue>yIvegN3VTr2RHHeyofXdzoyVBdzbRBM6yflB/+TwZTs=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Elva.exe" size="153088">
+  <file name="Elva.exe" size="153600">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>x+umIeoEBpyT5f87zh7MSK9uzPCaJDXM5Rp0yDLJ96M=</dsig:DigestValue>
+      <dsig:DigestValue>4JvJhJwLeuZTI6mracCWcETzotglnxfk/jUHMkw0mds=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Elva.runtimeconfig.json" size="651">
