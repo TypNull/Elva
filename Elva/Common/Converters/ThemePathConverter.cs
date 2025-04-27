@@ -13,7 +13,7 @@ namespace Elva.Common.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) return null;
+            if (value == null) return null!;
 
             string fileName = value.ToString() ?? "";
             bool isDarkTheme = IsAppUsingDarkTheme();

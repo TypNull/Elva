@@ -1,9 +1,12 @@
 ﻿using Elva.Pages.Shared.Models;
 using Elva.Services.Database.Saveable;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using WebsiteScraper.WebsiteUtilities;
 
@@ -11,7 +14,6 @@ namespace Elva.Services.Database
 {
     internal class SettingsManager
     {
-        //Source={IOManager.LocalDataPath}settings.db
         private (string url, string websiteID)? _actualComic;
         private (string url, string websiteID)? _lastActualComic;
         private SaveableSettings _settings;
@@ -19,7 +21,10 @@ namespace Elva.Services.Database
         private Dictionary<string, (string url, ReferenceType typ)[]> _homeList = new();
         private string _settingsPath = Path.Combine(IOManager.LocalDataPath, "settings.db");
         private string _actualComicPath = Path.Combine(IOManager.LocalDataPath, "actualComic.data");
-        private readonly Timer _saveTimer;
+        private readonly System.Timers.Timer _saveTimer;
+        private readonly SemaphoreSlim _settingsLock = new(1, 1);
+        private bool _isLoaded = false;
+        private readonly TaskCompletionSource<bool> _loadCompletionSource = new();
 
         public IReadOnlyCollection<string> Favorites => _settings.Favorites;
 
@@ -57,6 +62,8 @@ namespace Elva.Services.Database
             }
         }
 
+        public Task SettingsLoadedTask => _loadCompletionSource.Task;
+
         public SettingsManager()
         {
             _settings = new();
@@ -76,44 +83,99 @@ namespace Elva.Services.Database
         {
             try
             {
-                _settings.DownloadPath = IOManager.DownloadPath;
-                _settings.HomeWebsiteComics = _homeList;
-                if (!_settings.Equals(_lastSavedSettings))
+                _settingsLock.Wait();
+                try
                 {
-                    File.WriteAllText(_settingsPath, JsonSerializer.Serialize(_settings, new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }));
-                    Debug.WriteLine("Settings saved");
-                    _lastSavedSettings = _settings with { };
+                    _settings.DownloadPath = IOManager.DownloadPath;
+                    _settings.HomeWebsiteComics = _homeList;
+                    if (!_settings.Equals(_lastSavedSettings))
+                    {
+                        File.WriteAllText(_settingsPath, JsonSerializer.Serialize(_settings, new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }));
+                        Debug.WriteLine("Settings saved");
+                        _lastSavedSettings = _settings with { };
+                    }
+                    if (_lastActualComic != _actualComic)
+                    {
+                        File.WriteAllText(_actualComicPath, JsonSerializer.Serialize(_actualComic, new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }));
+                        _lastActualComic = _actualComic;
+                        Debug.WriteLine("Actual comic saved");
+                    }
                 }
-                if (_lastActualComic != _actualComic)
+                finally
                 {
-                    File.WriteAllText(_actualComicPath, JsonSerializer.Serialize(_actualComic, new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }));
-                    _lastActualComic = _actualComic;
-                    Debug.WriteLine("Actual comic saved");
+                    _settingsLock.Release();
                 }
-
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Error saving settings: {ex.Message}");
+            }
+        }
 
+        public async Task LoadSettingsAsync()
+        {
+            if (_isLoaded)
+            {
+                return;
+            }
+
+            try
+            {
+                await _settingsLock.WaitAsync();
+                try
+                {
+                    if (_isLoaded)
+                    {
+                        return;
+                    }
+
+                    if (!File.Exists(_settingsPath))
+                    {
+                        _isLoaded = true;
+                        _loadCompletionSource.SetResult(true);
+                        return;
+                    }
+
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            _settings = JsonSerializer.Deserialize<SaveableSettings>(File.ReadAllText(_settingsPath), new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }) ?? new();
+
+                            if (File.Exists(_actualComicPath))
+                            {
+                                _actualComic = JsonSerializer.Deserialize<(string url, string websiteID)?>(File.ReadAllText(_actualComicPath), new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }) ?? new();
+                            }
+
+                            IOManager.ChangeDownloadPath(_settings.DownloadPath);
+                            _homeList = _settings.HomeWebsiteComics;
+                            Debug.WriteLine("Settings loaded");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Error loading settings: {ex.Message}");
+                            _settings = new SaveableSettings();
+                        }
+                    });
+
+                    _isLoaded = true;
+                    _loadCompletionSource.SetResult(true);
+                }
+                finally
+                {
+                    _settingsLock.Release();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in LoadSettingsAsync: {ex.Message}");
+                _loadCompletionSource.TrySetException(ex);
             }
         }
 
         public void LoadSettings()
         {
-            if (!File.Exists(_settingsPath))
-                return;
-            try
-            {
-                _settings = JsonSerializer.Deserialize<SaveableSettings>(File.ReadAllText(_settingsPath), new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }) ?? new();
-                _actualComic = JsonSerializer.Deserialize<(string url, string websiteID)?>(File.ReadAllText(_actualComicPath), new JsonSerializerOptions() { WriteIndented = true, IncludeFields = true }) ?? new();
-                IOManager.ChangeDownloadPath(_settings.DownloadPath);
-                _homeList = _settings.HomeWebsiteComics;
-                Debug.WriteLine("Settings loaded");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.Assert(false, ex.Message);
-            }
+            _ = LoadSettingsAsync();
         }
 
         public void SaveSettings()
@@ -123,7 +185,9 @@ namespace Elva.Services.Database
         }
 
         public void SetHomeComics(Website website, (string url, ReferenceType typ)[] value) => _homeList[website.Name + website.Suffix] = value;
+
         public (string url, ReferenceType typ)[]? GetHomeComics(Website website) => _homeList.GetValueOrDefault(website.Name + website.Suffix);
+
         public void SetActualComic(string website, string url) => _actualComic = new(url, website);
 
         public (string url, string websiteID)? GetActualComic() => _actualComic;
@@ -133,6 +197,7 @@ namespace Elva.Services.Database
             _settings.Favorites.Add(url);
             SaveSettings();
         }
+
         public void RemoveFavorite(string url)
         {
             _settings.Favorites.Remove(url);

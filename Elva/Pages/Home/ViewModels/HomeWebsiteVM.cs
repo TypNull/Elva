@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using WebsiteScraper.Downloadable.Books;
 using WebsiteScraper.WebsiteUtilities;
 
@@ -20,19 +22,28 @@ namespace Elva.Pages.Home.ViewModels
     {
         [ObservableProperty]
         private bool _visible = false;
+
         [ObservableProperty]
         private bool _newVisible = false;
+
         [ObservableProperty]
         private bool _recommendedVisible = false;
+
         [ObservableProperty]
         private ObservableCollection<ComicVM> _newItems = new();
+
         [ObservableProperty]
         private ObservableCollection<ComicVM> _recommendedItems = new();
+
         [ObservableProperty]
         private Website _websiteObject = null!;
+
         [ObservableProperty]
         private string _websiteLogo;
-        private SettingsManager _settingsManager;
+
+        private readonly SettingsManager _settingsManager;
+        private readonly SemaphoreSlim _loadSemaphore = new(1, 1);
+        private CancellationTokenSource _loadCancellation = new();
 
         public string WebsiteName => WebsiteObject.Name + WebsiteObject.Suffix;
 
@@ -41,8 +52,14 @@ namespace Elva.Pages.Home.ViewModels
             _websiteObject = website;
             _websiteLogo = _websiteObject.GetLogoPath();
             _settingsManager = App.Current.ServiceProvider.GetRequiredService<SettingsManager>();
-            LoadItemsFromDatabase();
-            _ = LoadNewItems();
+            InitializeAsync();
+        }
+
+        private async void InitializeAsync()
+        {
+            await Task.Run(LoadItemsFromDatabase);
+            if (Application.Current != null)
+                _ = LoadNewItemsAsync();
         }
 
         private void LoadItemsFromDatabase()
@@ -50,12 +67,36 @@ namespace Elva.Pages.Home.ViewModels
             (string url, ReferenceType typ)[]? references = _settingsManager.GetHomeComics(WebsiteObject);
             if (references == null)
                 return;
-            NewItems = ReferencesToCollection(references, ReferenceType.New);
-            RecommendedItems = ReferencesToCollection(references, ReferenceType.Recommended);
-            ChangeVisibility();
-        }
 
-        private ObservableCollection<ComicVM> ReferencesToCollection((string url, ReferenceType typ)[] values, ReferenceType typ) => new(values.Where(x => x.typ == typ).Select(c => new ComicVM(new(c.url, c.url, WebsiteObject))));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    ObservableCollection<ComicVM> newItems = new();
+                    ObservableCollection<ComicVM> recommendedItems = new();
+
+                    foreach ((string url, ReferenceType typ) in references.Where(x => x.typ == ReferenceType.New))
+                    {
+                        Comic comic = new(url, url, WebsiteObject);
+                        newItems.Add(new ComicVM(comic));
+                    }
+
+                    foreach ((string url, ReferenceType typ) reference in references.Where(x => x.typ == ReferenceType.Recommended))
+                    {
+                        Comic comic = new(reference.url, reference.url, WebsiteObject);
+                        recommendedItems.Add(new ComicVM(comic));
+                    }
+
+                    NewItems = newItems;
+                    RecommendedItems = recommendedItems;
+                    ChangeVisibility();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error creating ComicVMs: {ex.Message}");
+                }
+            });
+        }
 
         private void ChangeVisibility()
         {
@@ -64,41 +105,97 @@ namespace Elva.Pages.Home.ViewModels
             Visible = RecommendedVisible || NewVisible;
         }
 
-        private async Task LoadNewItems()
+        private async Task LoadNewItemsAsync()
         {
-            Task<Comic[]> newTask = WebsiteObject.LoadNewAsync<Comic>();
-            Task<Comic[]> recoTask = WebsiteObject.LoadExtraAsync<Comic>("Recommended");
-            Comic[] newComic = await newTask;
-            Comic[] recoComic = await recoTask;
-            ResizeArray(ref newComic, 8);
-            ResizeArray(ref recoComic, 8);
-            NewItems = new(newComic.Select(c => new ComicVM(c)));
-            RecommendedItems = new(recoComic.Select(c => new ComicVM(c)));
+            try
+            {
+                await _loadSemaphore.WaitAsync();
 
-            ChangeVisibility();
+                _loadCancellation.Cancel();
+                _loadCancellation = new CancellationTokenSource();
+                CancellationToken cancellationToken = _loadCancellation.Token;
 
-            List<(string url, ReferenceType typ)> list = new();
-            foreach (ComicVM value in RecommendedItems)
-                list.Add((value.Url, ReferenceType.Recommended));
-            foreach (ComicVM value in NewItems)
-                list.Add((value.Url, ReferenceType.New));
-            _settingsManager.SetHomeComics(WebsiteObject, list.ToArray());
-            _settingsManager.SaveSettings();
+                Task<Comic[]> newTask = WebsiteObject.LoadNewAsync<Comic>();
+                Task<Comic[]> recoTask = WebsiteObject.LoadExtraAsync<Comic>("Recommended");
+
+                await Task.WhenAll(newTask, recoTask);
+
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                Comic[] newComic = newTask.Result;
+                Comic[] recoComic = recoTask.Result;
+
+                ResizeArray(ref newComic, 8);
+                ResizeArray(ref recoComic, 8);
+
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        ObservableCollection<ComicVM> newItems = [];
+                        ObservableCollection<ComicVM> recommendedItems = [];
+                        foreach (Comic comic in newComic)
+                            newItems.Add(new ComicVM(comic));
+
+                        foreach (Comic comic in recoComic)
+                            recommendedItems.Add(new ComicVM(comic));
+
+
+                        NewItems = newItems;
+                        RecommendedItems = recommendedItems;
+                        ChangeVisibility();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error updating UI with comic data: {ex.Message}");
+                    }
+                });
+
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        List<(string url, ReferenceType typ)> list = [];
+
+                        foreach (Comic comic in newComic)
+                            list.Add((comic.Url, ReferenceType.New));
+
+
+                        foreach (Comic comic in recoComic)
+                            list.Add((comic.Url, ReferenceType.Recommended));
+
+                        _settingsManager.SetHomeComics(WebsiteObject, [.. list]);
+                        _settingsManager.SaveSettings();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error saving comic references: {ex.Message}");
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading website data: {ex.Message}");
+            }
+            finally
+            {
+                _loadSemaphore.Release();
+            }
         }
 
-        private void ResizeArray(ref Comic[] comics, int length)
+        private static void ResizeArray(ref Comic[] comics, int length)
         {
             if (comics.Length > length)
                 Array.Resize(ref comics, length);
         }
 
+        public void RefreshData() => _ = LoadNewItemsAsync();
 
         [RelayCommand]
-        public void OpenWebsiteInfo()
-        {
-            Debug.WriteLine("OpenWebsite");
-        }
+        public void OpenWebsiteInfo() => Debug.WriteLine("OpenWebsite");
     }
-
-
 }

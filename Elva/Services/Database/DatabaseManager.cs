@@ -1,6 +1,8 @@
 ﻿using Elva.Pages.Shared.Models;
 using Elva.Services.Database.Saveable;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,57 +14,81 @@ namespace Elva.Services.Database
 {
     public abstract class DatabaseManager<T> where T : DbContext, new()
     {
-        private readonly T _context;
         protected readonly object _lockObject;
-        private readonly List<SaveableOnlineData> _data;
+        private readonly ConcurrentBag<SaveableOnlineData> _data;
         private readonly Timer _dbSaveTimer;
-        private bool _isChanging;
+        private volatile bool _isChanging;
+        private volatile bool _isModelReady = false;
         public long Version { get; private set; }
 
-        public T Context { get { return _context; } }
+        public T Context { get; }
 
-        public DatabaseManager(double intervall = 5000)
+        protected DatabaseManager(double intervall = 5000)
         {
-            _context = new T();
-            _data = new List<SaveableOnlineData>();
+            Context = new T();
+            _data = [];
             _lockObject = new object();
             _dbSaveTimer = new(intervall)
             {
                 AutoReset = false
             };
             _dbSaveTimer.Elapsed += DbSaveTimer_Elapsed;
+
             Directory.CreateDirectory(IOManager.LocalDataPath);
-            _context.Database.EnsureCreated();
-            // Version = _context.Database.SqlQuery<long>($"PRAGMA user_version").FirstOrDefault();
+
+            Task.Run(async () =>
+            {
+                await Context.Database.EnsureCreatedAsync();
+                _isModelReady = true;
+            }).ConfigureAwait(false);
+
             Debug.WriteLine("Database Version: " + Version);
         }
 
-        private void DbSaveTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        private async void DbSaveTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             if (_isChanging)
                 return;
+
             _isChanging = true;
             try
             {
-                SaveableOnlineData[] addable = _data.Distinct(new SaveableComparer()).ToArray();
-                _data.Clear();
-                SaveChanges(addable.ToArray());
-                Debug.WriteLine($"{typeof(T).Name} is saved");
-            }
-            catch (System.InvalidOperationException exeption)
-            {
-                Debug.WriteLine(exeption);
-            }
-            finally { _isChanging = false; }
+                List<SaveableOnlineData> dataToSave = new();
+                while (_data.TryTake(out SaveableOnlineData? item))
+                {
+                    dataToSave.Add(item);
+                }
 
+                SaveableOnlineData[] distinctItems = dataToSave.Distinct(new SaveableComparer()).ToArray();
+
+                if (distinctItems.Length > 0)
+                {
+                    await Task.Run(() => SaveChanges(distinctItems));
+                    Debug.WriteLine($"{typeof(T).Name} saved {distinctItems.Length} items");
+                }
+            }
+            catch (InvalidOperationException exception)
+            {
+                Debug.WriteLine(exception);
+            }
+            finally
+            {
+                _isChanging = false;
+            }
         }
 
         protected virtual void SaveChanges(params object[] addable)
         {
+            if (!_isModelReady)
+            {
+                Debug.WriteLine("Attempting to save before model is ready - operation postponed");
+                return;
+            }
+
             lock (_lockObject)
             {
-                _context.AddRange(addable);
-                _context.SaveChanges();
+                Context.AddRange(addable);
+                Context.SaveChanges();
             }
         }
 
@@ -78,17 +104,56 @@ namespace Elva.Services.Database
 
         internal bool TryGetSaved<TItem>(string id, out TItem? item) where TItem : SaveableOnlineData
         {
+            if (!_isModelReady)
+            {
+                item = default;
+                return false;
+            }
+
             lock (_lockObject)
             {
                 item = default;
-                if (_context.Find(typeof(TItem), id) is TItem found)
+                try
                 {
-                    item = found;
-                    return true;
+                    if (Context.Find(typeof(TItem), id) is TItem found)
+                    {
+                        item = found;
+                        return true;
+                    }
                 }
-                else return false;
+                catch (InvalidOperationException ex)
+                {
+                    Debug.WriteLine($"Error in TryGetSaved: {ex.Message}");
+                }
+                return false;
+            }
+        }
+
+        internal async Task<TItem?> TryGetSavedAsync<TItem>(string id) where TItem : SaveableOnlineData
+        {
+            if (!_isModelReady)
+            {
+                return default;
             }
 
+            return await Task.Run(() =>
+            {
+                lock (_lockObject)
+                {
+                    try
+                    {
+                        if (Context.Find(typeof(TItem), id) is TItem found)
+                        {
+                            return found;
+                        }
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Debug.WriteLine($"Error in TryGetSavedAsync: {ex.Message}");
+                    }
+                    return default;
+                }
+            });
         }
     }
 

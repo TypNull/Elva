@@ -8,8 +8,7 @@
              xmlns:local="clr-namespace:Elva.Pages.Home.Views"
              mc:Ignorable="d"
              d:DesignHeight="450"
-             d:DesignWidth="800"
-             Visibility="{Binding Visible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}">
+             d:DesignWidth="800">
     <StackPanel>
         <StackPanel.Resources>
             <Style TargetType="ItemsControl">
@@ -17,7 +16,7 @@
                     <Setter.Value>
                         <DataTemplate>
                             <Grid>
-                                <local:HomeItemView DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Grid}}"  />
+                                <local:HomeItemView DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=Grid}}" />
                             </Grid>
                         </DataTemplate>
                     </Setter.Value>
@@ -25,8 +24,9 @@
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
-                            <celement:UniformGridPanel VirtualizingPanel.IsVirtualizing="True" 
-                                                       VirtualizingPanel.VirtualizationMode="Recycling" ItemHeight="160"
+                            <celement:UniformGridPanel VirtualizingPanel.IsVirtualizing="True"
+                                                       VirtualizingPanel.VirtualizationMode="Recycling"
+                                                       ItemHeight="160"
                                                        Rows="1"
                                                        SizeChanged="UniformGridPanel_SizeChanged" />
                         </ItemsPanelTemplate>
@@ -46,7 +46,6 @@
             <Style TargetType="TextBlock">
                 <Setter Property="HorizontalAlignment"
                         Value="Left" />
-
             </Style>
         </StackPanel.Resources>
         <TextBlock Text="{Binding WebsiteName}"
@@ -60,44 +59,48 @@
                               MouseAction="LeftClick" />
             </TextBlock.InputBindings>
         </TextBlock>
-        <TextBlock Visibility="{Binding NewVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
-                   Margin="15,0,0,5"
-                   FontSize="22">     
-            <Run Text="New"> 
-                <Run.Foreground>                    
-                    <LinearGradientBrush EndPoint="0.5,1"
-                                    StartPoint="0.5,0">                       
-                        <GradientStop Color="LightGreen"
-                                        Offset="0.0" />                       
-                        <GradientStop Color="#FFA2EDD6"
-                                      Offset="0.9" />                   
-                    </LinearGradientBrush>              
-                </Run.Foreground>         
-            </Run>
-        </TextBlock>
-        <ItemsControl Margin="15,0,0,0"
-                      Visibility="{Binding NewVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
-                      ItemsSource="{Binding NewItems,Mode=OneWay}">
-        </ItemsControl>
-        <TextBlock Visibility="{Binding RecommendedVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
-                   Margin="15,0,0,5"
-                   FontSize="22">
-            <Run Text="Recommended"> 
-    <Run.Foreground>                    
-        <LinearGradientBrush EndPoint="0.5,1"
-                             StartPoint="0.5,0">                       
-            <GradientStop Color="DarkOrange"
-                          Offset="0.0" />                       
-            <GradientStop Color="#FFF7DB57"
-                          Offset="0.9" />                   
-        </LinearGradientBrush>              
-    </Run.Foreground>         
-</Run>
-        </TextBlock>
-        <ItemsControl Visibility="{Binding RecommendedVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
-                      Margin="15,0,0,20"
-                      ItemsSource="{Binding RecommendedItems,Mode=OneWay}">
-        </ItemsControl>
 
+        <Grid>
+            <StackPanel>
+                <TextBlock Visibility="{Binding NewVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                           Margin="15,0,0,5"
+                           FontSize="22">     
+                <Run Text="New"> 
+                    <Run.Foreground>                    
+                        <LinearGradientBrush EndPoint="0.5,1"
+                                             StartPoint="0.5,0">                       
+                            <GradientStop Color="LightGreen"
+                                          Offset="0.0" />                       
+                            <GradientStop Color="#FFA2EDD6"
+                                          Offset="0.9" />                   
+                        </LinearGradientBrush>              
+                    </Run.Foreground>         
+                </Run>
+                </TextBlock>
+                <ItemsControl Margin="15,0,0,0"
+                              Visibility="{Binding NewVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                              ItemsSource="{Binding NewItems,Mode=OneWay}">
+                </ItemsControl>
+                <TextBlock Visibility="{Binding RecommendedVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                           Margin="15,0,0,5"
+                           FontSize="22">
+                <Run Text="Recommended"> 
+                    <Run.Foreground>                    
+                        <LinearGradientBrush EndPoint="0.5,1"
+                                             StartPoint="0.5,0">                       
+                            <GradientStop Color="DarkOrange"
+                                          Offset="0.0" />                       
+                            <GradientStop Color="#FFF7DB57"
+                                          Offset="0.9" />                   
+                        </LinearGradientBrush>              
+                    </Run.Foreground>         
+                </Run>
+                </TextBlock>
+                <ItemsControl Visibility="{Binding RecommendedVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"
+                              Margin="15,0,0,20"
+                              ItemsSource="{Binding RecommendedItems,Mode=OneWay}">
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
     </StackPanel>
 </UserControl>

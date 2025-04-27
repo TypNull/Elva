@@ -7,7 +7,6 @@ using Elva.Services.Database.Saveable;
 using Elva.Services.Export;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -119,7 +118,7 @@ namespace Elva.Pages.Shared.ViewModels
         [RelayCommand]
         public void OpenChapterInBrowser(float f)
         {
-            Process.Start("explorer", _comic.Chapter.Where(x => x.Number == f).First().Url);
+            //  Process.Start("explorer", _comic.Chapter.Where(x => x.Number == f).First().Url);
         }
 
         [RelayCommand]

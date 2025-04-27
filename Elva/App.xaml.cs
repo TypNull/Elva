@@ -17,6 +17,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Elva
 {
@@ -30,6 +31,9 @@ namespace Elva
         internal static new App Current => (App)Application.Current;
 
         private readonly ILogger<App> _logger;
+
+        public event EventHandler<string>? OnThemeChanged;
+        private MainWindow? _mainWindow;
 
         public App(ILoggerFactory loggerF)
         {
@@ -67,35 +71,45 @@ namespace Elva
         {
             Log<App>("Start Application", time: true);
             base.OnStartup(e);
-            Task database = _serviceProvider.GetRequiredService<ComicDatabaseManager>().LoadDataAsync();
+            _ = _serviceProvider.GetRequiredService<ComicDatabaseManager>().LoadDataAsync();
+
             SettingsManager settingsManager = _serviceProvider.GetRequiredService<SettingsManager>();
             settingsManager.LoadSettings();
-
-            // Apply the saved theme
+            SetupConnectionManager(settingsManager);
+            _serviceProvider.GetRequiredService<INavigationService>().NavigateTo<HomeVM>();
+            _mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            _mainWindow.Show();
             ApplyTheme(settingsManager.Theme);
 
+            Log<App>("Show MainWindow", time: true);
+        }
+
+        private void SetupConnectionManager(SettingsManager settingsManager)
+        {
             ConnectionManager.ConnectionChanged += (o, s) =>
             {
                 if ((!ConnectionManager.ConnectionIsSave && settingsManager.IsKillSwitchEnabled) || !ConnectionManager.ConnectionIsAvailable)
                 {
                     RequestHandler.CancelMainCTS();
-                    ToastNotification.Show("Downloads paused: Connection not secure", ToastType.Warning);
+                    Dispatcher.Invoke(() =>
+                    {
+                        ToastNotification.Show("Downloads paused: Connection not secure", ToastType.Warning);
+                    });
                 }
                 else if (ConnectionManager.ConnectionIsAvailable)
                 {
                     RequestHandler.CreateMainCTS();
                     if (ConnectionManager.ConnectionIsSave)
                     {
-                        ToastNotification.Show("Connection secure: Downloads enabled", ToastType.Success);
+                        Dispatcher.Invoke(() =>
+                        {
+                            ToastNotification.Show("Connection secure: Downloads enabled", ToastType.Success);
+                        });
                     }
                 }
             };
-            ConnectionManager.Initialize();
 
-            database.Wait();
-            _serviceProvider.GetRequiredService<INavigationService>().NavigateTo<HomeVM>();
-            _serviceProvider.GetRequiredService<MainWindow>().Show();
-            Log<App>("Show MainWindow", time: true);
+            Task.Run(ConnectionManager.Initialize);
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -119,21 +133,26 @@ namespace Elva
 
             string packUri = $"pack://application:,,,/Resources/Styles/Theme{theme}.xaml";
             ResourceDictionary themeDictionary = new() { Source = new Uri(packUri, UriKind.Absolute) };
-            for (int i = Resources.MergedDictionaries.Count - 1; i >= 0; i--)
-            {
-                ResourceDictionary dict = Resources.MergedDictionaries[i];
-                if (dict.Source?.OriginalString.Contains("Theme") == true)
-                    Resources.MergedDictionaries.RemoveAt(i);
-            }
 
-            if (themeDictionary != null)
-                Resources.MergedDictionaries.Insert(0, themeDictionary);
+            Dispatcher.Invoke(() =>
+            {
+                for (int i = Resources.MergedDictionaries.Count - 1; i >= 0; i--)
+                {
+                    ResourceDictionary dict = Resources.MergedDictionaries[i];
+                    if (dict.Source?.OriginalString.Contains("Theme") == true)
+                        Resources.MergedDictionaries.RemoveAt(i);
+                }
+
+                if (themeDictionary != null)
+                    Resources.MergedDictionaries.Insert(0, themeDictionary);
+            });
+            OnThemeChanged?.Invoke(this, theme);
         }
 
         /// <summary>
         /// Checks if the system is using dark theme
         /// </summary>
-        private bool IsSystemUseDarkTheme()
+        private static bool IsSystemUseDarkTheme()
         {
             try
             {
@@ -149,6 +168,7 @@ namespace Elva
             catch { }
             return true;
         }
+
         public static void Log(string information, LogLevel logLevel = LogLevel.Information) => Current._logger.Log(logLevel, information);
         public static void Log<T>(string information, LogLevel logLevel = LogLevel.Information, bool time = false, [CallerMemberName] string callerName = "", [CallerLineNumber] long callerLineNumber = 0) =>
             Current._logger.Log(logLevel, $"Time: {(time ? DateTime.Now.TimeOfDay : "")} Class: {typeof(T).FullName} Method:{callerName} Line: {callerLineNumber} »»  {information} ");

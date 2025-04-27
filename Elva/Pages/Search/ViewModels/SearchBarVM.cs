@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Elva.Common;
 using Elva.Common.Navigation;
 using Elva.Pages.Search.Models;
-using Elva.Pages.Settings.ViewModels;
 using Elva.Pages.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -34,35 +33,26 @@ namespace Elva.Pages.Search.ViewModels
         [ObservableProperty]
         private string _errorMessage = string.Empty;
 
-        // Foreground property for error state visualization
-        public Brush Foreground => HasError
+        public Brush? Foreground => HasError
             ? Application.Current.Resources["SearchBarError"] as SolidColorBrush
             : Application.Current.Resources["SearchBarNormal"] as SolidColorBrush;
 
-        // Dependencies
         private readonly SearchManager _searchManager;
         private readonly WebsiteManager _websiteManager;
 
-        // Search history management
         private readonly SearchHistory _searchHistory = new() { MaxHistorySize = 5 };
 
-        // Navigation mode
-        private bool _fullHistoryMode = false;
+        private bool _fullHistoryMode;
 
         public SearchBarVM(INavigationService navigation) : base(navigation)
         {
             _searchManager = GetService<SearchManager>();
             _websiteManager = GetService<WebsiteManager>();
 
-            // Subscribe to events
             _searchManager.OnSearchChanged += SearchChanged;
             PropertyChanged += OnPropertyChanged;
-
-            // Initialize website text
             UpdateWebsiteText();
-
-            // Subscribe to theme changes
-            GetService<SettingsVM>().OnThemeChanged += (sender, theme) =>
+            App.Current.OnThemeChanged += (sender, theme) =>
                 OnPropertyChanged(nameof(Foreground));
         }
 

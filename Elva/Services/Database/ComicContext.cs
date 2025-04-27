@@ -12,13 +12,19 @@ namespace Elva.Services.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SaveableComic>().HasMany(e => e.Chapter).WithOne(e => e.Comic).HasForeignKey("ComicUrl").IsRequired();
+            modelBuilder.Entity<SaveableComic>().HasIndex(e => e.Title);
+            modelBuilder.Entity<SaveableComic>().HasIndex(e => e.WebsiteID);
+            modelBuilder.Entity<SaveableChapter>().HasIndex(e => e.Order);
+
             base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseSqlite($"Data Source={IOManager.LocalDataPath}Comics.db");
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            optionsBuilder.UseSqlite($"Data Source={IOManager.LocalDataPath}Comics.db",
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
         }
     }
 }

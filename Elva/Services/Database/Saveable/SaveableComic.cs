@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using WebsiteScraper.Downloadable;
 using WebsiteScraper.Downloadable.Books;
 
@@ -39,11 +40,23 @@ namespace Elva.Services.Database.Saveable
         public string CoverUrl { get; set; } = string.Empty;
         public DateTime LastSaveUpdate { get; set; } = DateTime.Now;
 
-        public List<SaveableChapter> Chapter { get; set; } = new();
+        public virtual List<SaveableChapter> Chapter { get; set; } = new();
 
-        private readonly ComicDatabaseManager _dbManager;
+        [NotMapped]
+        private ComicDatabaseManager? _dbManager;
 
-        public SaveableComic() => _dbManager = App.Current.ServiceProvider.GetRequiredService<ComicDatabaseManager>();
+        [NotMapped]
+        private ComicDatabaseManager? DbManager
+        {
+            get
+            {
+                if (_dbManager == null && App.Current?.ServiceProvider != null)
+                    _dbManager = App.Current.ServiceProvider.GetService<ComicDatabaseManager>();
+                return _dbManager;
+            }
+        }
+
+        public SaveableComic() { }
 
         public SaveableComic(Comic comic) : this()
         {
@@ -58,11 +71,15 @@ namespace Elva.Services.Database.Saveable
             Title = comic.Title;
             Description = comic.Description;
             WebsiteID = comic.HoldingWebsite.Name + comic.HoldingWebsite.Suffix;
+
             if (!string.IsNullOrEmpty(Url))
             {
                 AddChapters(comic);
-                _dbManager.Add(this);
-                _dbManager.SaveData();
+                if (DbManager != null)
+                {
+                    DbManager.Add(this);
+                    DbManager.SaveData();
+                }
             }
         }
 
@@ -79,8 +96,12 @@ namespace Elva.Services.Database.Saveable
                         found[0].UpdateWithChapter(this, chapter);
             }
             if (newChapter.Count > 0)
+            {
                 foreach (Chapter chapter in newChapter)
+                {
                     Chapter.Add(new SaveableChapter(this, chapter));
+                }
+            }
 
             Chapter = Chapter.Distinct(new SaveableComparer()).Select(x => (SaveableChapter)x).ToList();
         }
@@ -100,6 +121,26 @@ namespace Elva.Services.Database.Saveable
             comic.Chapter = Chapter.Select(c => c.CreateChapter(comic)).ToArray();
         }
 
+        internal async Task UpdateWithComicAsync(Comic comic)
+        {
+            LastUpdated = comic.LastUpdated;
+            CoverFileName = Path.GetFileName(comic.CoverPath) ?? string.Empty;
+            CoverUrl = comic.CoverUrl ?? string.Empty;
+            Author = comic.Author;
+            Genres = comic.Genres;
+            AlternativeTitles = comic.AlternativeTitles;
+            Status = comic.Status;
+            Title = comic.Title;
+            Description = comic.Description;
+            LastSaveUpdate = DateTime.Now;
+
+            await Task.Run(() =>
+            {
+                AddChapters(comic);
+                DbManager?.SaveData();
+            });
+        }
+
         internal void UpateWithComic(Comic comic)
         {
             LastUpdated = comic.LastUpdated;
@@ -113,7 +154,7 @@ namespace Elva.Services.Database.Saveable
             Description = comic.Description;
             LastSaveUpdate = DateTime.Now;
             AddChapters(comic);
-            _dbManager.SaveData();
+            DbManager?.SaveData();
         }
     }
 }

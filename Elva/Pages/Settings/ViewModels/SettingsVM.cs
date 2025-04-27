@@ -27,7 +27,7 @@ namespace Elva.Pages.Settings.ViewModels
         private bool _isLightTheme;
 
         [ObservableProperty]
-        private bool _isDarkTheme = true; // Default to dark theme
+        private bool _isDarkTheme = true;
 
         [ObservableProperty]
         private bool _isSystemTheme;
@@ -91,9 +91,6 @@ namespace Elva.Pages.Settings.ViewModels
             IsSystemTheme = savedTheme == "System";
         }
 
-        // Add this to your SettingsVM class
-        public event EventHandler<string>? OnThemeChanged;
-
         [RelayCommand]
         private void ChangeDownloadFolder() => OnChangeDownloadFolder?.Invoke(this, EventArgs.Empty);
 
@@ -113,23 +110,11 @@ namespace Elva.Pages.Settings.ViewModels
         [RelayCommand]
         private void ThemeChanged(string theme)
         {
-            // Update the theme properties
             IsLightTheme = theme == "Light";
             IsDarkTheme = theme == "Dark";
             IsSystemTheme = theme == "System";
-
-            // Save the theme preference
             _settingsManager.Theme = theme;
-
-
-            // Apply the theme
             App.Current.ApplyTheme(theme);
-
-            // Trigger the theme changed event
-            OnThemeChanged?.Invoke(this, theme);
-
-
-            // Show toast notification
             ToastNotification.Show($"{theme} theme applied", ToastType.Success);
         }
 

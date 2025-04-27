@@ -15,8 +15,8 @@ namespace Elva.Pages.Shared.Views
         private Window Window { get; init; }
 
         // Use ResourceDictionary references for dynamic theme support
-        private SolidColorBrush HoverBrush => TryFindResource("BackgroundTertiary") as SolidColorBrush;
-        private SolidColorBrush NormalBrush => TryFindResource("BackgroundSecondary") as SolidColorBrush;
+        private SolidColorBrush? HoverBrush => TryFindResource("BackgroundTertiary") as SolidColorBrush;
+        private SolidColorBrush? NormalBrush => TryFindResource("BackgroundSecondary") as SolidColorBrush;
 
         public ControlView()
         {

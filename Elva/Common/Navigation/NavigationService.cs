@@ -11,18 +11,11 @@ namespace Elva.Common.Navigation
         void NavigateTo(Type type);
     }
 
-    public partial class NavigationService : ObservableObject, INavigationService
+    public partial class NavigationService(Func<Type, ViewModelObject> viewModelFactory) : ObservableObject, INavigationService
     {
         [ObservableProperty]
         private ViewModelObject _currentView = null!;
-        private readonly Func<Type, ViewModelObject> _viewModelFactory;
-
-
-        public NavigationService(Func<Type, ViewModelObject> viewModelFactory)
-        {
-            _viewModelFactory = viewModelFactory;
-        }
-
+        private readonly Func<Type, ViewModelObject> _viewModelFactory = viewModelFactory;
 
         public void NavigateTo<TViewModel>() where TViewModel : ViewModelObject
         {
